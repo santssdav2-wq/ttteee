@@ -42,7 +42,7 @@ function Index() {
 
 function TopBar() {
   return (
-    <div className="bg-forest px-4 py-2 text-center text-[11px] font-bold uppercase tracking-[0.14em] text-gold">
+    <div className="bg-forest px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] sm:text-[11px] text-gold">
       Material digital para quem ensina capoeira
     </div>
   );
@@ -53,7 +53,7 @@ function Hero() {
     <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
         <span className="mb-4 font-display text-sm font-bold tracking-wide text-primary">{offer.brand}</span>
-        <h1 className="font-display font-extrabold leading-[1.02] tracking-tight text-ink">
+        <h1 className="isolate font-display font-extrabold leading-[1.02] tracking-tight text-ink">
           <span className="block text-[1.55rem] sm:text-[2.6rem]">
             <span className="text-[2.6rem] text-cta sm:text-[4.2rem]">+300</span> Dinâmicas Interativas de
           </span>
@@ -62,7 +62,8 @@ function Hero() {
             <span aria-hidden className="absolute -bottom-0.5 left-1 right-1 h-2.5 -z-0 rounded-sm bg-gold/70 sm:h-4" style={{ zIndex: -1 }} />
           </span>
           <span className="mt-2 block text-[1.45rem] sm:text-[2.4rem]">
-            Prontas para <span className="rounded bg-forest px-2 text-gold">Aplicar nas Aulas!</span>
+            Prontas para{" "}
+            <span className="mt-1 inline-block whitespace-nowrap rounded bg-forest px-2 pb-0.5 text-gold">Aplicar nas Aulas!</span>
           </span>
         </h1>
         <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
@@ -82,7 +83,7 @@ function PhoneMockup() {
   return (
     <div className="relative my-8 flex w-full justify-center">
       <div aria-hidden className="absolute top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-gold/30 blur-3xl sm:h-72 sm:w-72" />
-      <div className="relative w-[200px] rotate-[-3deg] rounded-[2rem] bg-ink p-2 shadow-2xl sm:w-[240px]">
+      <div className="relative w-[180px] rotate-[-3deg] rounded-[2rem] bg-ink p-2 shadow-2xl sm:w-[240px]">
         <div className="mx-auto mb-1.5 h-1.5 w-14 rounded-full bg-forest-muted/40" />
         <div className="aspect-[9/17] overflow-hidden rounded-[1.4rem]">
           {real ? <img src={real.src} alt={real.alt} className="h-full w-full object-cover" /> : <MaterialPage n={1} />}
