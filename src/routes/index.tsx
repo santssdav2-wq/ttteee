@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState, useRef } from "react";
 import { BookOpen, ClipboardList, Target, Smartphone, Layers, Users, GraduationCap, Building2, Baby, Check, ShieldCheck, Gift, Award } from "lucide-react";
 import { offer } from "@/config/offer";
 import { Section, SectionTitle, CtaButton, CheckoutButton, Carousel, MaterialPage } from "@/components/sales/parts";
@@ -44,6 +45,8 @@ function TopBar() {
 }
 
 function Hero() {
+  const [showButton, setShowButton] = useState(true);
+  const videoRef = useRef(null);
   return (
     <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -61,6 +64,35 @@ function Hero() {
             <span className="mt-1 inline-block whitespace-nowrap rounded bg-forest px-2 pb-0.5 text-gold">Aplicar nas Aulas!</span>
           </span>
         </h1>
+        <div className="video-placeholder mt-8 w-full max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+          <video
+            ref={videoRef}
+            src="https://drive.google.com/uc?id=1DhI-95X5MEP4wYgVHXqicnZi3CyOcPWU&export=download"
+            autoplay
+            muted
+            playsinline
+            loop
+            className="w-full h-auto"
+            onCanPlay={() => {
+              if (videoRef.current) {
+                videoRef.current.style.opacity = 1
+              }
+            }}
+          />
+          {showButton && (
+            <button
+              className="absolute top-4 left-1/2 -translate-x-1/2 bg-gold text-forest font-bold px-6 py-3 rounded-xl text-sm shadow-lg transition-all hover:opacity-90"
+              onClick={() => {
+                if (videoRef.current) {
+                  videoRef.current.muted = false
+                  videoRef.current.play()
+                }
+              }}
+            >
+              🔊 TOQUE PARA ASSISTIR COM SOM
+            </button>
+          )}
+        </div>
         <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
           Tenha mais opções de dinâmicas e atividades para variar suas aulas de capoeira e facilitar a preparação das suas próximas propostas.
         </p>
