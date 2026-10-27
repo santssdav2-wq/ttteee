@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BookOpen, ClipboardList, Target, Smartphone, Layers, Users, GraduationCap, Building2, Baby, Check, ShieldCheck, Gift } from "lucide-react";
+import { BookOpen, ClipboardList, Target, Smartphone, Layers, Users, GraduationCap, Building2, Baby, Check, ShieldCheck, Gift, Award } from "lucide-react";
 import { offer } from "@/config/offer";
 import { Section, SectionTitle, CtaButton, CheckoutButton, Carousel, MaterialPage } from "@/components/sales/parts";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import aulaImg from "@/assets/aula-capoeira.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -25,13 +24,9 @@ function Index() {
       <TopBar />
       <Hero />
       <Receive />
-      <Pain />
-      <Demo />
       <Audience />
-      <Benefits />
-      <Plans />
       <Bonuses />
-      <Testimonials />
+      <Plans />
       <Guarantee />
       <Faq />
       <FinalCta />
@@ -69,6 +64,9 @@ function Hero() {
         <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
           Tenha mais opções de dinâmicas e atividades para variar suas aulas de capoeira e facilitar a preparação das suas próximas propostas.
         </p>
+        <span className="mt-4 inline-flex items-center gap-2 rounded-md border border-gold/60 bg-gold/15 px-3 py-2 text-xs font-bold text-primary">
+          <Gift className="h-4 w-4" aria-hidden="true" /> Inclui bônus exclusivos
+        </span>
         <PhoneMockup />
         <div className="w-full">
           <CtaButton>QUERO MINHAS DINÂMICAS AGORA</CtaButton>
@@ -107,9 +105,9 @@ function Receive() {
   return (
     <Section className="bg-card">
       <SectionTitle eyebrow="O material">O Que Você Vai Receber?</SectionTitle>
-      <ul className="mx-auto grid max-w-3xl gap-x-8 gap-y-6 sm:grid-cols-2">
+      <ul className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
         {receiveItems.map(({ icon: Icon, title, text }) => (
-          <li key={title} className="flex items-start gap-4">
+          <li key={title} className="flex items-start gap-4 rounded-lg border bg-background p-4 sm:p-5">
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-forest text-gold"><Icon className="h-5 w-5" /></span>
             <div className="min-w-0">
               <h3 className="font-display text-lg font-bold text-ink">{title}</h3>
@@ -118,29 +116,10 @@ function Receive() {
           </li>
         ))}
       </ul>
-    </Section>
-  );
-}
-
-function Pain() {
-  return (
-    <section className="bg-forest text-forest-foreground">
-      <div className="mx-auto grid max-w-5xl items-center md:grid-cols-2">
-        <img src={aulaImg} alt="Professor conduzindo uma aula de capoeira em roda" width={1280} height={896} loading="lazy" className="aspect-[4/3] h-full w-full object-cover" />
-        <div className="px-5 py-12 sm:px-10">
-          <span className="eyebrow text-gold">A rotina de quem ensina</span>
-          <h2 className="mt-2 text-[1.65rem] font-extrabold leading-[1.1] sm:text-4xl">
-            Sua Próxima Aula Não Precisa Começar <span className="text-gold">do Zero</span>
-          </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-forest-muted sm:text-base">
-            Organizar aulas variadas exige repertório, planejamento e boas ideias. Ter diferentes dinâmicas à disposição pode facilitar a preparação das atividades e ajudar a encontrar novas formas de trabalhar com seus alunos.
-          </p>
-          <p className="mt-3 text-[15px] leading-relaxed text-forest-muted sm:text-base">
-            Um repertório organizado é uma ferramenta de apoio: você consulta, escolhe e adapta à sua roda.
-          </p>
-        </div>
+      <div className="mt-10 border-t pt-10 sm:mt-12 sm:pt-12">
+        <Demo />
       </div>
-    </section>
+    </Section>
   );
 }
 
@@ -148,7 +127,7 @@ function Demo() {
   const imgs = offer.previewImages;
   const count = imgs.length || 5;
   return (
-    <Section>
+    <div>
       <SectionTitle eyebrow="Por dentro">Conheça Algumas das Dinâmicas</SectionTitle>
       <Carousel count={count} label="Prévias do material">
         {Array.from({ length: count }).map((_, i) => (
@@ -158,7 +137,7 @@ function Demo() {
         ))}
       </Carousel>
       {!imgs.length && <p className="mt-4 text-center text-xs text-muted-foreground">Prévias ilustrativas da estrutura das páginas.</p>}
-    </Section>
+    </div>
   );
 }
 
@@ -181,30 +160,6 @@ function Audience() {
           </li>
         ))}
       </ul>
-    </Section>
-  );
-}
-
-const benefits = [
-  { t: "Mais repertório à disposição", d: "Tenha diferentes propostas para consultar durante o planejamento." },
-  { t: "Facilidade na preparação", d: "Consulte atividades organizadas em vez de precisar começar todas as propostas do zero." },
-  { t: "Mais possibilidades para variar as aulas", d: "Conheça outras formas de trabalhar dinâmicas e atividades com seus alunos." },
-];
-
-function Benefits() {
-  return (
-    <Section>
-      <SectionTitle eyebrow="Benefícios">Mais Opções Para Organizar Suas Aulas</SectionTitle>
-      <ol className="mx-auto grid max-w-4xl gap-8 sm:grid-cols-3">
-        {benefits.map((b, i) => (
-          <li key={b.t} className="text-center sm:text-left">
-            <span className="font-display text-5xl font-extrabold text-gold">{i + 1}</span>
-            <h3 className="mt-1 font-display text-xl font-bold leading-tight text-ink">{b.t}</h3>
-            <p className="mt-2 text-[15px] text-muted-foreground">{b.d}</p>
-          </li>
-        ))}
-      </ol>
-      <div className="mt-10"><CtaButton>QUERO MINHAS DINÂMICAS AGORA</CtaButton></div>
     </Section>
   );
 }
@@ -240,35 +195,21 @@ function Bonuses() {
   if (!offer.bonuses.length) return null;
   return (
     <Section className="bg-forest">
-      <SectionTitle eyebrow="Bônus" light>Bônus Incluídos</SectionTitle>
-      <ul className="grid gap-6 sm:grid-cols-3">
+      <SectionTitle light>E NÃO PARA POR AÍ!</SectionTitle>
+      <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">Além das dinâmicas, você também recebe bônus exclusivos para complementar suas aulas.</p>
+      <ul className={`mx-auto grid gap-6 ${offer.bonuses.length === 1 ? "max-w-2xl" : "sm:grid-cols-2"}`}>
         {offer.bonuses.map((b) => (
-          <li key={b.title} className="text-forest-foreground">
-            {b.image ? <img src={b.image} alt={b.title} loading="lazy" className="mb-3 aspect-video w-full rounded-lg object-cover" /> : <Gift className="mb-3 h-8 w-8 text-gold" />}
-            <h3 className="font-display text-lg font-bold">{b.title}</h3>
-            <p className="text-[15px] text-forest-muted">{b.description}</p>
+          <li key={b.title} className="flex flex-col items-start gap-5 rounded-lg border border-gold/40 bg-card p-6 text-ink sm:flex-row sm:p-8">
+            {b.image ? <img src={b.image} alt={b.title} loading="lazy" className="w-full rounded-md object-contain sm:w-44" /> : <span className="grid h-16 w-16 shrink-0 place-items-center rounded-lg bg-forest text-gold"><Award className="h-9 w-9" aria-hidden="true" /></span>}
+            <div className="min-w-0">
+              <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">{b.title}</h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">{b.description}</p>
+              {b.referencePrice && <p className="mt-4 text-sm text-muted-foreground line-through">Valor de referência: {b.referencePrice}</p>}
+              {b.includedAtNoExtraCost && <><p className="mt-4 inline-block rounded-md bg-gold px-3 py-2 text-sm font-extrabold text-ink">HOJE, GRÁTIS!</p><p className="mt-2 text-sm font-semibold text-primary">Incluído na oferta, sem cobrança adicional.</p></>}
+            </div>
           </li>
         ))}
       </ul>
-    </Section>
-  );
-}
-
-function Testimonials() {
-  const list = offer.testimonials;
-  if (!list.length) return null;
-  return (
-    <Section>
-      <SectionTitle eyebrow="Prova social">Veja a Experiência de Quem Utiliza o Material</SectionTitle>
-      <Carousel count={list.length} label="Depoimentos">
-        {list.map((t, i) => (
-          <figure key={i} className="w-[80%] shrink-0 snap-center rounded-lg border bg-card p-5 sm:w-[40%]">
-            {t.image && <img src={t.image} alt={`Depoimento de ${t.name}`} loading="lazy" className="mb-3 w-full rounded" />}
-            {t.text && <blockquote className="text-[15px] text-ink">“{t.text}”</blockquote>}
-            <figcaption className="mt-3 text-sm font-bold text-primary">{t.name}{t.role && <span className="font-normal text-muted-foreground"> · {t.role}</span>}</figcaption>
-          </figure>
-        ))}
-      </Carousel>
     </Section>
   );
 }
@@ -277,17 +218,17 @@ function Guarantee() {
   const g = offer.guarantee;
   if (!g) return null;
   return (
-    <Section className="bg-card">
+    <section className="bg-card px-5 py-10 sm:py-12">
       <div className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
         <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full border-4 border-gold bg-forest text-gold">
           <div className="text-center leading-none"><ShieldCheck className="mx-auto h-6 w-6" /><span className="font-display text-2xl font-extrabold">{g.days}</span><span className="block text-[10px] font-bold">DIAS</span></div>
         </div>
         <div>
-          <h2 className="text-2xl font-extrabold text-ink">Garantia de {g.days} dias</h2>
+           <h2 className="text-2xl font-extrabold text-ink">VOCÊ TEM {g.days} DIAS DE GARANTIA</h2>
           <p className="mt-1 text-[15px] text-muted-foreground">{g.text}</p>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
