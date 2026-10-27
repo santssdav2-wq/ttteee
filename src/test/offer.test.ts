@@ -8,12 +8,12 @@ describe("preserved offer and approved additions", () => {
 
   it("includes only the children's capoeira certificate at no extra cost", () => {
     expect(offer.bonuses).toHaveLength(1);
-    expect(offer.bonuses[0].title).toBe("Certificado de Capoeira Infantil");
-    expect(offer.bonuses[0].includedAtNoExtraCost).toBe(true);
+    expect(offer.bonuses[0]?.title).toBe("Certificado de Capoeira Infantil");
+    expect(offer.bonuses[0]?.includedAtNoExtraCost).toBe(true);
   });
 
   it("leaves the undefined certificate reference price unset", () => {
-    expect(offer.bonuses[0].referencePrice).toBeNull();
+    expect(offer.bonuses[0]?.referencePrice).toBeNull();
   });
 
   it("preserves both plans and their pending commercial settings", () => {
