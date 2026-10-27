@@ -21,7 +21,7 @@ export type Plan = {
   highlight?: boolean;
 };
 
-export type Bonus = { title: string; description: string; image?: string };
+export type Bonus = { title: string; description: string; image?: string; referencePrice: string | null; includedAtNoExtraCost: boolean };
 export type Testimonial = { name: string; role?: string; text?: string; image?: string };
 
 export const offer = {
@@ -53,14 +53,24 @@ export const offer = {
     },
   ] satisfies Plan[],
 
-  /** Bônus reais. Lista vazia = seção oculta. */
-  bonuses: [] as Bonus[],
+  /** Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência. */
+  bonuses: [
+    {
+      title: "Certificado de Capoeira Infantil",
+      description: "Para professores, mestres e instrutores que utilizam certificados em atividades e eventos de capoeira infantil.",
+      referencePrice: null,
+      includedAtNoExtraCost: true,
+    },
+  ] as Bonus[],
 
   /** Depoimentos autênticos. Lista vazia = seção oculta. */
   testimonials: [] as Testimonial[],
 
-  /** Garantia. null = seção oculta. Ex.: { days: 7, text: "..." } */
-  guarantee: null as null | { days: number; text: string },
+  /** Garantia definida para a oferta. */
+  guarantee: {
+    days: 7,
+    text: "Adquira seu material com tranquilidade. Você tem 7 dias de garantia para conhecer o conteúdo e avaliar se ele atende às suas necessidades.",
+  } as null | { days: number; text: string },
 
   /** Informações reais exibidas abaixo do CTA final. Lista vazia = nada exibido. */
   purchaseInfo: ["Produto 100% digital"] as string[],
