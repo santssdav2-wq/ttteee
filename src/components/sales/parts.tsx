@@ -56,9 +56,18 @@ export function Carousel({ count, children, label }: { count: number; children: 
     const el = ref.current;
     if (!el) return;
     const onScroll = () => {
-      const item = el.firstElementChild as HTMLElement | null;
-      if (!item) return;
-      setActive(Math.round(el.scrollLeft / (item.offsetWidth + 16)));
+      const center = el.scrollLeft + el.clientWidth / 2;
+      let nearest = 0;
+      let distance = Infinity;
+      Array.from(el.children).forEach((child, index) => {
+        const item = child as HTMLElement;
+        const delta = Math.abs(item.offsetLeft - el.offsetLeft + item.offsetWidth / 2 - center);
+        if (delta < distance) {
+          nearest = index;
+          distance = delta;
+        }
+      });
+      setActive(nearest);
     };
     el.addEventListener("scroll", onScroll, { passive: true });
     return () => el.removeEventListener("scroll", onScroll);
@@ -74,7 +83,7 @@ export function Carousel({ count, children, label }: { count: number; children: 
     <div className="relative" aria-roledescription="carrossel" aria-label={label}>
       <div
         ref={ref}
-        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[12%] pb-2 [scrollbar-width:none] sm:mx-0 sm:px-[30%] [&::-webkit-scrollbar]:hidden"
+        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[12%] pb-2 [scrollbar-width:none] sm:mx-0 sm:px-[calc(50%_-_200px)] [&::-webkit-scrollbar]:hidden"
       >
         {children}
       </div>

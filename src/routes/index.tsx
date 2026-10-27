@@ -131,7 +131,7 @@ function Demo() {
       <SectionTitle eyebrow="Por dentro">Conheça Algumas das Dinâmicas</SectionTitle>
       <Carousel count={count} label="Prévias do material">
         {Array.from({ length: count }).map((_, i) => (
-          <div key={i} className="aspect-[3/4] w-[76%] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[40%]">
+          <div key={i} className="aspect-[3/4] w-[76vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[400px]">
             {imgs[i] ? <img src={imgs[i].src} alt={imgs[i].alt} loading="lazy" className="h-full w-full object-cover" /> : <MaterialPage n={i + 1} />}
           </div>
         ))}
