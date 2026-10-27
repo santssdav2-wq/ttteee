@@ -99,7 +99,6 @@ function Hero() {
         <span className="mt-4 inline-flex items-center gap-2 rounded-md border border-gold/60 bg-gold/15 px-3 py-2 text-xs font-bold text-primary">
           <Gift className="h-4 w-4" aria-hidden="true" /> Inclui bônus exclusivos
         </span>
-        <PhoneMockup />
         <div className="w-full">
           <CtaButton>QUERO MINHAS DINÂMICAS AGORA</CtaButton>
         </div>
