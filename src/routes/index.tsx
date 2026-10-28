@@ -310,44 +310,88 @@ function CountdownTimer() {
 }
 
 function Plans() {
+  const [basico, completo] = offer.plans;
   return (
     <Section id="planos" className="bg-muted">
       <CountdownTimer />
       <SectionTitle eyebrow="Escolha seu plano">
-        Invista no <span className="text-green-600 font-bold">Repertório</span> das Suas Aulas
+        Escolha o melhor <span className="text-green-600 font-bold">pacote</span> para suas aulas
       </SectionTitle>
-      <div className="mx-auto grid max-w-3xl items-start gap-6 md:grid-cols-2">
-        {offer.plans.map((p) => (
-          <article
-            key={p.id}
-            className={`relative rounded-xl bg-card p-6 ${p.highlight ? "border-2 border-cta shadow-xl md:-mt-4" : "border"}`}
-          >
-            {p.highlight && (
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-ink">
-                Mais completo
-              </span>
-            )}
-            <h3 className="font-display text-2xl font-extrabold text-ink">{p.name}</h3>
-            <div className="mt-3">
-              {p.oldPrice && (
-                <p className="text-sm text-muted-foreground line-through">De {p.oldPrice}</p>
-              )}
-              <p className="font-display text-4xl font-extrabold text-primary">
-                {p.price ?? <span className="text-xl text-muted-foreground">Preço a definir</span>}
+      <p className="mx-auto -mt-6 mb-10 max-w-2xl text-center text-[15px] leading-relaxed text-muted-foreground sm:-mt-10 sm:mb-12">
+        Comece com as dinâmicas de capoeira ou leve também os materiais extras para organizar e
+        acompanhar suas aulas.
+      </p>
+      <div className="mx-auto grid max-w-4xl items-stretch gap-6 md:grid-cols-2">
+        {basico && (
+          <article className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-6 shadow-sm">
+            <h3 className="font-display text-2xl font-extrabold text-ink">{basico.name}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              O essencial para ampliar seu repertório de atividades.
+            </p>
+            <div className="mt-4">
+              <p className="font-display text-4xl font-extrabold text-ink">
+                {basico.price ?? (
+                  <span className="text-xl text-muted-foreground">Preço a definir</span>
+                )}
               </p>
-              {p.priceNote && <p className="text-xs text-muted-foreground">{p.priceNote}</p>}
+              {basico.priceNote && (
+                <p className="text-xs text-muted-foreground">{basico.priceNote}</p>
+              )}
             </div>
-            <ul className="my-5 space-y-2.5">
-              {[...p.items, ...(p.extras ?? [])].map((it) => (
+            <ul className="my-6 flex-1 space-y-2.5">
+              {basico.items.map((it) => (
                 <li key={it} className="flex gap-2 text-[15px] text-ink">
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-cta" />
-                  {it}
+                  <span>{it}</span>
                 </li>
               ))}
             </ul>
-            <CheckoutButton plan={p} />
+            <CheckoutButton plan={basico} />
           </article>
-        ))}
+        )}
+        {completo && (
+          <article className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-6 shadow-lg md:-mt-3">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-ink">
+              PACOTE MAIS COMPLETO
+            </span>
+            <h3 className="font-display text-2xl font-extrabold text-ink">{completo.name}</h3>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Mais recursos para planejar suas aulas e acompanhar seus alunos.
+            </p>
+            <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-4">
+              <div className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted/40 sm:h-32 sm:w-32">
+                <img
+                  src="/certificado.webp"
+                  alt="Mockup do pacote União Capoeirista"
+                  loading="lazy"
+                  className="h-full w-full object-contain mix-blend-multiply"
+                />
+              </div>
+              <div className="text-center sm:text-left">
+                <p className="font-display text-5xl font-extrabold text-primary">
+                  {completo.price ?? (
+                    <span className="text-xl text-muted-foreground">Preço a definir</span>
+                  )}
+                </p>
+                {completo.priceNote && (
+                  <p className="text-xs text-muted-foreground">{completo.priceNote}</p>
+                )}
+                <p className="mt-1 text-xs font-semibold text-green-700">
+                  + {basico?.name?.toLowerCase()} + 3 bônus inclusos
+                </p>
+              </div>
+            </div>
+            <ul className="my-6 flex-1 space-y-2.5">
+              {[...completo.items, ...(completo.extras ?? [])].map((it, idx) => (
+                <li key={it} className="flex gap-2 text-[15px] text-ink">
+                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+                  <span className={idx >= 4 ? "font-semibold" : ""}>{it}</span>
+                </li>
+              ))}
+            </ul>
+            <CheckoutButton plan={completo} />
+          </article>
+        )}
       </div>
     </Section>
   );
@@ -371,7 +415,9 @@ function Bonuses() {
         E NÃO PARA <span className="text-green-600 font-bold">POR AÍ</span>!
       </SectionTitle>
       <p className="mx-auto -mt-3 mb-6 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">
-        Além das dinâmicas, você também recebe bônus exclusivos para complementar suas aulas.
+        Além das dinâmicas, você também recebe 3 materiais extras{" "}
+        <span className="font-semibold text-gold">inclusos no Plano Completo</span> para organizar e
+        acompanhar suas aulas.
       </p>
 
       <ul className="mx-auto flex max-w-2xl flex-col gap-5">

@@ -28,8 +28,18 @@ describe("preserved offer and approved additions", () => {
         checkoutUrl,
       })),
     ).toEqual([
-      { id: "basico", price: null, oldPrice: null, checkoutUrl: null },
-      { id: "completo", price: null, oldPrice: null, checkoutUrl: null },
+      {
+        id: "basico",
+        price: "R$ 10,00",
+        oldPrice: null,
+        checkoutUrl: "https://pay.hotmart.com/L102785831V?checkoutMode=10&off=pewf2eow",
+      },
+      {
+        id: "completo",
+        price: "R$ 27,90",
+        oldPrice: null,
+        checkoutUrl: "https://pay.hotmart.com/L102785831V?checkoutMode=10&off=uo8kf2kb",
+      },
     ]);
     expect(PLANS_ANCHOR).toBe("planos");
   });
