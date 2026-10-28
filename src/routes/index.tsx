@@ -63,8 +63,8 @@ function Index() {
       <Receive />
       <Audience />
       <Bonuses />
-      <Testimonials />
       <Plans />
+      <Testimonials />
       <Guarantee />
       <Faq />
       <FinalCta />
@@ -403,7 +403,7 @@ function Testimonials() {
         {imgs.map((img, i) => (
           <div
             key={i}
-            className="aspect-[9/20] w-[76vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[320px]"
+            className="aspect-[9/20] w-[64vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[280px]"
           >
             <img
               src={img.src}
