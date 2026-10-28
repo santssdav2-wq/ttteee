@@ -83,7 +83,11 @@ export const offer = {
   purchaseInfo: ["Produto 100% digital"] as string[],
 
   /** Imagens reais de páginas do material (carrossel). Vazio = prévias de estrutura temporárias. */
-  previewImages: [] as { src: string; alt: string }[],
+  previewImages: [
+    { src: "/ginga-espelho.webp", alt: "Ginga Espelho — dinâmica de capoeira" },
+    { src: "/semaforo-da-ginga.webp", alt: "Semáforo da Ginga — dinâmica de capoeira" },
+    { src: "/trilha-da-ginga.webp", alt: "Trilha da Ginga — dinâmica de capoeira" },
+  ] as { src: string; alt: string }[],
 
   faq: [
     {

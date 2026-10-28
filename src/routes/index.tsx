@@ -210,7 +210,7 @@ function Demo() {
       <SectionTitle eyebrow="Por dentro">
         Conheça Algumas das <span className="text-green-600 font-bold">Dinâmicas</span>
       </SectionTitle>
-      <Carousel count={count} label="Prévias do material">
+      <Carousel count={count} label="Prévias do material" autoPlay interval={1800}>
         {Array.from({ length: count }).map((_, i) => (
           <div
             key={i}

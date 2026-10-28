@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 
@@ -69,18 +69,28 @@ export function CheckoutButton({ plan }: { plan: Plan }) {
   );
 }
 
-/** Carrossel leve com scroll-snap (toque nativo) + setas e indicadores. */
+/** Carrossel leve com scroll-snap (toque nativo) + setas e indicadores.
+ *  Suporta rotação automática em loop (autoPlay) com pausa ao passar o mouse. */
 export function Carousel({
   count,
   children,
   label,
+  autoPlay = false,
+  interval = 2000,
 }: {
   count: number;
   children: ReactNode;
   label: string;
+  autoPlay?: boolean;
+  interval?: number;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const activeRef = useRef(active);
+  useEffect(() => {
+    activeRef.current = active;
+  }, [active]);
 
   useEffect(() => {
     const el = ref.current;
@@ -103,18 +113,38 @@ export function Carousel({
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
-  const go = (i: number) => {
-    const el = ref.current;
-    const item = el?.children[Math.max(0, Math.min(count - 1, i))] as HTMLElement | undefined;
-    if (el && item)
-      el.scrollTo({
-        left: item.offsetLeft - el.offsetLeft - (el.clientWidth - item.offsetWidth) / 2,
-        behavior: "smooth",
-      });
-  };
+  const go = useCallback(
+    (i: number) => {
+      const el = ref.current;
+      if (!el || count <= 0) return;
+      const target = ((i % count) + count) % count;
+      const item = el.children[target] as HTMLElement | undefined;
+      if (item)
+        el.scrollTo({
+          left: item.offsetLeft - el.offsetLeft - (el.clientWidth - item.offsetWidth) / 2,
+          behavior: "smooth",
+        });
+      setActive(target);
+    },
+    [count],
+  );
+
+  useEffect(() => {
+    if (!autoPlay || paused || count <= 1) return;
+    const id = window.setInterval(() => {
+      go(activeRef.current + 1);
+    }, interval);
+    return () => window.clearInterval(id);
+  }, [autoPlay, interval, count, paused, go]);
 
   return (
-    <div className="relative" aria-roledescription="carrossel" aria-label={label}>
+    <div
+      className="relative"
+      aria-roledescription="carrossel"
+      aria-label={label}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       <div
         ref={ref}
         className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[12%] pb-2 [scrollbar-width:none] sm:mx-0 sm:px-[calc(50%_-_200px)] [&::-webkit-scrollbar]:hidden"
