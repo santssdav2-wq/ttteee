@@ -62,7 +62,7 @@ export const offer = {
   /** Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência. */
   bonuses: [
     {
-      title: "Certificado de Capoeira Infantil",
+      title: "Certificado de Capoeira",
       description:
         "Para professores, mestres e instrutores que utilizam certificados em atividades e eventos de capoeira infantil.",
       image: "/certificado.webp",

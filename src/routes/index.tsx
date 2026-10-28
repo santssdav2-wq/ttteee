@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   BookOpen,
   ClipboardList,
@@ -290,9 +290,32 @@ function Audience() {
   );
 }
 
+function CountdownTimer() {
+  const [seconds, setSeconds] = useState(11 * 60 + 13);
+  useEffect(() => {
+    const id = window.setInterval(() => {
+      setSeconds((s) => (s <= 0 ? 11 * 60 + 13 : s - 1));
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, []);
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return (
+    <div className="mx-auto mb-6 flex max-w-md items-center justify-center gap-3 rounded-xl border border-cta/30 bg-card px-4 py-3 shadow-sm sm:mb-8">
+      <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+        Oferta expira em
+      </span>
+      <span className="font-mono text-2xl font-extrabold tabular-nums text-cta">
+        {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}
+      </span>
+    </div>
+  );
+}
+
 function Plans() {
   return (
     <Section id="planos" className="bg-muted">
+      <CountdownTimer />
       <SectionTitle eyebrow="Escolha seu plano">
         Invista no <span className="text-green-600 font-bold">Repertório</span> das Suas Aulas
       </SectionTitle>
@@ -358,10 +381,10 @@ function Bonuses() {
         {offer.bonuses.map((b) => (
           <li
             key={b.title}
-            className="flex flex-col items-stretch gap-5 rounded-xl border border-gold/40 bg-card p-5 text-ink sm:flex-row sm:items-center sm:gap-6 sm:p-6"
+            className="flex flex-col items-center gap-4 rounded-xl border border-gold/40 bg-card p-6 text-center text-ink"
           >
             {b.image ? (
-              <div className="mx-auto aspect-square w-full max-w-[180px] shrink-0 overflow-hidden rounded-lg bg-muted sm:mx-0">
+              <div className="aspect-square w-full max-w-[360px] overflow-hidden rounded-lg bg-muted">
                 <img
                   src={b.image}
                   alt={b.title}
@@ -370,34 +393,22 @@ function Bonuses() {
                 />
               </div>
             ) : (
-              <span className="grid h-20 w-20 shrink-0 place-items-center rounded-lg bg-forest text-gold">
-                <Award className="h-10 w-10" aria-hidden="true" />
+              <span className="grid h-24 w-24 place-items-center rounded-lg bg-forest text-gold">
+                <Award className="h-12 w-12" aria-hidden="true" />
               </span>
             )}
-            <div className="min-w-0 flex-1">
-              <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">
-                {b.title}
-              </h3>
-              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
-                {b.description}
+            <h3 className="font-display text-2xl font-bold leading-tight sm:text-3xl">{b.title}</h3>
+            {b.referencePrice && (
+              <p className="text-sm text-muted-foreground">
+                Valor de referência:{" "}
+                <span className="font-semibold line-through">{b.referencePrice}</span>
               </p>
-              {b.referencePrice && (
-                <p className="mt-3 text-sm text-muted-foreground">
-                  Valor de referência:{" "}
-                  <span className="font-semibold line-through">{b.referencePrice}</span>
-                </p>
-              )}
-              {b.includedAtNoExtraCost && (
-                <div className="mt-3 flex flex-wrap items-center gap-3">
-                  <span className="inline-block rounded-md bg-gold px-4 py-2 text-base font-extrabold text-ink shadow-md">
-                    HOJE, GRÁTIS!
-                  </span>
-                  <span className="text-sm font-semibold text-primary">
-                    Incluído na oferta, sem cobrança adicional.
-                  </span>
-                </div>
-              )}
-            </div>
+            )}
+            {b.includedAtNoExtraCost && (
+              <span className="inline-block rounded-md bg-gold px-5 py-2 text-base font-extrabold text-ink shadow-md sm:text-lg">
+                HOJE, GRÁTIS!
+              </span>
+            )}
           </li>
         ))}
       </ul>
