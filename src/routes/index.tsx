@@ -46,7 +46,7 @@ function TopBar() {
 
 function Hero() {
   const [showButton, setShowButton] = useState(true);
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   return (
     <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -64,26 +64,29 @@ function Hero() {
             <span className="mt-1 inline-block whitespace-nowrap rounded bg-forest px-2 pb-0.5 text-gold">Aplicar nas Aulas!</span>
           </span>
         </h1>
-        <div className="video-placeholder mt-8 w-full max-w-2xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
+        <div className="relative mx-auto mt-8 w-full max-w-2xl overflow-hidden rounded-2xl bg-ink shadow-2xl">
           <video
             ref={videoRef}
-            src="https://drive.google.com/uc?id=1DhI-95X5MEP4wYgVHXqicnZi3CyOcPWU&export=download"
-            playsinline
-            className="w-full h-auto"
-            onCanPlay={() => {
-              if (videoRef.current) {
-                videoRef.current.style.opacity = 1
-              }
-            }}
+            src="/vsl.mp4"
+            poster="/vsl-poster.jpg"
+            autoPlay
+            muted
+            playsInline
+            preload="metadata"
+            controls
+            className="aspect-[9/16] h-auto w-full"
           />
           {showButton && (
             <button
-              className="absolute top-4 left-1/2 -translate-x-1/2 bg-gold text-forest font-bold px-6 py-3 rounded-xl text-sm shadow-lg transition-all hover:opacity-90"
+              type="button"
+              className="absolute left-1/2 top-[70%] w-max -translate-x-1/2 bg-gold px-5 py-3 font-bold text-forest rounded-xl text-sm shadow-lg transition-all hover:opacity-90"
               onClick={() => {
-                if (videoRef.current) {
-                  videoRef.current.muted = false
-                  videoRef.current.play()
-                }
+                const video = videoRef.current;
+                if (!video) return;
+                video.muted = false;
+                video.currentTime = 0;
+                void video.play();
+                setShowButton(false);
               }}
             >
               🔊 TOQUE PARA ASSISTIR COM SOM
