@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useRef, useState, type ReactNode } from "react";
 import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 
 export function Section({
@@ -73,7 +73,7 @@ export function Carousel({
   count,
   children,
   label,
-  interval = 1800,
+  interval = 2200,
 }: {
   count: number;
   children: ReactNode;
@@ -84,12 +84,25 @@ export function Carousel({
   // Duração de um ciclo completo (ida) em ms: count * interval, com piso de 4s.
   const durationMs = Math.max(count * interval, 4000);
   const durationSec = (durationMs / 1000).toFixed(2);
+  // Pausa enquanto o usuário segura/arrasta (mouse ou toque); retoma instantaneamente ao soltar.
+  const [paused, setPaused] = useState(false);
 
   return (
-    <div className="relative overflow-hidden" aria-roledescription="carrossel" aria-label={label}>
+    <div
+      className="relative overflow-hidden"
+      aria-roledescription="carrossel"
+      aria-label={label}
+      onPointerDown={() => setPaused(true)}
+      onPointerUp={() => setPaused(false)}
+      onPointerLeave={() => setPaused(false)}
+      onPointerCancel={() => setPaused(false)}
+    >
       <div
         className="carousel-track flex w-max gap-4 py-2"
-        style={{ animation: `marquee ${durationSec}s linear infinite` }}
+        style={{
+          animation: `marquee ${durationSec}s linear infinite`,
+          animationPlayState: paused ? "paused" : "running",
+        }}
       >
         {children}
         <div aria-hidden className="flex gap-4">
