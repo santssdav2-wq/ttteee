@@ -55,7 +55,7 @@ function Hero() {
           <span className="block text-[1.55rem] sm:text-[2.6rem]">
             <span className="text-[2.6rem] text-cta sm:text-[4.2rem]">+300</span> Dinâmicas Interativas de
           </span>
-          <span className="relative mx-auto mt-1 block w-fit text-[3.1rem] text-primary sm:text-[5.2rem]">
+          <span className="relative mx-auto mt-1 block w-fit text-[3.1rem] text-green-600 sm:text-[5.2rem]">
             Capoeira
             <span aria-hidden className="absolute -bottom-0.5 left-1 right-1 h-2.5 -z-0 rounded-sm bg-gold/70 sm:h-4" style={{ zIndex: -1 }} />
           </span>
@@ -68,10 +68,7 @@ function Hero() {
           <video
             ref={videoRef}
             src="https://drive.google.com/uc?id=1DhI-95X5MEP4wYgVHXqicnZi3CyOcPWU&export=download"
-            autoplay
-            muted
             playsinline
-            loop
             className="w-full h-auto"
             onCanPlay={() => {
               if (videoRef.current) {
@@ -130,12 +127,13 @@ const receiveItems = [
   { icon: BookOpen, title: "Organizadas", text: "Atividades organizadas para facilitar a consulta." },
   { icon: ClipboardList, title: "Como aplicar", text: "Orientações de aplicação das propostas." },
   { icon: Smartphone, title: "Acesso digital", text: "Consulte no celular, tablet ou computador." },
+  { icon: Gift, title: "Bônus exclusivos", text: "Materiais extras para complementar suas dinâmicas e enriquecer suas aulas." },
 ];
 
 function Receive() {
   return (
     <Section className="bg-card">
-      <SectionTitle eyebrow="O material">O Que Você Vai Receber?</SectionTitle>
+      <SectionTitle eyebrow="O material">O Que Você <span className="text-green-600 font-bold">Vai Receber</span>?</SectionTitle>
       <ul className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
         {receiveItems.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex items-start gap-4 rounded-lg border bg-background p-4 sm:p-5">
@@ -159,7 +157,7 @@ function Demo() {
   const count = imgs.length || 5;
   return (
     <div>
-      <SectionTitle eyebrow="Por dentro">Conheça Algumas das Dinâmicas</SectionTitle>
+      <SectionTitle eyebrow="Por dentro">Conheça Algumas das <span className="text-green-600 font-bold">Dinâmicas</span></SectionTitle>
       <Carousel count={count} label="Prévias do material">
         {Array.from({ length: count }).map((_, i) => (
           <div key={i} className="aspect-[3/4] w-[76vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[400px]">
@@ -182,7 +180,7 @@ const audience = [
 function Audience() {
   return (
     <Section className="bg-card">
-      <SectionTitle eyebrow="Para quem é">Feito Para Quem Ensina Capoeira</SectionTitle>
+      <SectionTitle eyebrow="Para quem é">Feito Para <span className="text-green-600 font-bold">Quem Ensina Capoeira</span></SectionTitle>
       <ul className="mx-auto max-w-2xl divide-y">
         {audience.map(({ icon: Icon, t }) => (
           <li key={t} className="flex items-center gap-4 py-4">
@@ -198,7 +196,7 @@ function Audience() {
 function Plans() {
   return (
     <Section id="planos" className="bg-muted">
-      <SectionTitle eyebrow="Escolha seu plano">Invista no Repertório das Suas Aulas</SectionTitle>
+      <SectionTitle eyebrow="Escolha seu plano">Invista no <span className="text-green-600 font-bold">Repertório</span> das Suas Aulas</SectionTitle>
       <div className="mx-auto grid max-w-3xl items-start gap-6 md:grid-cols-2">
         {offer.plans.map((p) => (
           <article key={p.id} className={`relative rounded-xl bg-card p-6 ${p.highlight ? "border-2 border-cta shadow-xl md:-mt-4" : "border"}`}>
@@ -226,7 +224,7 @@ function Bonuses() {
   if (!offer.bonuses.length) return null;
   return (
     <Section className="bg-forest">
-      <SectionTitle light>E NÃO PARA POR AÍ!</SectionTitle>
+      <SectionTitle light>E NÃO PARA <span className="text-green-600 font-bold">POR AÍ</span>!</SectionTitle>
       <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">Além das dinâmicas, você também recebe bônus exclusivos para complementar suas aulas.</p>
       <ul className={`mx-auto grid gap-6 ${offer.bonuses.length === 1 ? "max-w-2xl" : "sm:grid-cols-2"}`}>
         {offer.bonuses.map((b) => (
@@ -266,7 +264,7 @@ function Guarantee() {
 function Faq() {
   return (
     <Section>
-      <SectionTitle eyebrow="Dúvidas">Perguntas Frequentes</SectionTitle>
+      <SectionTitle eyebrow="Dúvidas">Perguntas <span className="text-green-600 font-bold">Frequentes</span></SectionTitle>
       <Accordion type="single" collapsible className="mx-auto max-w-2xl">
         {offer.faq.map((f, i) => (
           <AccordionItem key={i} value={`f${i}`}>
