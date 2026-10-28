@@ -63,6 +63,7 @@ function Index() {
       <Receive />
       <Audience />
       <Bonuses />
+      <Testimonials />
       <Plans />
       <Guarantee />
       <Faq />
@@ -382,6 +383,37 @@ function Bonuses() {
           </li>
         ))}
       </ul>
+    </Section>
+  );
+}
+
+function Testimonials() {
+  const imgs = offer.testimonialImages;
+  if (!imgs.length) return null;
+  const count = imgs.length;
+  return (
+    <Section className="bg-card">
+      <SectionTitle eyebrow="Depoimentos">
+        O Que Estão <span className="text-green-600 font-bold">Dizendo</span> Sobre as Dinâmicas
+      </SectionTitle>
+      <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-muted-foreground sm:-mt-6">
+        Prints reais de quem já está usando as dinâmicas nas aulas de capoeira.
+      </p>
+      <Carousel count={count} label="Depoimentos sobre as dinâmicas">
+        {imgs.map((img, i) => (
+          <div
+            key={i}
+            className="aspect-[9/20] w-[76vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[320px]"
+          >
+            <img
+              src={img.src}
+              alt={img.alt}
+              loading="lazy"
+              className="h-full w-full object-contain"
+            />
+          </div>
+        ))}
+      </Carousel>
     </Section>
   );
 }

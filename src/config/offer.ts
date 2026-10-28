@@ -89,6 +89,14 @@ export const offer = {
     { src: "/trilha-da-ginga.webp", alt: "Trilha da Ginga — dinâmica de capoeira" },
   ] as { src: string; alt: string }[],
 
+  /** Depoimentos (prints) — o que estão dizendo sobre as dinâmicas. Vazio = seção oculta. */
+  testimonialImages: [
+    { src: "/depoimento-1.webp", alt: "Depoimento sobre as dinâmicas de capoeira" },
+    { src: "/depoimento-2.webp", alt: "Depoimento sobre as dinâmicas de capoeira" },
+    { src: "/depoimento-3.webp", alt: "Depoimento sobre as dinâmicas de capoeira" },
+    { src: "/depoimento-4.webp", alt: "Depoimento sobre as dinâmicas de capoeira" },
+  ] as { src: string; alt: string }[],
+
   faq: [
     {
       q: "Como receberei o material?",
