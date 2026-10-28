@@ -142,3 +142,16 @@
   border-radius: 99px;
   background: linear-gradient(90deg, var(--gold), var(--cta));
 }
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.carousel-track {
+  animation: marquee var(--marquee-duration, 6s) linear infinite;
+  will-change: transform;
+}

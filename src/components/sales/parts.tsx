@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useRef, type ReactNode } from "react";
 import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 
 export function Section({
@@ -69,14 +68,12 @@ export function CheckoutButton({ plan }: { plan: Plan }) {
   );
 }
 
-/** Carrossel leve com scroll-snap (toque nativo) + setas e indicadores.
- *  Suporta rotação automática em loop (autoPlay) com pausa ao passar o mouse. */
+/** Carrossel fluido (marquee) em loop contínuo, sem pausa e sem setas laterais. */
 export function Carousel({
   count,
   children,
   label,
-  autoPlay = false,
-  interval = 2000,
+  interval = 1800,
 }: {
   count: number;
   children: ReactNode;
@@ -84,96 +81,20 @@ export function Carousel({
   autoPlay?: boolean;
   interval?: number;
 }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [active, setActive] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const activeRef = useRef(active);
-  useEffect(() => {
-    activeRef.current = active;
-  }, [active]);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const onScroll = () => {
-      const center = el.scrollLeft + el.clientWidth / 2;
-      let nearest = 0;
-      let distance = Infinity;
-      Array.from(el.children).forEach((child, index) => {
-        const item = child as HTMLElement;
-        const delta = Math.abs(item.offsetLeft - el.offsetLeft + item.offsetWidth / 2 - center);
-        if (delta < distance) {
-          nearest = index;
-          distance = delta;
-        }
-      });
-      setActive(nearest);
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const go = useCallback(
-    (i: number) => {
-      const el = ref.current;
-      if (!el || count <= 0) return;
-      const target = ((i % count) + count) % count;
-      const item = el.children[target] as HTMLElement | undefined;
-      if (item)
-        el.scrollTo({
-          left: item.offsetLeft - el.offsetLeft - (el.clientWidth - item.offsetWidth) / 2,
-          behavior: "smooth",
-        });
-      setActive(target);
-    },
-    [count],
-  );
-
-  useEffect(() => {
-    if (!autoPlay || paused || count <= 1) return;
-    const id = window.setInterval(() => {
-      go(activeRef.current + 1);
-    }, interval);
-    return () => window.clearInterval(id);
-  }, [autoPlay, interval, count, paused, go]);
+  // Duração de um ciclo completo (ida) em ms: count * interval, com piso de 4s.
+  const durationMs = Math.max(count * interval, 4000);
+  const durationSec = (durationMs / 1000).toFixed(2);
 
   return (
-    <div
-      className="relative"
-      aria-roledescription="carrossel"
-      aria-label={label}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
-    >
+    <div className="relative overflow-hidden" aria-roledescription="carrossel" aria-label={label}>
       <div
-        ref={ref}
-        className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-[12%] pb-2 [scrollbar-width:none] sm:mx-0 sm:px-[calc(50%_-_200px)] [&::-webkit-scrollbar]:hidden"
+        className="carousel-track flex w-max gap-4 py-2"
+        style={{ animation: `marquee ${durationSec}s linear infinite` }}
       >
         {children}
-      </div>
-      <button
-        aria-label="Anterior"
-        onClick={() => go(active - 1)}
-        className="absolute left-0 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-card text-ink shadow-md sm:grid"
-      >
-        <ChevronLeft className="h-5 w-5" />
-      </button>
-      <button
-        aria-label="Próxima"
-        onClick={() => go(active + 1)}
-        className="absolute right-0 top-1/2 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-card text-ink shadow-md sm:grid"
-      >
-        <ChevronRight className="h-5 w-5" />
-      </button>
-      <div className="mt-5 flex justify-center gap-1.5">
-        {Array.from({ length: count }).map((_, i) => (
-          <button
-            key={i}
-            aria-label={`Ir para ${i + 1}`}
-            onClick={() => go(i)}
-            className={`h-2 rounded-full transition-all ${i === active ? "w-6 bg-cta" : "w-2 bg-border"}`}
-          />
-        ))}
+        <div aria-hidden className="flex gap-4">
+          {children}
+        </div>
       </div>
     </div>
   );
