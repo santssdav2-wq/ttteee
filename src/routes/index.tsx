@@ -335,6 +335,16 @@ function Plans() {
 
 function Bonuses() {
   if (!offer.bonuses.length) return null;
+  const totalReference = offer.bonuses.reduce((sum, b) => {
+    const m = b.referencePrice?.match(/[\d.,]+/);
+    const v = m ? parseFloat(m[0].replace(/\./g, "").replace(",", ".")) : 0;
+    return sum + v;
+  }, 0);
+  const totalFormatted = totalReference.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+
   return (
     <Section className="bg-forest">
       <SectionTitle light>
@@ -343,52 +353,71 @@ function Bonuses() {
       <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">
         Além das dinâmicas, você também recebe bônus exclusivos para complementar suas aulas.
       </p>
-      <ul
-        className={`mx-auto grid gap-6 ${offer.bonuses.length === 1 ? "max-w-2xl" : "sm:grid-cols-2"}`}
-      >
+
+      <ul className="mx-auto flex max-w-2xl flex-col gap-6">
         {offer.bonuses.map((b) => (
           <li
             key={b.title}
-            className="flex flex-col items-start gap-5 rounded-lg border border-gold/40 bg-card p-6 text-ink sm:flex-row sm:p-8"
+            className="flex flex-col items-stretch gap-5 rounded-xl border border-gold/40 bg-card p-5 text-ink sm:flex-row sm:items-center sm:gap-6 sm:p-6"
           >
             {b.image ? (
-              <img
-                src={b.image}
-                alt={b.title}
-                loading="lazy"
-                className="w-full rounded-md object-contain sm:w-44"
-              />
+              <div className="mx-auto aspect-square w-full max-w-[180px] shrink-0 overflow-hidden rounded-lg bg-muted sm:mx-0">
+                <img
+                  src={b.image}
+                  alt={b.title}
+                  loading="lazy"
+                  className="h-full w-full object-contain"
+                />
+              </div>
             ) : (
-              <span className="grid h-16 w-16 shrink-0 place-items-center rounded-lg bg-forest text-gold">
-                <Award className="h-9 w-9" aria-hidden="true" />
+              <span className="grid h-20 w-20 shrink-0 place-items-center rounded-lg bg-forest text-gold">
+                <Award className="h-10 w-10" aria-hidden="true" />
               </span>
             )}
-            <div className="min-w-0">
+            <div className="min-w-0 flex-1">
               <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">
                 {b.title}
               </h3>
-              <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground">
+              <p className="mt-2 text-[15px] leading-relaxed text-muted-foreground">
                 {b.description}
               </p>
               {b.referencePrice && (
-                <p className="mt-4 text-sm text-muted-foreground line-through">
-                  Valor de referência: {b.referencePrice}
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Valor de referência:{" "}
+                  <span className="font-semibold line-through">{b.referencePrice}</span>
                 </p>
               )}
               {b.includedAtNoExtraCost && (
-                <>
-                  <p className="mt-4 inline-block rounded-md bg-gold px-3 py-2 text-sm font-extrabold text-ink">
+                <div className="mt-3 flex flex-wrap items-center gap-3">
+                  <span className="inline-block rounded-md bg-gold px-4 py-2 text-base font-extrabold text-ink shadow-md">
                     HOJE, GRÁTIS!
-                  </p>
-                  <p className="mt-2 text-sm font-semibold text-primary">
+                  </span>
+                  <span className="text-sm font-semibold text-primary">
                     Incluído na oferta, sem cobrança adicional.
-                  </p>
-                </>
+                  </span>
+                </div>
               )}
             </div>
           </li>
         ))}
       </ul>
+
+      {offer.bonuses.some((b) => b.referencePrice) && (
+        <div className="mx-auto mt-8 max-w-2xl rounded-xl border-2 border-gold/60 bg-card p-6 text-center shadow-lg">
+          <p className="text-sm font-semibold text-muted-foreground">
+            Valor total dos bônus se comprados separadamente:
+          </p>
+          <p className="mt-1 font-display text-3xl font-extrabold text-ink line-through">
+            {totalFormatted}
+          </p>
+          <p className="mt-4 text-base font-bold text-primary">
+            Comprando hoje, você leva tudo <span className="text-cta">GRÁTIS</span>!
+          </p>
+          <p className="mt-1 text-sm font-semibold text-muted-foreground">
+            Economia de {totalFormatted} na sua compra.
+          </p>
+        </div>
+      )}
     </Section>
   );
 }
