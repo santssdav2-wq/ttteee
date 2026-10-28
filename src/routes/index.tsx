@@ -160,14 +160,11 @@ function Hero() {
             </>
           )}
         </div>
-        <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
+        <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
           Tenha mais opções de dinâmicas e atividades para variar suas aulas de capoeira e facilitar
           a preparação das suas próximas propostas.
         </p>
-        <span className="mt-4 inline-flex items-center gap-2 rounded-md border border-gold/60 bg-gold/15 px-3 py-2 text-xs font-bold text-primary">
-          <Gift className="h-4 w-4" aria-hidden="true" /> Inclui bônus exclusivos
-        </span>
-        <div className="w-full">
+        <div className="mt-2 w-full">
           <CtaButton>QUERO MINHAS DINÂMICAS AGORA</CtaButton>
         </div>
       </div>
@@ -373,18 +370,18 @@ function Bonuses() {
       <SectionTitle light>
         E NÃO PARA <span className="text-green-600 font-bold">POR AÍ</span>!
       </SectionTitle>
-      <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">
+      <p className="mx-auto -mt-3 mb-6 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">
         Além das dinâmicas, você também recebe bônus exclusivos para complementar suas aulas.
       </p>
 
-      <ul className="mx-auto flex max-w-2xl flex-col gap-6">
+      <ul className="mx-auto flex max-w-2xl flex-col gap-5">
         {offer.bonuses.map((b) => (
           <li
             key={b.title}
-            className="flex flex-col items-center gap-4 rounded-xl border border-gold/40 bg-card p-6 text-center text-ink"
+            className="flex flex-col items-center gap-3 rounded-xl border border-gold/40 bg-card p-5 text-center text-ink"
           >
             {b.image ? (
-              <div className="aspect-square w-full max-w-[360px] overflow-hidden rounded-lg bg-muted">
+              <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-lg bg-muted">
                 <img
                   src={b.image}
                   alt={b.title}
@@ -397,7 +394,7 @@ function Bonuses() {
                 <Award className="h-12 w-12" aria-hidden="true" />
               </span>
             )}
-            <h3 className="font-display text-2xl font-bold leading-tight sm:text-3xl">{b.title}</h3>
+            <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">{b.title}</h3>
             {b.referencePrice && (
               <p className="text-sm text-muted-foreground">
                 Valor de referência:{" "}
@@ -405,7 +402,7 @@ function Bonuses() {
               </p>
             )}
             {b.includedAtNoExtraCost && (
-              <span className="inline-block rounded-md bg-gold px-5 py-2 text-base font-extrabold text-ink shadow-md sm:text-lg">
+              <span className="inline-block rounded-md bg-gold px-4 py-1.5 text-sm font-extrabold text-ink shadow-md sm:text-base">
                 HOJE, GRÁTIS!
               </span>
             )}
@@ -414,14 +411,14 @@ function Bonuses() {
       </ul>
 
       {offer.bonuses.some((b) => b.referencePrice) && (
-        <div className="mx-auto mt-8 max-w-2xl rounded-xl border-2 border-gold/60 bg-card p-6 text-center shadow-lg">
+        <div className="mx-auto mt-6 max-w-2xl rounded-xl border-2 border-gold/60 bg-card p-5 text-center shadow-lg">
           <p className="text-sm font-semibold text-muted-foreground">
             Valor total dos bônus se comprados separadamente:
           </p>
-          <p className="mt-1 font-display text-3xl font-extrabold text-ink line-through">
+          <p className="mt-1 font-display text-2xl font-extrabold text-ink line-through">
             {totalFormatted}
           </p>
-          <p className="mt-4 text-base font-bold text-primary">
+          <p className="mt-3 text-base font-bold text-primary">
             Comprando hoje, você leva tudo <span className="text-cta">GRÁTIS</span>!
           </p>
           <p className="mt-1 text-sm font-semibold text-muted-foreground">
