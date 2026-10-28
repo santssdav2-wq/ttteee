@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from "react";
+import { useRef, useState, useCallback, useEffect, type ReactNode } from "react";
 import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 
 export function Section({
@@ -68,12 +68,12 @@ export function CheckoutButton({ plan }: { plan: Plan }) {
   );
 }
 
-/** Carrossel fluido (marquee) em loop contínuo, sem pausa e sem setas laterais. */
+/** Carrossel arrastável em loop contínuo: auto-scroll suave, pausa ao segurar/arrastar,
+ *  retoma instantaneamente ao soltar; arrastável para esquerda/direita (mouse e toque). */
 export function Carousel({
   count,
   children,
   label,
-  interval = 2200,
 }: {
   count: number;
   children: ReactNode;
@@ -81,31 +81,104 @@ export function Carousel({
   autoPlay?: boolean;
   interval?: number;
 }) {
-  // Duração de um ciclo completo (ida) em ms: count * interval, com piso de 4s.
-  const durationMs = Math.max(count * interval, 4000);
-  const durationSec = (durationMs / 1000).toFixed(2);
-  // Pausa enquanto o usuário segura/arrasta (mouse ou toque); retoma instantaneamente ao soltar.
-  const [paused, setPaused] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const setRef = useRef<HTMLDivElement>(null); // primeira cópia (mede a largura de um ciclo)
+  const draggingRef = useRef(false);
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef({ x: 0, scroll: 0 });
+
+  useEffect(() => {
+    draggingRef.current = dragging;
+  }, [dragging]);
+
+  // Auto-scroll contínuo em loop, com wrap suave.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const speed = 1.2; // px/frame (~72px/s) — ritmo legível
+    let raf = 0;
+    const boundary = () => {
+      const inner = el.firstChild as HTMLElement | null;
+      const secondFirst = inner?.children?.[1]?.firstChild as HTMLElement | null;
+      const innerRect = inner?.getBoundingClientRect();
+      const itemRect = secondFirst?.getBoundingClientRect();
+      if (innerRect && itemRect) return itemRect.left - innerRect.left;
+      return (setRef.current?.offsetWidth ?? 0) + 16;
+    };
+    const step = () => {
+      if (!draggingRef.current) {
+        const b = boundary();
+        el.scrollLeft += speed;
+        if (b > 0 && el.scrollLeft >= b) el.scrollLeft -= b;
+      }
+      raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = containerRef.current;
+    if (!el) return;
+    setDragging(true);
+    dragStart.current = { x: e.clientX, scroll: el.scrollLeft };
+    try {
+      el.setPointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+  };
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = containerRef.current;
+    if (!dragging || !el) return;
+    const delta = e.clientX - dragStart.current.x;
+    const b = (() => {
+      const inner = el.firstChild as HTMLElement | null;
+      const secondFirst = inner?.children?.[1]?.firstChild as HTMLElement | null;
+      const innerRect = inner?.getBoundingClientRect();
+      const itemRect = secondFirst?.getBoundingClientRect();
+      if (innerRect && itemRect) return itemRect.left - innerRect.left;
+      return (setRef.current?.offsetWidth ?? 0) + 16;
+    })();
+    let newScroll = dragStart.current.scroll - delta;
+    if (b > 0) {
+      while (newScroll >= b) newScroll -= b;
+      while (newScroll < 0) newScroll += b;
+    }
+    el.scrollLeft = newScroll;
+  };
+  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    const el = containerRef.current;
+    if (el) {
+      try {
+        el.releasePointerCapture(e.pointerId);
+      } catch {
+        /* ignore */
+      }
+    }
+    setDragging(false);
+  };
 
   return (
     <div
-      className="relative overflow-hidden"
+      ref={containerRef}
+      className={`relative cursor-grab overflow-x-auto select-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden ${
+        dragging ? "cursor-grabbing" : ""
+      }`}
       aria-roledescription="carrossel"
       aria-label={label}
-      onPointerDown={() => setPaused(true)}
-      onPointerUp={() => setPaused(false)}
-      onPointerLeave={() => setPaused(false)}
-      onPointerCancel={() => setPaused(false)}
+      style={{ touchAction: "none" }}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
+      onPointerLeave={onPointerUp}
     >
-      <div
-        className="carousel-track flex w-max gap-4 py-2"
-        style={{
-          animation: `marquee ${durationSec}s linear infinite`,
-          animationPlayState: paused ? "paused" : "running",
-        }}
-      >
-        {children}
-        <div aria-hidden className="flex gap-4">
+      <div className="flex w-max gap-4 py-2">
+        <div ref={setRef} className="flex shrink-0 gap-4">
+          {children}
+        </div>
+        <div className="flex shrink-0 gap-4" aria-hidden>
           {children}
         </div>
       </div>
