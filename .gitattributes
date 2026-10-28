@@ -1,0 +1,19 @@
+﻿# Normalize line endings to LF for all text files (matches prettier's default endOfLine).
+* text=auto eol=lf
+
+# Binary assets must not have line-ending normalization.
+*.mp4 binary
+*.mp3 binary
+*.wav binary
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.eot binary

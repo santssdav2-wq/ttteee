@@ -17,7 +17,14 @@ describe("preserved offer and approved additions", () => {
   });
 
   it("preserves both plans and their pending commercial settings", () => {
-    expect(offer.plans.map(({ id, price, oldPrice, checkoutUrl }) => ({ id, price, oldPrice, checkoutUrl }))).toEqual([
+    expect(
+      offer.plans.map(({ id, price, oldPrice, checkoutUrl }) => ({
+        id,
+        price,
+        oldPrice,
+        checkoutUrl,
+      })),
+    ).toEqual([
       { id: "basico", price: null, oldPrice: null, checkoutUrl: null },
       { id: "completo", price: null, oldPrice: null, checkoutUrl: null },
     ]);

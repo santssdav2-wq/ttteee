@@ -21,7 +21,13 @@ export type Plan = {
   highlight?: boolean;
 };
 
-export type Bonus = { title: string; description: string; image?: string; referencePrice: string | null; includedAtNoExtraCost: boolean };
+export type Bonus = {
+  title: string;
+  description: string;
+  image?: string;
+  referencePrice: string | null;
+  includedAtNoExtraCost: boolean;
+};
 export type Testimonial = { name: string; role?: string; text?: string; image?: string };
 
 export const offer = {
@@ -57,7 +63,8 @@ export const offer = {
   bonuses: [
     {
       title: "Certificado de Capoeira Infantil",
-      description: "Para professores, mestres e instrutores que utilizam certificados em atividades e eventos de capoeira infantil.",
+      description:
+        "Para professores, mestres e instrutores que utilizam certificados em atividades e eventos de capoeira infantil.",
       referencePrice: null,
       includedAtNoExtraCost: true,
     },
@@ -79,13 +86,34 @@ export const offer = {
   previewImages: [] as { src: string; alt: string }[],
 
   faq: [
-    { q: "Como receberei o material?", a: "Após a confirmação do pagamento, você recebe o acesso ao material digital. [Confirmar o canal de entrega: e-mail, WhatsApp ou área de membros.]" },
-    { q: "O produto é digital?", a: "Sim. Não há envio físico; todo o conteúdo é acessado de forma digital." },
-    { q: "Em quais dispositivos posso acessar o conteúdo?", a: "Você pode consultar o material no celular, tablet ou computador." },
-    { q: "Para quem são indicadas as dinâmicas?", a: "Para professores, instrutores, mestres e profissionais que conduzem aulas e atividades de capoeira." },
-    { q: "Preciso de materiais específicos para aplicar as atividades?", a: "[Preencher conforme o conteúdo real das dinâmicas.]" },
-    { q: "Qual é a diferença entre o plano básico e o plano completo?", a: "[Preencher com os itens reais incluídos em cada plano.]" },
-    { q: "Como funciona a garantia?", a: "[Preencher com a política de garantia definida antes da publicação.]" },
+    {
+      q: "Como receberei o material?",
+      a: "Após a confirmação do pagamento, você recebe o acesso ao material digital. [Confirmar o canal de entrega: e-mail, WhatsApp ou área de membros.]",
+    },
+    {
+      q: "O produto é digital?",
+      a: "Sim. Não há envio físico; todo o conteúdo é acessado de forma digital.",
+    },
+    {
+      q: "Em quais dispositivos posso acessar o conteúdo?",
+      a: "Você pode consultar o material no celular, tablet ou computador.",
+    },
+    {
+      q: "Para quem são indicadas as dinâmicas?",
+      a: "Para professores, instrutores, mestres e profissionais que conduzem aulas e atividades de capoeira.",
+    },
+    {
+      q: "Preciso de materiais específicos para aplicar as atividades?",
+      a: "[Preencher conforme o conteúdo real das dinâmicas.]",
+    },
+    {
+      q: "Qual é a diferença entre o plano básico e o plano completo?",
+      a: "[Preencher com os itens reais incluídos em cada plano.]",
+    },
+    {
+      q: "Como funciona a garantia?",
+      a: "[Preencher com a política de garantia definida antes da publicação.]",
+    },
   ],
 };
 

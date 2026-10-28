@@ -73,15 +73,23 @@
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
-  html { scroll-behavior: smooth; }
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     overflow-x: hidden;
   }
-  h1, h2, h3 { font-family: var(--font-display); }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+  }
 }
 
 @utility btn-cta {
@@ -100,10 +108,23 @@
   letter-spacing: 0.02em;
   text-align: center;
   box-shadow: var(--shadow-cta);
-  transition: transform 0.15s, box-shadow 0.15s;
-  &:hover { transform: translateY(-1px); }
-  &:active { transform: translateY(3px); box-shadow: 0 3px 0 -1px oklch(0.45 0.13 150); }
-  &[aria-disabled="true"] { background: var(--muted); color: var(--muted-foreground); box-shadow: none; cursor: not-allowed; transform: none; }
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+  &:hover {
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 -1px oklch(0.45 0.13 150);
+  }
+  &[aria-disabled="true"] {
+    background: var(--muted);
+    color: var(--muted-foreground);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
 }
 
 @utility eyebrow {
