@@ -109,7 +109,7 @@ function Hero() {
             </span>
           </span>
         </h1>
-        <div className="relative mx-auto mt-8 w-full max-w-2xl overflow-hidden rounded-2xl bg-ink shadow-2xl">
+        <div className="relative mx-auto mt-6 w-full max-w-2xl overflow-hidden rounded-2xl bg-ink shadow-2xl sm:mt-8">
           <video
             ref={videoRef}
             src="/vsl.mp4"
@@ -119,7 +119,7 @@ function Hero() {
             playsInline
             preload="metadata"
             controls
-            className="aspect-[9/16] h-auto w-full"
+            className="aspect-[9/16] h-auto w-full max-h-[42vh] object-cover sm:max-h-none"
           />
           {showButton && (
             <button
