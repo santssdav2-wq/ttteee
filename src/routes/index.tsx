@@ -109,18 +109,7 @@ function Hero() {
             </span>
           </span>
         </h1>
-        <div
-          className="relative mx-auto mt-6 w-[65%] max-w-2xl cursor-pointer overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:w-full"
-          onClick={() => {
-            if (!showButton) return;
-            const video = videoRef.current;
-            if (!video) return;
-            video.muted = false;
-            video.currentTime = 0;
-            void video.play();
-            setShowButton(false);
-          }}
-        >
+        <div className="relative mx-auto mt-6 w-[65%] max-w-2xl overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:w-full">
           <video
             ref={videoRef}
             src="/vsl.mp4"
@@ -133,21 +122,40 @@ function Hero() {
             className="aspect-[9/16] h-auto w-full"
           />
           {showButton && (
-            <button
-              type="button"
-              className="pulse-cta absolute left-1/2 top-1/2 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:px-5 sm:py-3 sm:text-sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                const video = videoRef.current;
-                if (!video) return;
-                video.muted = false;
-                video.currentTime = 0;
-                void video.play();
-                setShowButton(false);
-              }}
-            >
-              🔊 TOQUE PARA ASSISTIR COM SOM
-            </button>
+            <>
+              {/* Camada invisível cobrindo toda a moldura: clicar em qualquer ponto inicia com som. */}
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label="Toque para assistir com som"
+                className="absolute inset-0 z-10 cursor-pointer"
+                onClick={() => {
+                  const video = videoRef.current;
+                  if (!video) return;
+                  video.muted = false;
+                  video.currentTime = 0;
+                  void video.play();
+                  setShowButton(false);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    const video = videoRef.current;
+                    if (!video) return;
+                    video.muted = false;
+                    video.currentTime = 0;
+                    void video.play();
+                    setShowButton(false);
+                  }
+                }}
+              />
+              <button
+                type="button"
+                className="pulse-cta pointer-events-none absolute left-1/2 top-1/2 z-20 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:px-5 sm:py-3 sm:text-sm"
+              >
+                🔊 TOQUE PARA ASSISTIR COM SOM
+              </button>
+            </>
           )}
         </div>
         <p className="mt-5 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
