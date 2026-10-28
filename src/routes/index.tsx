@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Gift,
   Award,
+  Printer,
 } from "lucide-react";
 import { offer } from "@/config/offer";
 import {
@@ -181,6 +182,11 @@ const receiveItems = [
     text: "Dinâmicas interativas de capoeira em um só material.",
   },
   {
+    icon: Gift,
+    title: "Bônus exclusivos",
+    text: "Materiais extras para complementar suas dinâmicas e enriquecer suas aulas.",
+  },
+  {
     icon: BookOpen,
     title: "Organizadas",
     text: "Atividades organizadas para facilitar a consulta.",
@@ -188,9 +194,9 @@ const receiveItems = [
   { icon: ClipboardList, title: "Como aplicar", text: "Orientações de aplicação das propostas." },
   { icon: Smartphone, title: "Acesso digital", text: "Consulte no celular, tablet ou computador." },
   {
-    icon: Gift,
-    title: "Bônus exclusivos",
-    text: "Materiais extras para complementar suas dinâmicas e enriquecer suas aulas.",
+    icon: Printer,
+    title: "Pronto para Imprimir",
+    text: "Leve para o tatame sem depender de tecnologia.",
   },
 ];
 
@@ -200,18 +206,18 @@ function Receive() {
       <SectionTitle eyebrow="O material">
         O Que Você <span className="text-green-600 font-bold">Vai Receber</span>?
       </SectionTitle>
-      <ul className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2">
+      <ul className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:gap-4">
         {receiveItems.map(({ icon: Icon, title, text }) => (
           <li
             key={title}
-            className="flex items-start gap-4 rounded-lg border bg-background p-4 sm:p-5"
+            className="flex items-start gap-3 rounded-lg border bg-background p-3 sm:gap-4 sm:p-5"
           >
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-lg bg-forest text-gold">
-              <Icon className="h-5 w-5" />
+            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-forest text-gold sm:h-11 sm:w-11">
+              <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
             </span>
             <div className="min-w-0">
-              <h3 className="font-display text-lg font-bold text-ink">{title}</h3>
-              <p className="text-[15px] text-muted-foreground">{text}</p>
+              <h3 className="font-display text-base font-bold text-ink sm:text-lg">{title}</h3>
+              <p className="text-xs text-muted-foreground sm:text-[15px]">{text}</p>
             </div>
           </li>
         ))}
