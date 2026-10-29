@@ -90,9 +90,6 @@ function Hero() {
   return (
     <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <span className="mb-4 font-display text-sm font-bold tracking-wide text-primary">
-          {offer.brand}
-        </span>
         <h1 className="isolate font-display font-extrabold leading-[1.02] tracking-tight text-ink">
           <span className="block text-[1.55rem] sm:text-[2.6rem]">
             <span className="text-[2.6rem] text-cta sm:text-[4.2rem]">+300</span> Dinâmicas

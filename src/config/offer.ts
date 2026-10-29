@@ -163,7 +163,7 @@ export const offer = {
   faq: [
     {
       q: "Como receberei o material?",
-      a: "Após a confirmação do pagamento, você recebe o acesso ao material digital. [Confirmar o canal de entrega: e-mail, WhatsApp ou área de membros.]",
+      a: "Após a confirmação do pagamento, você recebe o acesso ao material digital por WhatsApp e por e-mail.",
     },
     {
       q: "O produto é digital?",
@@ -179,15 +179,11 @@ export const offer = {
     },
     {
       q: "Preciso de materiais específicos para aplicar as atividades?",
-      a: "[Preencher conforme o conteúdo real das dinâmicas.]",
-    },
-    {
-      q: "Qual é a diferença entre o plano básico e o plano completo?",
-      a: "[Preencher com os itens reais incluídos em cada plano.]",
+      a: "Não. As dinâmicas foram pensadas para a rotina da aula e podem ser aplicadas com o que você já tem no espaço onde ensina, sem necessidade de equipamentos especiais.",
     },
     {
       q: "Como funciona a garantia?",
-      a: "[Preencher com a política de garantia definida antes da publicação.]",
+      a: "Você tem 7 dias de garantia após a compra. Se o material não fizer sentido para as suas aulas, basta pedir o reembolso dentro desse prazo e devolvemos o valor integral.",
     },
   ],
 };
