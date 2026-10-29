@@ -87,6 +87,29 @@ function TopBar() {
 function Hero() {
   const [showButton, setShowButton] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Pausa o vídeo quando ele sai da tela (economiza CPU/bateria no celular).
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    let wasPlaying = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        if (entry.isIntersecting) {
+          if (wasPlaying && !video.ended) void video.play().catch(() => {});
+        } else if (!video.paused) {
+          wasPlaying = true;
+          video.pause();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -290,6 +313,7 @@ function CountdownTimer() {
   const [seconds, setSeconds] = useState(11 * 60 + 13);
   useEffect(() => {
     const id = window.setInterval(() => {
+      if (document.hidden) return;
       setSeconds((s) => (s <= 0 ? 11 * 60 + 13 : s - 1));
     }, 1000);
     return () => window.clearInterval(id);
@@ -545,7 +569,7 @@ function Bonuses() {
     <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-5 py-9 text-forest-foreground sm:py-11">
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl"
+        className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.83_0.15_84/0.22),transparent)]"
       />
       <div className="relative mx-auto w-full max-w-5xl">
         <SectionTitle light compact>
@@ -561,7 +585,7 @@ function Bonuses() {
           {offer.bonuses.map((b) => (
             <li
               key={b.title}
-              className="flex flex-col items-center rounded-2xl border border-gold/25 bg-[#FAF5E9]/95 p-3 text-center shadow-lg shadow-black/10 backdrop-blur-sm sm:p-4"
+              className="flex flex-col items-center rounded-2xl border border-gold/25 bg-[#FAF5E9] p-3 text-center shadow-lg shadow-black/10 sm:p-4"
             >
               <div className="w-full overflow-hidden rounded-xl md:aspect-square">
                 {b.image ? (

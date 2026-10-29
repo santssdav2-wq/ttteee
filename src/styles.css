@@ -187,20 +187,6 @@
   border-radius: 99px;
   background: linear-gradient(90deg, var(--gold), var(--cta));
 }
-@keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.carousel-track {
-  animation: marquee var(--marquee-duration, 6s) linear infinite;
-  will-change: transform;
-}
-
 @keyframes pulse-cta {
   0%,
   100% {
@@ -217,33 +203,39 @@
   animation: pulse-cta 1.4s ease-in-out infinite;
 }
 
-@keyframes gold-pulse {
+@keyframes gold-cta-pulse {
   0%,
   100% {
     box-shadow:
-      var(--shadow-cta),
-      0 0 0 0 oklch(0.83 0.15 84 / 0.75),
-      0 0 16px 0 oklch(0.83 0.15 84 / 0.35);
+      0 8px 0 -2px oklch(0.62 0.13 74),
+      0 0 0 0 oklch(0.86 0.16 88 / 0.75),
+      0 0 16px 0 oklch(0.86 0.16 88 / 0.5);
   }
   50% {
     box-shadow:
-      var(--shadow-cta),
-      0 0 0 10px oklch(0.83 0.15 84 / 0),
-      0 0 28px 6px oklch(0.83 0.15 84 / 0.6);
+      0 8px 0 -2px oklch(0.62 0.13 74),
+      0 0 0 10px oklch(0.86 0.16 88 / 0),
+      0 0 30px 7px oklch(0.86 0.16 88 / 0.7);
   }
 }
 
-/* CTA do popup: verde com contorno e halo dourado pulsando. */
+/* CTA do popup: botão dourado com pulso de brilho. */
 .btn-cta-gold-pulse {
-  border: 2px solid oklch(0.83 0.15 84);
-  animation: gold-pulse 1.7s ease-in-out infinite;
+  border: 2px solid oklch(0.74 0.14 76);
+  background: linear-gradient(180deg, oklch(0.92 0.14 92), oklch(0.82 0.16 80));
+  color: var(--forest);
+  text-shadow: 0 1px 0 oklch(0.97 0.06 95 / 0.7);
+  animation: gold-cta-pulse 1.7s ease-in-out infinite;
+  &:hover {
+    background: linear-gradient(180deg, oklch(0.94 0.13 92), oklch(0.85 0.15 80));
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .btn-cta-gold-pulse {
     animation: none;
     box-shadow:
-      var(--shadow-cta),
-      0 0 18px 2px oklch(0.83 0.15 84 / 0.45);
+      0 8px 0 -2px oklch(0.62 0.13 74),
+      0 0 18px 2px oklch(0.86 0.16 88 / 0.55);
   }
 }

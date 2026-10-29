@@ -117,10 +117,8 @@ export function Carousel({
   count: number;
   children: ReactNode;
   label: string;
-  /** Velocidade do auto-scroll em px por frame (~60fps). */
+  /** Velocidade do auto-scroll em px por 1/60s. */
   speed?: number;
-  autoPlay?: boolean;
-  interval?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
@@ -134,33 +132,88 @@ export function Carousel({
   });
 
   // Auto-scroll contínuo em loop, com wrap suave.
-  // Usa tempo decorrido + acumulador fracionário: navegadores arredondam
-  // scrollLeft para pixel inteiro, então somar frações por frame não desacelera.
+  // - usa tempo decorrido + acumulador fracionário (scrollLeft é arredondado);
+  // - mede a largura do ciclo só quando o tamanho muda (evita layout por frame);
+  // - pausa quando o carrossel está fora da tela, com a aba oculta ou com
+  //   "reduzir movimento" ativo — economiza CPU/bateria.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let raf = 0;
-    let last = performance.now();
+    let last = 0;
     let carry = 0;
-    const step = (now: number) => {
+    let cycle = cycleWidth(el);
+    let onScreen = false;
+
+    const measure = () => {
+      cycle = cycleWidth(el);
+    };
+    const resizeObserver = new ResizeObserver(measure);
+    resizeObserver.observe(el);
+
+    const tick = (now: number) => {
+      raf = 0;
+      if (!onScreen || document.hidden || reduceMotion.matches) return;
+
       const elapsed = Math.min(now - last, 100);
       last = now;
-      if (!pausedRef.current) {
+
+      if (pausedRef.current) {
+        carry = 0;
+      } else {
         carry += (speed * elapsed) / (1000 / 60);
         const whole = Math.trunc(carry);
         if (whole > 0) {
           carry -= whole;
-          const b = cycleWidth(el);
           el.scrollLeft += whole;
-          if (b > 0 && el.scrollLeft >= b) el.scrollLeft -= b;
+          if (cycle > 0 && el.scrollLeft >= cycle) el.scrollLeft -= cycle;
         }
-      } else {
-        carry = 0;
       }
-      raf = requestAnimationFrame(step);
+      raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+
+    const start = () => {
+      if (raf || !onScreen || document.hidden || reduceMotion.matches) return;
+      last = performance.now();
+      raf = requestAnimationFrame(tick);
+    };
+
+    const intersectionObserver = new IntersectionObserver(
+      (entries) => {
+        onScreen = entries.some((entry) => entry.isIntersecting);
+        if (onScreen) start();
+        else if (raf) {
+          cancelAnimationFrame(raf);
+          raf = 0;
+        }
+      },
+      { rootMargin: "120px" },
+    );
+    intersectionObserver.observe(el);
+
+    const onVisibilityChange = () => {
+      if (!document.hidden) start();
+    };
+    const onReduceMotionChange = () => {
+      if (reduceMotion.matches && raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      } else {
+        start();
+      }
+    };
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    reduceMotion.addEventListener("change", onReduceMotionChange);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      intersectionObserver.disconnect();
+      resizeObserver.disconnect();
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      reduceMotion.removeEventListener("change", onReduceMotionChange);
+    };
   }, [speed]);
 
   const endGesture = (pointerId?: number) => {

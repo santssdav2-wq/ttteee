@@ -28,6 +28,8 @@ export type Plan = {
 
 /** Oferta de upgrade mostrada em popup quando o visitante escolhe o Plano Básico. */
 export type UpgradeOffer = {
+  title: string;
+  subtitle: string;
   badge: string;
   /** Ex.: "R$ 17,90" */
   price: string;
@@ -62,7 +64,7 @@ export const offer = {
         { label: "+300 dinâmicas interativas de capoeira" },
         { label: "Material digital para consulta" },
         { label: "Propostas prontas para as aulas" },
-      ],
+      ] as PlanItem[],
       checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1256599",
       ctaLabel: "QUERO O PLANO BÁSICO",
     },
@@ -83,7 +85,7 @@ export const offer = {
         { label: "Certificado de Capoeira Infantil", gift: true },
         { label: "Planejamento de Aula", gift: true },
         { label: "Ficha de Acompanhamento dos Alunos", gift: true },
-      ],
+      ] as PlanItem[],
       checkoutUrl: "https://pay.cakto.com.br/36egbwo",
       ctaLabel: "QUERO O PACOTE COMPLETO",
       highlight: true,
