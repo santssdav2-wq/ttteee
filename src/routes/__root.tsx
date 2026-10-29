@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { metaPixelNoScript, metaPixelScript } from "../lib/meta-pixel";
 
 function NotFoundComponent() {
   return (
@@ -96,6 +97,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
+    // Pixel da Meta (global): o TanStack Router já evita reinjetar o mesmo
+    // script inline em navegações do cliente, e o próprio snippet tem trava
+    // extra para não duplicar `init`/`PageView`.
+    scripts: [{ children: metaPixelScript }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -111,6 +116,11 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
+        {/* Fallback do Pixel: só executa quando o JavaScript está desativado. */}
+        <noscript
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{ __html: metaPixelNoScript }}
+        />
         <Scripts />
       </body>
     </html>
