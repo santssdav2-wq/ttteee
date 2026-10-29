@@ -72,8 +72,19 @@ export function CheckoutButton({ plan }: { plan: Plan }) {
   );
 }
 
+/** Largura de um ciclo completo (distância entre o 1º item da 1ª cópia e o 1º da 2ª cópia). */
+function cycleWidth(el: HTMLDivElement) {
+  const inner = el.firstChild as HTMLElement | null;
+  const secondFirst = inner?.children?.[1]?.firstChild as HTMLElement | null;
+  const innerRect = inner?.getBoundingClientRect();
+  const itemRect = secondFirst?.getBoundingClientRect();
+  if (innerRect && itemRect) return itemRect.left - innerRect.left;
+  return 0;
+}
+
 /** Carrossel arrastável em loop contínuo: auto-scroll suave, pausa ao segurar/arrastar,
- *  retoma instantaneamente ao soltar; arrastável para esquerda/direita (mouse e toque). */
+ *  retoma instantaneamente ao soltar; arrastável para esquerda/direita (mouse e toque).
+ *  Gestos verticais são deixados para a página (rolagem normal), sem prender o dedo. */
 export function Carousel({
   count,
   children,
@@ -86,14 +97,15 @@ export function Carousel({
   interval?: number;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const setRef = useRef<HTMLDivElement>(null); // primeira cópia (mede a largura de um ciclo)
-  const draggingRef = useRef(false);
+  const pausedRef = useRef(false);
   const [dragging, setDragging] = useState(false);
-  const dragStart = useRef({ x: 0, scroll: 0 });
-
-  useEffect(() => {
-    draggingRef.current = dragging;
-  }, [dragging]);
+  const gesture = useRef({
+    pointerId: -1,
+    startX: 0,
+    startY: 0,
+    startScroll: 0,
+    horizontal: false,
+  });
 
   // Auto-scroll contínuo em loop, com wrap suave.
   useEffect(() => {
@@ -101,17 +113,9 @@ export function Carousel({
     if (!el) return;
     const speed = 1.2; // px/frame (~72px/s) — ritmo legível
     let raf = 0;
-    const boundary = () => {
-      const inner = el.firstChild as HTMLElement | null;
-      const secondFirst = inner?.children?.[1]?.firstChild as HTMLElement | null;
-      const innerRect = inner?.getBoundingClientRect();
-      const itemRect = secondFirst?.getBoundingClientRect();
-      if (innerRect && itemRect) return itemRect.left - innerRect.left;
-      return (setRef.current?.offsetWidth ?? 0) + 16;
-    };
     const step = () => {
-      if (!draggingRef.current) {
-        const b = boundary();
+      if (!pausedRef.current) {
+        const b = cycleWidth(el);
         el.scrollLeft += speed;
         if (b > 0 && el.scrollLeft >= b) el.scrollLeft -= b;
       }
@@ -121,46 +125,67 @@ export function Carousel({
     return () => cancelAnimationFrame(raf);
   }, []);
 
+  const endGesture = (pointerId?: number) => {
+    const el = containerRef.current;
+    if (el && pointerId !== undefined) {
+      try {
+        el.releasePointerCapture(pointerId);
+      } catch {
+        /* ignore */
+      }
+    }
+    gesture.current = { pointerId: -1, startX: 0, startY: 0, startScroll: 0, horizontal: false };
+    pausedRef.current = false;
+    setDragging(false);
+  };
+
   const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = containerRef.current;
     if (!el) return;
-    setDragging(true);
-    dragStart.current = { x: e.clientX, scroll: el.scrollLeft };
-    try {
-      el.setPointerCapture(e.pointerId);
-    } catch {
-      /* ignore */
-    }
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    gesture.current = {
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      startScroll: el.scrollLeft,
+      horizontal: false,
+    };
+    // Segurar pausa o auto-scroll, mas não bloqueia a rolagem da página.
+    pausedRef.current = true;
   };
+
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = containerRef.current;
-    if (!dragging || !el) return;
-    const delta = e.clientX - dragStart.current.x;
-    const b = (() => {
-      const inner = el.firstChild as HTMLElement | null;
-      const secondFirst = inner?.children?.[1]?.firstChild as HTMLElement | null;
-      const innerRect = inner?.getBoundingClientRect();
-      const itemRect = secondFirst?.getBoundingClientRect();
-      if (innerRect && itemRect) return itemRect.left - innerRect.left;
-      return (setRef.current?.offsetWidth ?? 0) + 16;
-    })();
-    let newScroll = dragStart.current.scroll - delta;
+    const g = gesture.current;
+    if (!el || g.pointerId !== e.pointerId) return;
+
+    const dx = e.clientX - g.startX;
+    const dy = e.clientY - g.startY;
+
+    // Ainda não sabemos a intenção: espera um mínimo de movimento.
+    if (!g.horizontal) {
+      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
+      if (Math.abs(dy) >= Math.abs(dx)) {
+        // Gesto vertical: solta o controle para a página rolar normalmente.
+        endGesture();
+        return;
+      }
+      g.horizontal = true;
+      setDragging(true);
+      try {
+        el.setPointerCapture(e.pointerId);
+      } catch {
+        /* ignore */
+      }
+    }
+
+    const b = cycleWidth(el);
+    let newScroll = g.startScroll - dx;
     if (b > 0) {
       while (newScroll >= b) newScroll -= b;
       while (newScroll < 0) newScroll += b;
     }
     el.scrollLeft = newScroll;
-  };
-  const onPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
-    const el = containerRef.current;
-    if (el) {
-      try {
-        el.releasePointerCapture(e.pointerId);
-      } catch {
-        /* ignore */
-      }
-    }
-    setDragging(false);
   };
 
   return (
@@ -171,17 +196,15 @@ export function Carousel({
       }`}
       aria-roledescription="carrossel"
       aria-label={label}
-      style={{ touchAction: "none" }}
+      style={{ touchAction: "pan-y pinch-zoom" }}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
-      onPointerUp={onPointerUp}
-      onPointerCancel={onPointerUp}
-      onPointerLeave={onPointerUp}
+      onPointerUp={(e) => endGesture(e.pointerId)}
+      onPointerCancel={() => endGesture()}
+      onLostPointerCapture={() => endGesture()}
     >
       <div className="flex w-max gap-4 py-2">
-        <div ref={setRef} className="flex shrink-0 gap-4">
-          {children}
-        </div>
+        <div className="flex shrink-0 gap-4">{children}</div>
         <div className="flex shrink-0 gap-4" aria-hidden>
           {children}
         </div>
