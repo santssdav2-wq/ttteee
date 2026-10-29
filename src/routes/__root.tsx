@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { metaPixelNoScript, metaPixelScript } from "../lib/meta-pixel";
+import { utmifyScript } from "../lib/utmify";
 
 function NotFoundComponent() {
   return (
@@ -103,7 +104,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     // Pixel da Meta (global): o TanStack Router já evita reinjetar o mesmo
     // script inline em navegações do cliente, e o próprio snippet tem trava
     // extra para não duplicar `init`/`PageView`.
-    scripts: [{ children: metaPixelScript }],
+    // UTMify vem em seguida, também com trava de execução única.
+    scripts: [{ children: metaPixelScript }, { children: utmifyScript }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
