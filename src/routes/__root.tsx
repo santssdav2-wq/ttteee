@@ -12,7 +12,6 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { metaPixelNoScript, metaPixelScript } from "../lib/meta-pixel";
 import { utmifyScript } from "../lib/utmify";
 
 function NotFoundComponent() {
@@ -92,7 +91,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      // Abre a conexão do Pixel mais cedo (script + config do fbevents).
+      // A UTMify carrega o Pixel da Meta; adiantar a conexão ajuda o fbevents.
       { rel: "preconnect", href: "https://connect.facebook.net" },
       { rel: "dns-prefetch", href: "https://www.facebook.com" },
       {
@@ -101,11 +100,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
-    // Pixel da Meta (global): o TanStack Router já evita reinjetar o mesmo
-    // script inline em navegações do cliente, e o próprio snippet tem trava
-    // extra para não duplicar `init`/`PageView`.
-    // UTMify vem em seguida, também com trava de execução única.
-    scripts: [{ children: metaPixelScript }, { children: utmifyScript }],
+    // Rastreamento global: apenas o script da UTMify, que já inicializa o
+    // Pixel da Meta e a API de Conversões. Não há instalação direta do Pixel
+    // nesta página para evitar duplicidade.
+    scripts: [{ children: utmifyScript }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
@@ -121,11 +119,6 @@ function RootShell({ children }: { children: ReactNode }) {
       </head>
       <body>
         {children}
-        {/* Fallback do Pixel: só executa quando o JavaScript está desativado. */}
-        <noscript
-          suppressHydrationWarning
-          dangerouslySetInnerHTML={{ __html: metaPixelNoScript }}
-        />
         <Scripts />
       </body>
     </html>
