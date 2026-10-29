@@ -112,10 +112,13 @@ export function Carousel({
   count,
   children,
   label,
+  speed = 1.2,
 }: {
   count: number;
   children: ReactNode;
   label: string;
+  /** Velocidade do auto-scroll em px por frame (~60fps). */
+  speed?: number;
   autoPlay?: boolean;
   interval?: number;
 }) {
@@ -131,22 +134,34 @@ export function Carousel({
   });
 
   // Auto-scroll contínuo em loop, com wrap suave.
+  // Usa tempo decorrido + acumulador fracionário: navegadores arredondam
+  // scrollLeft para pixel inteiro, então somar frações por frame não desacelera.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
-    const speed = 1.2; // px/frame (~72px/s) — ritmo legível
     let raf = 0;
-    const step = () => {
+    let last = performance.now();
+    let carry = 0;
+    const step = (now: number) => {
+      const elapsed = Math.min(now - last, 100);
+      last = now;
       if (!pausedRef.current) {
-        const b = cycleWidth(el);
-        el.scrollLeft += speed;
-        if (b > 0 && el.scrollLeft >= b) el.scrollLeft -= b;
+        carry += (speed * elapsed) / (1000 / 60);
+        const whole = Math.trunc(carry);
+        if (whole > 0) {
+          carry -= whole;
+          const b = cycleWidth(el);
+          el.scrollLeft += whole;
+          if (b > 0 && el.scrollLeft >= b) el.scrollLeft -= b;
+        }
+      } else {
+        carry = 0;
       }
       raf = requestAnimationFrame(step);
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [speed]);
 
   const endGesture = (pointerId?: number) => {
     const el = containerRef.current;

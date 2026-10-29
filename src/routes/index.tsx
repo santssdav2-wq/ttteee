@@ -608,7 +608,7 @@ function Testimonials() {
       <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-muted-foreground sm:-mt-6">
         Prints reais de quem já está usando as dinâmicas nas aulas de capoeira.
       </p>
-      <Carousel count={count} label="Depoimentos sobre as dinâmicas">
+      <Carousel count={count} label="Depoimentos sobre as dinâmicas" speed={0.5}>
         {imgs.map((img, i) => (
           <div
             key={i}
