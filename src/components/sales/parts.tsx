@@ -21,20 +21,24 @@ export function SectionTitle({
   eyebrow,
   children,
   light,
+  compact,
 }: {
   eyebrow?: string;
   children: ReactNode;
   light?: boolean;
+  compact?: boolean;
 }) {
   return (
-    <div className="mb-8 flex flex-col items-center text-center sm:mb-12">
+    <div
+      className={`flex flex-col items-center text-center ${compact ? "mb-3 sm:mb-4" : "mb-8 sm:mb-12"}`}
+    >
       {eyebrow && <span className="eyebrow mb-2">{eyebrow}</span>}
       <h2
         className={`max-w-xl text-[1.65rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl ${light ? "text-forest-foreground" : "text-ink"}`}
       >
         {children}
       </h2>
-      <div className="berimbau-line mt-4" />
+      <div className={`berimbau-line ${compact ? "mt-2.5" : "mt-4"}`} />
     </div>
   );
 }

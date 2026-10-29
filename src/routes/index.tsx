@@ -399,80 +399,60 @@ function Plans() {
 
 function Bonuses() {
   if (!offer.bonuses.length) return null;
-  const totalReference = offer.bonuses.reduce((sum, b) => {
-    const m = b.referencePrice?.match(/[\d.,]+/);
-    const v = m ? parseFloat(m[0].replace(/\./g, "").replace(",", ".")) : 0;
-    return sum + v;
-  }, 0);
-  const totalFormatted = totalReference.toLocaleString("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  });
 
   return (
-    <Section className="bg-forest">
-      <SectionTitle light>
-        E NÃO PARA <span className="text-green-600 font-bold">POR AÍ</span>!
-      </SectionTitle>
-      <p className="mx-auto -mt-3 mb-6 max-w-xl text-center text-[15px] leading-relaxed text-forest-muted sm:-mt-6">
-        Além das dinâmicas, você também recebe 3 materiais extras{" "}
-        <span className="font-semibold text-gold">inclusos no Plano Completo</span> para organizar e
-        acompanhar suas aulas.
-      </p>
+    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-5 py-9 text-forest-foreground sm:py-11">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-gold/10 blur-3xl"
+      />
+      <div className="relative mx-auto w-full max-w-5xl">
+        <SectionTitle light compact>
+          E NÃO PARA <span className="font-bold text-gold">POR AÍ</span>!
+        </SectionTitle>
+        <p className="mx-auto mb-5 max-w-xl text-center text-sm leading-relaxed text-forest-muted sm:mb-6">
+          Três materiais extras{" "}
+          <span className="font-semibold text-gold">inclusos no Plano Completo</span> para
+          reconhecer, acompanhar e planejar suas aulas.
+        </p>
 
-      <ul className="mx-auto flex max-w-2xl flex-col gap-5">
-        {offer.bonuses.map((b) => (
-          <li
-            key={b.title}
-            className="flex flex-col items-center gap-3 rounded-xl border border-gold/40 bg-card p-5 text-center text-ink"
-          >
-            {b.image ? (
-              <div className="aspect-square w-full max-w-[300px] overflow-hidden rounded-lg bg-muted">
-                <img
-                  src={b.image}
-                  alt={b.title}
-                  loading="lazy"
-                  className="h-full w-full object-contain"
-                />
+        <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3">
+          {offer.bonuses.map((b) => (
+            <li
+              key={b.title}
+              className="flex items-center gap-3 rounded-2xl border border-gold/25 bg-[#FAF5E9]/95 p-3 shadow-lg shadow-black/10 backdrop-blur-sm md:flex-col md:items-stretch md:gap-1 md:p-4"
+            >
+              <div className="grid aspect-square w-28 shrink-0 place-items-center overflow-hidden rounded-xl sm:w-32 md:w-full">
+                {b.image ? (
+                  <img
+                    src={b.image}
+                    alt={b.title}
+                    loading="lazy"
+                    className="h-full w-full object-contain mix-blend-multiply"
+                  />
+                ) : (
+                  <Award className="h-10 w-10 text-forest" aria-hidden="true" />
+                )}
               </div>
-            ) : (
-              <span className="grid h-24 w-24 place-items-center rounded-lg bg-forest text-gold">
-                <Award className="h-12 w-12" aria-hidden="true" />
-              </span>
-            )}
-            <h3 className="font-display text-xl font-bold leading-tight sm:text-2xl">{b.title}</h3>
-            {b.referencePrice && (
-              <p className="text-sm text-muted-foreground">
-                Valor de referência:{" "}
-                <span className="font-semibold line-through">{b.referencePrice}</span>
-              </p>
-            )}
-            {b.includedAtNoExtraCost && (
-              <span className="inline-block rounded-md bg-gold px-4 py-1.5 text-sm font-extrabold text-ink shadow-md sm:text-base">
-                HOJE, GRÁTIS!
-              </span>
-            )}
-          </li>
-        ))}
-      </ul>
-
-      {offer.bonuses.some((b) => b.referencePrice) && (
-        <div className="mx-auto mt-6 max-w-2xl rounded-xl border-2 border-gold/60 bg-card p-5 text-center shadow-lg">
-          <p className="text-sm font-semibold text-muted-foreground">
-            Valor total dos bônus se comprados separadamente:
-          </p>
-          <p className="mt-1 font-display text-2xl font-extrabold text-ink line-through">
-            {totalFormatted}
-          </p>
-          <p className="mt-3 text-base font-bold text-primary">
-            Comprando hoje, você leva tudo <span className="text-cta">GRÁTIS</span>!
-          </p>
-          <p className="mt-1 text-sm font-semibold text-muted-foreground">
-            Economia de {totalFormatted} na sua compra.
-          </p>
-        </div>
-      )}
-    </Section>
+              <div className="flex min-w-0 flex-1 flex-col">
+                <h3 className="font-display text-[15px] font-bold leading-snug text-ink sm:text-base md:text-lg">
+                  {b.title}
+                </h3>
+                <p className="mt-1 text-[13px] leading-snug text-ink/70 sm:text-sm">
+                  {b.description}
+                </p>
+                {b.includedAtNoExtraCost && (
+                  <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-full bg-forest px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-gold md:mt-auto md:pt-1">
+                    <Check className="h-3 w-3" aria-hidden="true" />
+                    Incluído grátis
+                  </span>
+                )}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
   );
 }
 

@@ -73,25 +73,22 @@ export const offer = {
   /** Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência. */
   bonuses: [
     {
-      title: "Certificado de Capoeira",
-      description:
-        "Para professores, mestres e instrutores que utilizam certificados em atividades e eventos de capoeira infantil.",
+      title: "Certificado de Capoeira Infantil",
+      description: "Um certificado para reconhecer a participação das crianças.",
       image: "/certificado.webp",
       referencePrice: "R$ 37,00",
       includedAtNoExtraCost: true,
     },
     {
-      title: "Acompanhamento de Alunos",
-      description:
-        "Ferramenta para acompanhar a evolução, presença e progresso de cada aluno nas aulas de capoeira.",
+      title: "Ficha de Acompanhamento dos Alunos",
+      description: "Acompanhe a evolução e registre as conquistas da turma.",
       image: "/acompanhamento-alunos.webp",
       referencePrice: "R$ 27,90",
       includedAtNoExtraCost: true,
     },
     {
-      title: "Planejamento de Aula",
-      description:
-        "Modelos prontos de planejamento para organizar suas aulas de capoeira com mais praticidade.",
+      title: "Ficha de Planejamento de Aula",
+      description: "Organize os objetivos, as atividades e os materiais de cada aula.",
       image: "/planejamento-aula.webp",
       referencePrice: "R$ 49,90",
       includedAtNoExtraCost: true,

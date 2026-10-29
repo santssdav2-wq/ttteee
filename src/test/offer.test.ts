@@ -8,13 +8,13 @@ describe("preserved offer and approved additions", () => {
 
   it("includes the three bonuses at no extra cost", () => {
     expect(offer.bonuses).toHaveLength(3);
-    expect(offer.bonuses[0]?.title).toBe("Certificado de Capoeira");
+    expect(offer.bonuses[0]?.title).toBe("Certificado de Capoeira Infantil");
     expect(offer.bonuses[0]?.includedAtNoExtraCost).toBe(true);
     expect(offer.bonuses[0]?.referencePrice).toBe("R$ 37,00");
-    expect(offer.bonuses[1]?.title).toBe("Acompanhamento de Alunos");
+    expect(offer.bonuses[1]?.title).toBe("Ficha de Acompanhamento dos Alunos");
     expect(offer.bonuses[1]?.includedAtNoExtraCost).toBe(true);
     expect(offer.bonuses[1]?.referencePrice).toBe("R$ 27,90");
-    expect(offer.bonuses[2]?.title).toBe("Planejamento de Aula");
+    expect(offer.bonuses[2]?.title).toBe("Ficha de Planejamento de Aula");
     expect(offer.bonuses[2]?.includedAtNoExtraCost).toBe(true);
     expect(offer.bonuses[2]?.referencePrice).toBe("R$ 49,90");
   });
