@@ -53,8 +53,17 @@ export function CtaButton({ children }: { children: ReactNode }) {
 }
 
 /** Botão de checkout do plano. Desativado enquanto o link estiver pendente.
- *  `muted`: variante apagada (cinza), usada no plano de entrada. */
-export function CheckoutButton({ plan, muted }: { plan: Plan; muted?: boolean }) {
+ *  `muted`: variante apagada (cinza), usada no plano de entrada.
+ *  `onSelect`: intercepta o clique (ex.: abrir popup) antes de navegar. */
+export function CheckoutButton({
+  plan,
+  muted,
+  onSelect,
+}: {
+  plan: Plan;
+  muted?: boolean;
+  onSelect?: () => void;
+}) {
   const className = muted ? "btn-cta-muted" : "btn-cta";
   if (!plan.checkoutUrl) {
     return (
@@ -68,7 +77,19 @@ export function CheckoutButton({ plan, muted }: { plan: Plan; muted?: boolean })
     );
   }
   return (
-    <a href={plan.checkoutUrl} className={className} rel="noopener">
+    <a
+      href={plan.checkoutUrl}
+      className={className}
+      rel="noopener"
+      onClick={
+        onSelect
+          ? (event) => {
+              event.preventDefault();
+              onSelect();
+            }
+          : undefined
+      }
+    >
       {plan.ctaLabel}
     </a>
   );

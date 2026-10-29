@@ -26,6 +26,19 @@ export type Plan = {
   highlight?: boolean;
 };
 
+/** Oferta de upgrade mostrada em popup quando o visitante escolhe o Plano Básico. */
+export type UpgradeOffer = {
+  badge: string;
+  /** Ex.: "R$ 17,90" */
+  price: string;
+  priceNote: string;
+  items: string[];
+  ctaLabel: string;
+  dismissLabel: string;
+  /** URL real do checkout desta oferta. null = pendente (botão desativado) */
+  checkoutUrl: string | null;
+};
+
 export type Bonus = {
   title: string;
   description: string;
@@ -50,7 +63,7 @@ export const offer = {
         { label: "Material digital para consulta" },
         { label: "Propostas prontas para as aulas" },
       ],
-      checkoutUrl: "https://pay.hotmart.com/L102785831V?checkoutMode=10&off=pewf2eow",
+      checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1256599",
       ctaLabel: "QUERO O PLANO BÁSICO",
     },
     {
@@ -71,11 +84,29 @@ export const offer = {
         { label: "Planejamento de Aula", gift: true },
         { label: "Ficha de Acompanhamento dos Alunos", gift: true },
       ],
-      checkoutUrl: "https://pay.hotmart.com/L102785831V?checkoutMode=10&off=uo8kf2kb",
+      checkoutUrl: "https://pay.cakto.com.br/36egbwo",
       ctaLabel: "QUERO O PACOTE COMPLETO",
       highlight: true,
     },
   ] satisfies Plan[],
+
+  /** Popup exibido ao clicar no Plano Básico: oferece a versão completa com os bônus. */
+  upgrade: {
+    title: "Espere! Temos uma opção melhor para você 👀",
+    subtitle: "Leve a versão completa do União Capoeirista com todos os bônus incluídos.",
+    badge: "VERSÃO COMPLETA + BÔNUS",
+    price: "R$ 17,90",
+    priceNote: "Apenas R$ 7,90 a mais que o básico",
+    items: [
+      "+300 dinâmicas interativas de capoeira",
+      "Certificado de participação",
+      "Ficha de planejamento de aula",
+      "Ficha de acompanhamento dos alunos",
+    ],
+    ctaLabel: "QUERO A VERSÃO COMPLETA",
+    dismissLabel: "Não, vou continuar com o plano básico",
+    checkoutUrl: "https://pay.cakto.com.br/dc5aynu",
+  } satisfies UpgradeOffer,
 
   /** Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência. */
   bonuses: [

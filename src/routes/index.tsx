@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   BookOpen,
   ClipboardList,
@@ -15,6 +16,7 @@ import {
   Gift,
   Award,
   Printer,
+  X,
 } from "lucide-react";
 import { offer } from "@/config/offer";
 import {
@@ -309,8 +311,130 @@ function CountdownTimer() {
   );
 }
 
+/** Popup de upgrade exibido ao escolher o Plano Básico. */
+function UpgradeDialog({
+  open,
+  onClose,
+  basicCheckoutUrl,
+}: {
+  open: boolean;
+  onClose: () => void;
+  basicCheckoutUrl: string | null;
+}) {
+  const primaryRef = useRef<HTMLAnchorElement>(null);
+  const upgrade = offer.upgrade;
+
+  useEffect(() => {
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    primaryRef.current?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open, onClose]);
+
+  if (!open || typeof document === "undefined") return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div
+        className="absolute inset-0 bg-ink/60 backdrop-blur-sm motion-safe:animate-[dialog-fade_180ms_ease-out]"
+        onClick={onClose}
+        aria-hidden="true"
+      />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="upgrade-title"
+        className="relative max-h-[92vh] w-full max-w-md overflow-y-auto rounded-2xl bg-white p-5 text-center shadow-2xl motion-safe:animate-[dialog-pop_200ms_ease-out] sm:p-6"
+      >
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Fechar"
+          className="absolute right-3 top-3 rounded-full p-2 text-ink/40 transition hover:bg-muted hover:text-ink"
+        >
+          <X className="h-5 w-5" aria-hidden="true" />
+        </button>
+
+        <div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-gold/25 sm:h-16 sm:w-16">
+          <Gift className="h-7 w-7 text-[#c8951a] sm:h-8 sm:w-8" aria-hidden="true" />
+        </div>
+
+        <h2
+          id="upgrade-title"
+          className="mt-3 font-display text-xl font-extrabold leading-tight text-ink sm:text-2xl"
+        >
+          {upgrade.title}
+        </h2>
+        <p className="mx-auto mt-2 max-w-sm text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+          {upgrade.subtitle}
+        </p>
+
+        <div className="mt-4 rounded-xl border border-gold/40 bg-[#FAF5E9] px-4 py-3">
+          <p className="text-[11px] font-extrabold uppercase tracking-wider text-green-700">
+            {upgrade.badge}
+          </p>
+          <p className="mt-1 font-display text-[40px] font-extrabold leading-none text-ink sm:text-5xl">
+            {upgrade.price}
+          </p>
+          <p className="mt-1.5 text-xs font-bold text-green-700">{upgrade.priceNote}</p>
+        </div>
+
+        <ul className="mx-auto mt-4 max-w-sm space-y-1.5 text-left">
+          {upgrade.items.map((item) => (
+            <li key={item} className="flex items-start gap-2 text-[14px] leading-snug text-ink">
+              <Check className="mt-0.5 h-5 w-5 shrink-0 text-cta" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+
+        {upgrade.checkoutUrl ? (
+          <a ref={primaryRef} href={upgrade.checkoutUrl} className="btn-cta mt-5" rel="noopener">
+            {upgrade.ctaLabel}
+          </a>
+        ) : (
+          <span
+            aria-disabled="true"
+            className="btn-cta mt-5 opacity-60"
+            title="Link de checkout pendente de configuração"
+          >
+            {upgrade.ctaLabel} · LINK PENDENTE
+          </span>
+        )}
+
+        {basicCheckoutUrl ? (
+          <a
+            href={basicCheckoutUrl}
+            className="mt-2 inline-block px-2 py-2 text-sm font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
+          >
+            {upgrade.dismissLabel}
+          </a>
+        ) : (
+          <button
+            type="button"
+            onClick={onClose}
+            className="mt-2 inline-block px-2 py-2 text-sm font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
+          >
+            {upgrade.dismissLabel}
+          </button>
+        )}
+      </div>
+    </div>,
+    document.body,
+  );
+}
+
 function Plans() {
   const [basico, completo] = offer.plans;
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
   return (
     <Section id="planos" className="bg-muted">
       <CountdownTimer />
@@ -349,7 +473,7 @@ function Plans() {
                 </li>
               ))}
             </ul>
-            <CheckoutButton plan={basico} muted />
+            <CheckoutButton plan={basico} muted onSelect={() => setUpgradeOpen(true)} />
           </article>
         )}
         {completo && (
@@ -403,6 +527,11 @@ function Plans() {
           </article>
         )}
       </div>
+      <UpgradeDialog
+        open={upgradeOpen}
+        onClose={() => setUpgradeOpen(false)}
+        basicCheckoutUrl={basico?.checkoutUrl ?? null}
+      />
     </Section>
   );
 }
