@@ -323,7 +323,7 @@ function Plans() {
       </p>
       <div className="mx-auto grid max-w-4xl items-stretch gap-6 md:grid-cols-2">
         {basico && (
-          <article className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-6 shadow-sm">
+          <article className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-5 shadow-sm sm:p-6">
             <h3 className="font-display text-2xl font-extrabold text-ink">{basico.name}</h3>
             <p className="mt-1 text-sm text-muted-foreground">
               O essencial para ampliar seu repertório de atividades.
@@ -338,19 +338,22 @@ function Plans() {
                 <p className="text-xs text-muted-foreground">{basico.priceNote}</p>
               )}
             </div>
-            <ul className="my-6 flex-1 space-y-2.5">
+            <ul className="my-5 flex-1 space-y-2">
               {basico.items.map((it) => (
-                <li key={it} className="flex gap-2 text-[15px] text-ink">
+                <li
+                  key={it.label}
+                  className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[15px]"
+                >
                   <Check className="mt-0.5 h-5 w-5 shrink-0 text-cta" />
-                  <span>{it}</span>
+                  <span>{it.label}</span>
                 </li>
               ))}
             </ul>
-            <CheckoutButton plan={basico} />
+            <CheckoutButton plan={basico} muted />
           </article>
         )}
         {completo && (
-          <article className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-6 shadow-lg md:-mt-3">
+          <article className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-5 shadow-lg sm:p-6 md:-mt-3">
             <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-ink">
               PACOTE MAIS COMPLETO
             </span>
@@ -381,11 +384,18 @@ function Plans() {
                 </p>
               </div>
             </div>
-            <ul className="my-6 flex-1 space-y-2.5">
-              {[...completo.items, ...(completo.extras ?? [])].map((it, idx) => (
-                <li key={it} className="flex gap-2 text-[15px] text-ink">
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
-                  <span className={idx >= 4 ? "font-semibold" : ""}>{it}</span>
+            <ul className="my-5 flex-1 space-y-2">
+              {completo.items.map((it) => (
+                <li
+                  key={it.label}
+                  className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[15px]"
+                >
+                  {it.gift ? (
+                    <Gift className="mt-0.5 h-5 w-5 shrink-0 text-[#c8951a]" aria-hidden="true" />
+                  ) : (
+                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+                  )}
+                  <span className={it.gift ? "font-semibold" : undefined}>{it.label}</span>
                 </li>
               ))}
             </ul>

@@ -127,6 +127,31 @@
   }
 }
 
+@utility btn-cta-muted {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 1.25rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  transition: background 0.15s;
+  &:hover {
+    background: oklch(0.925 0.012 100);
+  }
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
+
 @utility eyebrow {
   display: inline-block;
   font-size: 0.72rem;

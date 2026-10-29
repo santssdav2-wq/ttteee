@@ -52,13 +52,15 @@ export function CtaButton({ children }: { children: ReactNode }) {
   );
 }
 
-/** Botão de checkout do plano. Desativado enquanto o link estiver pendente. */
-export function CheckoutButton({ plan }: { plan: Plan }) {
+/** Botão de checkout do plano. Desativado enquanto o link estiver pendente.
+ *  `muted`: variante apagada (cinza), usada no plano de entrada. */
+export function CheckoutButton({ plan, muted }: { plan: Plan; muted?: boolean }) {
+  const className = muted ? "btn-cta-muted" : "btn-cta";
   if (!plan.checkoutUrl) {
     return (
       <span
         aria-disabled="true"
-        className="btn-cta"
+        className={className}
         title="Link de checkout pendente de configuração"
       >
         {plan.ctaLabel} · LINK PENDENTE
@@ -66,7 +68,7 @@ export function CheckoutButton({ plan }: { plan: Plan }) {
     );
   }
   return (
-    <a href={plan.checkoutUrl} className="btn-cta" rel="noopener">
+    <a href={plan.checkoutUrl} className={className} rel="noopener">
       {plan.ctaLabel}
     </a>
   );

@@ -4,6 +4,13 @@
  * e as seções/botões correspondentes ficam ocultos ou desativados até serem preenchidos.
  */
 
+export type PlanItem = {
+  /** Texto curto, de uma linha, exibido na lista do plano. */
+  label: string;
+  /** Item de bônus: aparece com o ícone de presente. */
+  gift?: boolean;
+};
+
 export type Plan = {
   id: "basico" | "completo";
   name: string;
@@ -12,9 +19,7 @@ export type Plan = {
   /** Ex.: "R$ 47,00" (preço "de"). null = não exibir */
   oldPrice: string | null;
   priceNote: string | null;
-  items: string[];
-  /** Itens extras apenas do plano completo */
-  extras?: string[];
+  items: PlanItem[];
   /** URL real do checkout. null = pendente (botão desativado) */
   checkoutUrl: string | null;
   ctaLabel: string;
@@ -41,9 +46,9 @@ export const offer = {
       oldPrice: null,
       priceNote: "Pagamento único",
       items: [
-        "+300 dinâmicas interativas de capoeira",
-        "Material digital organizado para consulta",
-        "Propostas prontas para ajudar na preparação das aulas",
+        { label: "+300 dinâmicas interativas de capoeira" },
+        { label: "Material digital para consulta" },
+        { label: "Propostas prontas para as aulas" },
       ],
       checkoutUrl: "https://pay.hotmart.com/L102785831V?checkoutMode=10&off=pewf2eow",
       ctaLabel: "QUERO O PLANO BÁSICO",
@@ -55,15 +60,16 @@ export const offer = {
       oldPrice: null,
       priceNote: "Pagamento único",
       items: [
-        "Tudo do Plano Básico: +300 dinâmicas interativas de capoeira",
-        "Material digital organizado para consulta",
-        "Propostas prontas para ajudar na preparação das aulas",
-        "Certificado de Capoeira Infantil: material complementar para reconhecer a participação das crianças",
-        "Ficha de Planejamento de Aula: para organizar objetivos, atividades, materiais e observações",
-        "Ficha de Acompanhamento dos Alunos: para registrar a evolução e acompanhar o desenvolvimento de cada criança",
-        "Acesso digital ao material: consulta prática ao conteúdo adquirido",
+        { label: "+300 dinâmicas interativas de capoeira" },
+        { label: "Material digital para consulta" },
+        { label: "Propostas prontas para as aulas" },
+        { label: "Certificado de Capoeira Infantil", gift: true },
+        { label: "Ficha de Planejamento de Aula", gift: true },
+        { label: "Ficha de Acompanhamento dos Alunos", gift: true },
+        { label: "Atualizações mensais" },
+        { label: "Suporte prioritário" },
+        { label: "Garantia de 7 dias" },
       ],
-      extras: [],
       checkoutUrl: "https://pay.hotmart.com/L102785831V?checkoutMode=10&off=uo8kf2kb",
       ctaLabel: "QUERO O PACOTE COMPLETO",
       highlight: true,
