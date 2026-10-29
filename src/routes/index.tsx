@@ -359,12 +359,12 @@ function Plans() {
               Mais recursos para planejar suas aulas e acompanhar seus alunos.
             </p>
             <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted/40 sm:h-32 sm:w-32">
+              <div className="flex h-36 w-36 shrink-0 items-center justify-center sm:h-40 sm:w-40">
                 <img
-                  src="/certificado.webp"
-                  alt="Mockup do pacote União Capoeirista"
+                  src="/mockup-completo.webp"
+                  alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
                   loading="lazy"
-                  className="h-full w-full object-contain mix-blend-multiply"
+                  className="h-full w-full object-contain drop-shadow-sm"
                 />
               </div>
               <div className="text-center sm:text-left">
