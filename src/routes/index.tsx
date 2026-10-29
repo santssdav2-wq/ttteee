@@ -416,38 +416,39 @@ function Bonuses() {
           reconhecer, acompanhar e planejar suas aulas.
         </p>
 
-        <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3">
+        <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3">
           {offer.bonuses.map((b) => (
             <li
               key={b.title}
-              className="flex items-center gap-3 rounded-2xl border border-gold/25 bg-[#FAF5E9]/95 p-3 shadow-lg shadow-black/10 backdrop-blur-sm md:flex-col md:items-stretch md:gap-1 md:p-4"
+              className="flex flex-col items-center rounded-2xl border border-gold/25 bg-[#FAF5E9]/95 p-3 text-center shadow-lg shadow-black/10 backdrop-blur-sm sm:p-4"
             >
-              <div className="grid aspect-square w-28 shrink-0 place-items-center overflow-hidden rounded-xl sm:w-32 md:w-full">
+              <div className="w-full overflow-hidden rounded-xl md:aspect-square">
                 {b.image ? (
                   <img
                     src={b.image}
                     alt={b.title}
                     loading="lazy"
-                    className="h-full w-full object-contain mix-blend-multiply"
+                    className="h-auto w-full object-contain mix-blend-multiply md:h-full"
                   />
                 ) : (
-                  <Award className="h-10 w-10 text-forest" aria-hidden="true" />
+                  <div className="grid aspect-square w-full place-items-center">
+                    <Award className="h-12 w-12 text-forest" aria-hidden="true" />
+                  </div>
                 )}
               </div>
-              <div className="flex min-w-0 flex-1 flex-col">
-                <h3 className="font-display text-[15px] font-bold leading-snug text-ink sm:text-base md:text-lg">
-                  {b.title}
-                </h3>
-                <p className="mt-1 text-[13px] leading-snug text-ink/70 sm:text-sm">
-                  {b.description}
+              <h3 className="mt-2 font-display text-base font-bold leading-snug text-ink sm:text-lg md:flex md:min-h-14 md:items-center md:justify-center">
+                {b.title}
+              </h3>
+              {b.referencePrice && (
+                <p className="mt-0.5 text-sm font-semibold text-ink/55 line-through">
+                  {b.referencePrice}
                 </p>
-                {b.includedAtNoExtraCost && (
-                  <span className="mt-2 inline-flex w-fit items-center gap-1 rounded-full bg-forest px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wide text-gold md:mt-auto md:pt-1">
-                    <Check className="h-3 w-3" aria-hidden="true" />
-                    Incluído grátis
-                  </span>
-                )}
-              </div>
+              )}
+              {b.includedAtNoExtraCost && (
+                <span className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-cta px-4 py-2 text-sm font-extrabold uppercase tracking-wide text-cta-foreground shadow-md">
+                  HOJE GRÁTIS
+                </span>
+              )}
             </li>
           ))}
         </ul>
