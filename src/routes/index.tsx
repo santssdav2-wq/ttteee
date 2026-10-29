@@ -394,7 +394,12 @@ function UpgradeDialog({
         </ul>
 
         {upgrade.checkoutUrl ? (
-          <a ref={primaryRef} href={upgrade.checkoutUrl} className="btn-cta mt-5" rel="noopener">
+          <a
+            ref={primaryRef}
+            href={upgrade.checkoutUrl}
+            className="btn-cta btn-cta-gold-pulse mt-5"
+            rel="noopener"
+          >
             {upgrade.ctaLabel}
           </a>
         ) : (

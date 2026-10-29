@@ -216,3 +216,34 @@
 .pulse-cta {
   animation: pulse-cta 1.4s ease-in-out infinite;
 }
+
+@keyframes gold-pulse {
+  0%,
+  100% {
+    box-shadow:
+      var(--shadow-cta),
+      0 0 0 0 oklch(0.83 0.15 84 / 0.75),
+      0 0 16px 0 oklch(0.83 0.15 84 / 0.35);
+  }
+  50% {
+    box-shadow:
+      var(--shadow-cta),
+      0 0 0 10px oklch(0.83 0.15 84 / 0),
+      0 0 28px 6px oklch(0.83 0.15 84 / 0.6);
+  }
+}
+
+/* CTA do popup: verde com contorno e halo dourado pulsando. */
+.btn-cta-gold-pulse {
+  border: 2px solid oklch(0.83 0.15 84);
+  animation: gold-pulse 1.7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta-gold-pulse {
+    animation: none;
+    box-shadow:
+      var(--shadow-cta),
+      0 0 18px 2px oklch(0.83 0.15 84 / 0.45);
+  }
+}
