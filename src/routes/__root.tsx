@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { fbqHistoryGuardScript } from "../lib/fbq-history-guard";
 import { utmifyScript } from "../lib/utmify";
 
 function NotFoundComponent() {
@@ -100,10 +101,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
     ],
-    // Rastreamento global: apenas o script da UTMify, que já inicializa o
-    // Pixel da Meta e a API de Conversões. Não há instalação direta do Pixel
-    // nesta página para evitar duplicidade.
-    scripts: [{ children: utmifyScript }],
+    // Rastreamento global: a UTMify carrega o Pixel da Meta e a API de
+    // Conversões. O guard roda antes e apenas desliga o PageView automático
+    // em mudanças de histórico (âncoras / voltar / avançar).
+    scripts: [{ children: fbqHistoryGuardScript }, { children: utmifyScript }],
   }),
   shellComponent: RootShell,
   component: RootComponent,
