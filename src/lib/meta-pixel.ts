@@ -18,6 +18,11 @@ export const META_PIXEL_ID = "1103498362282038";
  *   de recriá-la, caso outra integração já tenha carregado o `fbevents.js`.
  *
  * Por isso `init` e `PageView` disparam exatamente uma vez por page load.
+ *
+ * `fbq.disablePushState = true` desliga o PageView automático que o
+ * `fbevents.js` dispara em cada mudança de histórico (pushState/replaceState/
+ * popstate). Sem isso, clicar em âncoras como "#planos" contaria um PageView
+ * extra — e o requisito é contar só a entrada na página.
  */
 export const metaPixelScript = `
 (function () {
@@ -40,6 +45,7 @@ export const metaPixelScript = `
     s = b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t, s);
   })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+  window.fbq.disablePushState = true;
   window.fbq("init", id);
   window.fbq("track", "PageView");
 })();
