@@ -361,8 +361,8 @@ function Plans() {
             <p className="mt-1 text-sm text-muted-foreground">
               Mais recursos para planejar suas aulas e acompanhar seus alunos.
             </p>
-            <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-4">
-              <div className="flex h-36 w-36 shrink-0 items-center justify-center sm:h-40 sm:w-40">
+            <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-4 md:flex-col md:gap-2 lg:flex-row lg:gap-4">
+              <div className="flex h-48 w-48 shrink-0 items-center justify-center sm:h-44 sm:w-44">
                 <img
                   src="/mockup-completo.webp"
                   alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
@@ -370,7 +370,7 @@ function Plans() {
                   className="h-full w-full object-contain drop-shadow-sm"
                 />
               </div>
-              <div className="text-center sm:text-left">
+              <div className="text-center sm:text-left md:text-center lg:text-left">
                 <p className="font-display text-5xl font-extrabold text-primary">
                   {completo.price ?? (
                     <span className="text-xl text-muted-foreground">Preço a definir</span>
