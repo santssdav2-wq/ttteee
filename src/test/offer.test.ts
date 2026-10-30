@@ -50,4 +50,10 @@ describe("preserved offer and approved additions", () => {
     expect(offer.upgrade.items).toHaveLength(4);
     expect(offer.upgrade.checkoutUrl).toBe("https://pay.cakto.com.br/dc5aynu");
   });
+
+  it("anchors the complete plan on the sum of the bonus reference prices", () => {
+    const completo = offer.plans.find((plan) => plan.id === "completo");
+    expect(completo?.anchorPrice).toBe("R$ 114,80");
+    expect(completo?.anchorLabel).toBe("Os 3 bônus valem");
+  });
 });

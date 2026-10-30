@@ -24,6 +24,10 @@ export type Plan = {
   checkoutUrl: string | null;
   ctaLabel: string;
   highlight?: boolean;
+  /** Rótulo da ancoragem de preço exibida abaixo da lista (ex.: "Os 3 bônus valem"). */
+  anchorLabel?: string | null;
+  /** Valor riscado da ancoragem. Derivado da soma dos bônus, exibido abaixo da lista. */
+  anchorPrice?: string | null;
 };
 
 /** Oferta de upgrade mostrada em popup quando o visitante escolhe o Plano Básico. */
@@ -49,6 +53,45 @@ export type Bonus = {
   includedAtNoExtraCost: boolean;
 };
 export type Testimonial = { name: string; role?: string; text?: string; image?: string };
+
+/**
+ * Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência.
+ * Ficam fora do objeto `offer` para que a soma dos valores possa alimentar a
+ * ancoragem de preço do Plano Completo sem duplicar números no código.
+ */
+const bonuses = [
+  {
+    title: "Certificado de Capoeira Infantil",
+    description: "Um certificado para reconhecer a participação das crianças.",
+    image: "/certificado.webp",
+    referencePrice: "R$ 37,00",
+    includedAtNoExtraCost: true,
+  },
+  {
+    title: "Ficha de Acompanhamento dos Alunos",
+    description: "Acompanhe a evolução e registre as conquistas da turma.",
+    image: "/acompanhamento-alunos.webp",
+    referencePrice: "R$ 27,90",
+    includedAtNoExtraCost: true,
+  },
+  {
+    title: "Ficha de Planejamento de Aula",
+    description: "Organize os objetivos, as atividades e os materiais de cada aula.",
+    image: "/planejamento-aula.webp",
+    referencePrice: "R$ 49,90",
+    includedAtNoExtraCost: true,
+  },
+] as Bonus[];
+
+/** Soma dos preços de referência dos bônus, formatada em reais (ex.: "R$ 114,80"). */
+const bonusesReferenceTotal = (() => {
+  const cents = bonuses.reduce((total, bonus) => {
+    const digits = (bonus.referencePrice ?? "").replace(/[^\d,]/g, "").replace(",", ".");
+    const value = Number(digits);
+    return total + (Number.isFinite(value) ? Math.round(value * 100) : 0);
+  }, 0);
+  return `R$ ${(cents / 100).toFixed(2).replace(".", ",")}`;
+})();
 
 export const offer = {
   brand: "União Capoeirista",
@@ -89,6 +132,8 @@ export const offer = {
       checkoutUrl: "https://pay.cakto.com.br/36egbwo",
       ctaLabel: "QUERO O PACOTE COMPLETO",
       highlight: true,
+      anchorLabel: "Os 3 bônus valem",
+      anchorPrice: bonusesReferenceTotal,
     },
   ] satisfies Plan[],
 
@@ -110,30 +155,8 @@ export const offer = {
     checkoutUrl: "https://pay.cakto.com.br/dc5aynu",
   } satisfies UpgradeOffer,
 
-  /** Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência. */
-  bonuses: [
-    {
-      title: "Certificado de Capoeira Infantil",
-      description: "Um certificado para reconhecer a participação das crianças.",
-      image: "/certificado.webp",
-      referencePrice: "R$ 37,00",
-      includedAtNoExtraCost: true,
-    },
-    {
-      title: "Ficha de Acompanhamento dos Alunos",
-      description: "Acompanhe a evolução e registre as conquistas da turma.",
-      image: "/acompanhamento-alunos.webp",
-      referencePrice: "R$ 27,90",
-      includedAtNoExtraCost: true,
-    },
-    {
-      title: "Ficha de Planejamento de Aula",
-      description: "Organize os objetivos, as atividades e os materiais de cada aula.",
-      image: "/planejamento-aula.webp",
-      referencePrice: "R$ 49,90",
-      includedAtNoExtraCost: true,
-    },
-  ] as Bonus[],
+  /** Bônus reais (definidos acima para que a soma alimente a ancoragem de preço). */
+  bonuses,
 
   /** Depoimentos autênticos. Lista vazia = seção oculta. */
   testimonials: [] as Testimonial[],

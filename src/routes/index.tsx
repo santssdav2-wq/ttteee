@@ -511,28 +511,13 @@ function Plans() {
             <p className="mt-1 text-sm text-muted-foreground">
               Mais recursos para planejar suas aulas e acompanhar seus alunos.
             </p>
-            <div className="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:items-center sm:gap-4 md:flex-col md:gap-2 lg:flex-row lg:gap-4">
-              <div className="flex h-48 w-48 shrink-0 items-center justify-center sm:h-44 sm:w-44">
-                <img
-                  src="/mockup-completo.webp"
-                  alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
-                  loading="lazy"
-                  className="h-full w-full object-contain drop-shadow-sm"
-                />
-              </div>
-              <div className="text-center sm:text-left md:text-center lg:text-left">
-                <p className="font-display text-5xl font-extrabold text-primary">
-                  {completo.price ?? (
-                    <span className="text-xl text-muted-foreground">Preço a definir</span>
-                  )}
-                </p>
-                {completo.priceNote && (
-                  <p className="text-xs text-muted-foreground">{completo.priceNote}</p>
-                )}
-                <p className="mt-1 text-xs font-semibold text-green-700">
-                  + {basico?.name?.toLowerCase()} + 3 bônus inclusos
-                </p>
-              </div>
+            <div className="mt-4 flex justify-center">
+              <img
+                src="/mockup-completo.webp"
+                alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
+                loading="lazy"
+                className="h-48 w-48 object-contain drop-shadow-sm sm:h-44 sm:w-44"
+              />
             </div>
             <ul className="my-5 flex-1 space-y-2">
               {completo.items.map((it) => (
@@ -549,6 +534,29 @@ function Plans() {
                 </li>
               ))}
             </ul>
+            <div className="mb-5 rounded-xl border border-gold/70 bg-gradient-to-b from-gold/20 to-gold/5 px-4 py-4 text-center">
+              {completo.anchorPrice && (
+                <p className="text-[13px] font-semibold text-ink/70">
+                  {completo.anchorLabel}{" "}
+                  <span className="text-[15px] font-extrabold text-ink/60 line-through decoration-2">
+                    {completo.anchorPrice}
+                  </span>
+                </p>
+              )}
+              <p className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-green-700">
+                Hoje o pacote completo sai por
+              </p>
+              <p className="font-display text-5xl font-extrabold leading-none text-primary sm:text-6xl">
+                {completo.price ?? (
+                  <span className="text-xl text-muted-foreground">Preço a definir</span>
+                )}
+              </p>
+              {completo.priceNote && (
+                <p className="mt-1 text-xs font-semibold text-muted-foreground">
+                  {completo.priceNote}
+                </p>
+              )}
+            </div>
             <CheckoutButton plan={completo} />
           </article>
         )}
