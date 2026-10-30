@@ -132,7 +132,7 @@ export const offer = {
       checkoutUrl: "https://pay.cakto.com.br/36egbwo",
       ctaLabel: "QUERO O PACOTE COMPLETO",
       highlight: true,
-      anchorLabel: "Os 3 bônus valem",
+      anchorLabel: "Os bônus valem",
       anchorPrice: bonusesReferenceTotal,
     },
   ] satisfies Plan[],

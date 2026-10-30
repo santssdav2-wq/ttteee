@@ -54,6 +54,6 @@ describe("preserved offer and approved additions", () => {
   it("anchors the complete plan on the sum of the bonus reference prices", () => {
     const completo = offer.plans.find((plan) => plan.id === "completo");
     expect(completo?.anchorPrice).toBe("R$ 114,80");
-    expect(completo?.anchorLabel).toBe("Os 3 bônus valem");
+    expect(completo?.anchorLabel).toBe("Os bônus valem");
   });
 });
