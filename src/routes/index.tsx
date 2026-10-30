@@ -88,28 +88,8 @@ function Hero() {
   const [showButton, setShowButton] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Pausa o vídeo quando ele sai da tela (economiza CPU/bateria no celular).
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    let wasPlaying = false;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (!entry) return;
-        if (entry.isIntersecting) {
-          if (wasPlaying && !video.ended) void video.play().catch(() => {});
-        } else if (!video.paused) {
-          wasPlaying = true;
-          video.pause();
-        }
-      },
-      { threshold: 0.2 },
-    );
-    observer.observe(video);
-    return () => observer.disconnect();
-  }, []);
-
+  // O vídeo NÃO pausa ao rolar a página: quem começa a assistir continua
+  // ouvindo enquanto navega pelo conteúdo.
   return (
     <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
