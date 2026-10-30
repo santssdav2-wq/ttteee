@@ -215,7 +215,7 @@ const receiveItems = [
   {
     icon: Printer,
     title: "Pronto para Imprimir",
-    text: "Leve para o tatame sem depender de tecnologia.",
+    text: "Aplique nas aulas sem depender de tecnologia.",
   },
 ];
 
