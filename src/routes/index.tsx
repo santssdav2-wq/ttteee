@@ -564,7 +564,7 @@ function Bonuses() {
           E NÃO PARA <span className="font-bold text-gold">POR AÍ</span>!
         </SectionTitle>
         <p className="mx-auto mb-5 max-w-xl text-center text-sm leading-relaxed text-forest-muted sm:mb-6">
-          Três materiais extras{" "}
+          Materiais extras{" "}
           <span className="font-semibold text-gold">inclusos no Material Completo</span> para
           reconhecer, acompanhar e planejar suas aulas.
         </p>
