@@ -108,7 +108,7 @@ export const offer = {
         { label: "Material digital para consulta" },
         { label: "Propostas prontas para as aulas" },
       ] as PlanItem[],
-      checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1256599",
+      checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1261237",
       ctaLabel: "QUERO O MATERIAL BÁSICO",
     },
     {

@@ -32,7 +32,7 @@ describe("preserved offer and approved additions", () => {
         id: "basico",
         price: "R$ 10,00",
         oldPrice: null,
-        checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1256599",
+        checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1261237",
       },
       {
         id: "completo",
