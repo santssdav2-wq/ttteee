@@ -294,7 +294,7 @@ const audience = [
 function Audience() {
   return (
     <Section className="bg-card">
-      <SectionTitle eyebrow="Para quem é">
+      <SectionTitle eyebrow="Para quem é?">
         Feito Para <span className="text-green-600 font-bold">Quem Ensina Capoeira</span>
       </SectionTitle>
       <ul className="mx-auto max-w-2xl divide-y">
@@ -332,7 +332,7 @@ function CountdownTimer() {
   );
 }
 
-/** Popup de upgrade exibido ao escolher o Plano Básico. */
+/** Popup de upgrade exibido ao escolher o Material Básico. */
 function UpgradeDialog({
   open,
   onClose,
@@ -585,7 +585,7 @@ function Bonuses() {
         </SectionTitle>
         <p className="mx-auto mb-5 max-w-xl text-center text-sm leading-relaxed text-forest-muted sm:mb-6">
           Três materiais extras{" "}
-          <span className="font-semibold text-gold">inclusos no Plano Completo</span> para
+          <span className="font-semibold text-gold">inclusos no Material Completo</span> para
           reconhecer, acompanhar e planejar suas aulas.
         </p>
 

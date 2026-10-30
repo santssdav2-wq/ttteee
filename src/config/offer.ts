@@ -30,7 +30,7 @@ export type Plan = {
   anchorPrice?: string | null;
 };
 
-/** Oferta de upgrade mostrada em popup quando o visitante escolhe o Plano Básico. */
+/** Oferta de upgrade mostrada em popup quando o visitante escolhe o Material Básico. */
 export type UpgradeOffer = {
   title: string;
   subtitle: string;
@@ -57,7 +57,7 @@ export type Testimonial = { name: string; role?: string; text?: string; image?: 
 /**
  * Bônus reais. referencePrice: preencha com o valor real; null = não exibir preço de referência.
  * Ficam fora do objeto `offer` para que a soma dos valores possa alimentar a
- * ancoragem de preço do Plano Completo sem duplicar números no código.
+ * ancoragem de preço do Material Completo sem duplicar números no código.
  */
 const bonuses = [
   {
@@ -99,7 +99,7 @@ export const offer = {
   plans: [
     {
       id: "basico",
-      name: "Plano Básico",
+      name: "Material Básico",
       price: "R$ 10,00",
       oldPrice: null,
       priceNote: "Pagamento único",
@@ -109,11 +109,11 @@ export const offer = {
         { label: "Propostas prontas para as aulas" },
       ] as PlanItem[],
       checkoutUrl: "https://pay.cakto.com.br/jvzcvhq_1256599",
-      ctaLabel: "QUERO O PLANO BÁSICO",
+      ctaLabel: "QUERO O MATERIAL BÁSICO",
     },
     {
       id: "completo",
-      name: "Plano Completo",
+      name: "Material Completo",
       price: "R$ 27,90",
       oldPrice: null,
       priceNote: "Pagamento único",
@@ -130,14 +130,14 @@ export const offer = {
         { label: "Ficha de Acompanhamento dos Alunos", gift: true },
       ] as PlanItem[],
       checkoutUrl: "https://pay.cakto.com.br/36egbwo",
-      ctaLabel: "QUERO O PACOTE COMPLETO",
+      ctaLabel: "QUERO O MATERIAL COMPLETO",
       highlight: true,
       anchorLabel: "Os bônus valem",
       anchorPrice: bonusesReferenceTotal,
     },
   ] satisfies Plan[],
 
-  /** Popup exibido ao clicar no Plano Básico: oferece a versão completa com os bônus. */
+  /** Popup exibido ao clicar no Material Básico: oferece a versão completa com os bônus. */
   upgrade: {
     title: "Espere! Temos uma opção melhor para você 👀",
     subtitle: "Leve a versão completa do União Capoeirista com todos os bônus incluídos.",
@@ -151,7 +151,7 @@ export const offer = {
       "Ficha de acompanhamento dos alunos",
     ],
     ctaLabel: "QUERO A VERSÃO COMPLETA",
-    dismissLabel: "Não, vou continuar com o plano básico",
+    dismissLabel: "Não, vou continuar com o material básico",
     checkoutUrl: "https://pay.cakto.com.br/dc5aynu",
   } satisfies UpgradeOffer,
 
@@ -200,7 +200,7 @@ export const offer = {
     },
     {
       q: "Para quem são indicadas as dinâmicas?",
-      a: "Para professores, instrutores, mestres e profissionais que conduzem aulas e atividades de capoeira.",
+      a: "Para professores, instrutores, mestres e profissionais que conduzem aulas e atividades de capoeira para crianças, adolescentes e até adultos iniciantes.",
     },
     {
       q: "Preciso de materiais específicos para aplicar as atividades?",
