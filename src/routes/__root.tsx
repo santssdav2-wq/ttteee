@@ -119,7 +119,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR">
+    // O script de reveal adiciona a classe `reveal-ready` no <html> antes do
+    // primeiro paint; sem isso o React avisaria sobre a diferença de className.
+    <html lang="pt-BR" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>
