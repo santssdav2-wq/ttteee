@@ -15,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { fbqHistoryGuardScript } from "../lib/fbq-history-guard";
 import { revealReadyScript } from "../lib/reveal-ready";
 import { utmifyScript } from "../lib/utmify";
+import { utmifyStaleLeadScript } from "../lib/utmify-stale-lead";
 
 function NotFoundComponent() {
   return (
@@ -104,11 +105,13 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     // Rastreamento global: a UTMify carrega o Pixel da Meta e a API de
     // Conversões. O guard roda antes e apenas desliga o PageView automático
-    // em mudanças de histórico (âncoras / voltar / avançar).
+    // em mudanças de histórico (âncoras / voltar / avançar). O guard do lead
+    // roda logo depois do snippet e descarta leads salvos por outro pixel.
     scripts: [
       { children: revealReadyScript },
       { children: fbqHistoryGuardScript },
       { children: utmifyScript },
+      { children: utmifyStaleLeadScript },
     ],
   }),
   shellComponent: RootShell,
