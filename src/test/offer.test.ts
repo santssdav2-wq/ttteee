@@ -56,4 +56,30 @@ describe("preserved offer and approved additions", () => {
     expect(completo?.anchorPrice).toBe("R$ 114,80");
     expect(completo?.anchorLabel).toBe("Os bônus valem");
   });
+
+  it("lists the plan items in the approved order", () => {
+    const basico = offer.plans.find((plan) => plan.id === "basico");
+    const completo = offer.plans.find((plan) => plan.id === "completo");
+
+    expect(basico?.items.map((item) => item.label)).toEqual([
+      "+300 dinâmicas interativas de capoeira",
+      "Material digital para consulta",
+      "Propostas prontas para as aulas",
+      "Acesso vitalício",
+      "Garantia de 7 dias",
+    ]);
+
+    expect(completo?.items.map((item) => item.label)).toEqual([
+      "+300 dinâmicas interativas de capoeira",
+      "Atualizações mensais",
+      "Suporte prioritário",
+      "Material digital para consulta",
+      "Propostas prontas para as aulas",
+      "Acesso vitalício",
+      "Garantia de 7 dias",
+      "Certificado de Capoeira Infantil",
+      "Planejamento de Aula",
+      "Ficha de Acompanhamento dos Alunos",
+    ]);
+  });
 });
