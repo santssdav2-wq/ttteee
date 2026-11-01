@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 import {
   BookOpen,
@@ -90,11 +90,40 @@ function TopBar() {
 }
 
 function Hero() {
-  const [showButton, setShowButton] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [started, setStarted] = useState(false);
+  const [playing, setPlaying] = useState(true);
 
   // O vídeo NÃO pausa ao rolar a página: quem começa a assistir continua
   // ouvindo enquanto navega pelo conteúdo.
+  //
+  // O player nativo fica escondido (sem o atributo `controls`): nada de barra
+  // de progresso, tempo ou botões. O toque em qualquer ponto da moldura é o
+  // único controle — o primeiro reinicia do começo com som; os seguintes
+  // pausam e retomam exatamente de onde pararam, também com som.
+  const togglePlayback = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (!started) {
+      video.muted = false;
+      video.currentTime = 0;
+      void video.play();
+      setStarted(true);
+      return;
+    }
+    if (video.paused) {
+      void video.play();
+    } else {
+      video.pause();
+    }
+  };
+
+  const handleToggleKey = (e: ReactKeyboardEvent<HTMLDivElement>) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    togglePlayback();
+  };
+
   return (
     <section className="relative bg-background px-5 pb-8 pt-8 sm:pb-10 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
@@ -111,44 +140,36 @@ function Hero() {
             muted
             playsInline
             preload="metadata"
-            controls
+            onPlay={() => setPlaying(true)}
+            onPause={() => setPlaying(false)}
             className="aspect-[9/16] h-auto w-full"
           />
-          {showButton && (
-            <>
-              {/* Camada invisível cobrindo toda a moldura: clicar em qualquer ponto inicia com som. */}
-              <div
-                role="button"
-                tabIndex={0}
-                aria-label="Toque para assistir com som"
-                className="absolute inset-0 z-10 cursor-pointer"
-                onClick={() => {
-                  const video = videoRef.current;
-                  if (!video) return;
-                  video.muted = false;
-                  video.currentTime = 0;
-                  void video.play();
-                  setShowButton(false);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    const video = videoRef.current;
-                    if (!video) return;
-                    video.muted = false;
-                    video.currentTime = 0;
-                    void video.play();
-                    setShowButton(false);
-                  }
-                }}
-              />
-              <button
-                type="button"
-                className="pulse-cta pointer-events-none absolute left-1/2 top-1/2 z-20 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs text-balance font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:max-w-[calc(100%-0.75rem)] sm:px-3 sm:py-2 sm:text-[0.72rem]"
-              >
-                🔊 TOQUE PARA ASSISTIR COM SOM
-              </button>
-            </>
+          {/* Camada invisível cobrindo toda a moldura: é o único controle do
+              vídeo. 1º toque inicia do começo com som; depois alterna pausa e
+              continuação de onde parou. */}
+          <div
+            role="button"
+            tabIndex={0}
+            aria-label={
+              !started
+                ? "Toque para assistir com som"
+                : playing
+                  ? "Pausar vídeo"
+                  : "Continuar vídeo de onde parou"
+            }
+            className="absolute inset-0 z-10 cursor-pointer"
+            onClick={togglePlayback}
+            onKeyDown={handleToggleKey}
+          />
+          {!started && (
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="pulse-cta pointer-events-none absolute left-1/2 top-1/2 z-20 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs text-balance font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:max-w-[calc(100%-0.75rem)] sm:px-3 sm:py-2 sm:text-[0.72rem]"
+            >
+              🔊 TOQUE PARA ASSISTIR COM SOM
+            </button>
           )}
         </div>
         <p className="font-hero mt-4 max-w-xl text-balance text-[15px] font-normal leading-relaxed text-muted-foreground sm:text-base">
