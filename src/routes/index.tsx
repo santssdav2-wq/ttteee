@@ -99,7 +99,7 @@ function Hero() {
           +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
           nas aulas de <span className="text-green-600">CAPOEIRA</span>
         </h1>
-        <div className="relative mx-auto mt-6 w-[65%] max-w-2xl overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:w-full">
+        <div className="relative mx-auto mt-6 w-[65%] max-w-2xl overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:h-[clamp(200px,calc(100vh-401px),560px)] sm:w-auto sm:max-w-none sm:aspect-[9/16]">
           <video
             ref={videoRef}
             src="/vsl.mp4"
@@ -141,7 +141,7 @@ function Hero() {
               />
               <button
                 type="button"
-                className="pulse-cta pointer-events-none absolute left-1/2 top-1/2 z-20 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:px-5 sm:py-3 sm:text-sm"
+                className="pulse-cta pointer-events-none absolute left-1/2 top-1/2 z-20 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs text-balance font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:max-w-[calc(100%-0.75rem)] sm:px-3 sm:py-2 sm:text-[0.72rem]"
               >
                 🔊 TOQUE PARA ASSISTIR COM SOM
               </button>
