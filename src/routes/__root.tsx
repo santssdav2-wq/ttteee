@@ -107,11 +107,21 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     // Conversões. O guard roda antes e apenas desliga o PageView automático
     // em mudanças de histórico (âncoras / voltar / avançar). O guard do lead
     // roda logo depois do snippet e descarta leads salvos por outro pixel.
+    // O script de UTMs (utms/latest.js) captura os parâmetros da URL e os
+    // preserva nos links de checkout (Cakto) — sem ele as vendas chegam
+    // como "não rastreadas".
     scripts: [
       { children: revealReadyScript },
       { children: fbqHistoryGuardScript },
       { children: utmifyScript },
       { children: utmifyStaleLeadScript },
+      {
+        src: "https://cdn.utmify.com.br/scripts/utms/latest.js",
+        async: true,
+        defer: true,
+        "data-utmify-prevent-xcod-sck": "",
+        "data-utmify-prevent-subids": "",
+      },
     ],
   }),
   shellComponent: RootShell,

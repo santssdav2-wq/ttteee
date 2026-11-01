@@ -92,6 +92,7 @@ export function CheckoutButton({
       href={plan.checkoutUrl}
       className={className}
       rel="noopener"
+      suppressHydrationWarning
       onClick={
         onSelect
           ? (event) => {

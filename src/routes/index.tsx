@@ -437,6 +437,7 @@ function UpgradeDialog({
             href={upgrade.checkoutUrl}
             className="btn-cta btn-cta-gold-pulse mt-5"
             rel="noopener"
+            suppressHydrationWarning
           >
             {upgrade.ctaLabel}
           </a>
