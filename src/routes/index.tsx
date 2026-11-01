@@ -27,6 +27,7 @@ import {
   Carousel,
   MaterialPage,
 } from "@/components/sales/parts";
+import { ScrollReveal } from "@/components/sales/scroll-reveal";
 import {
   Accordion,
   AccordionContent,
@@ -61,6 +62,7 @@ export const Route = createFileRoute("/")({
 function Index() {
   return (
     <main className="overflow-x-hidden">
+      <ScrollReveal />
       <TopBar />
       <Hero />
       <Receive />
@@ -95,7 +97,7 @@ function Hero() {
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
         <h1 className="font-headline mx-auto max-w-3xl text-balance text-[1.5rem] font-extrabold leading-[1.26] tracking-[-0.01em] text-ink sm:text-[2.05rem] sm:leading-[1.2]">
           +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
-          nas aulas de <span className="text-green-600">capoeira</span>
+          nas aulas de <span className="text-green-600">CAPOEIRA</span>
         </h1>
         <div className="relative mx-auto mt-6 w-[65%] max-w-2xl overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:w-full">
           <video
@@ -190,9 +192,11 @@ function Receive() {
         O Que Você <span className="text-green-600 font-bold">Vai Receber</span>?
       </SectionTitle>
       <ul className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:gap-4">
-        {receiveItems.map(({ icon: Icon, title, text }) => (
+        {receiveItems.map(({ icon: Icon, title, text }, i) => (
           <li
             key={title}
+            data-reveal
+            style={{ transitionDelay: `${i * 60}ms` }}
             className="flex items-start gap-3 rounded-lg border bg-background p-3 sm:gap-4 sm:p-5"
           >
             <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-forest text-gold sm:h-11 sm:w-11">
@@ -205,7 +209,7 @@ function Receive() {
           </li>
         ))}
       </ul>
-      <div className="mt-6 border-t pt-6 sm:mt-8 sm:pt-8">
+      <div className="mt-6 border-t pt-6 sm:mt-8 sm:pt-8" data-reveal>
         <Demo />
       </div>
     </Section>
@@ -262,8 +266,13 @@ function Audience() {
         Feito Para <span className="text-green-600 font-bold">Quem Ensina Capoeira</span>
       </SectionTitle>
       <ul className="mx-auto max-w-2xl divide-y">
-        {audience.map(({ icon: Icon, t }) => (
-          <li key={t} className="flex items-center gap-4 py-4">
+        {audience.map(({ icon: Icon, t }, i) => (
+          <li
+            key={t}
+            data-reveal
+            style={{ transitionDelay: `${i * 70}ms` }}
+            className="flex items-center gap-4 py-4"
+          >
             <Icon className="h-6 w-6 shrink-0 text-cta" />
             <span className="text-[16px] font-semibold text-ink">{t}</span>
           </li>
@@ -437,7 +446,10 @@ function Plans() {
       </p>
       <div className="mx-auto grid max-w-4xl items-stretch gap-6 md:grid-cols-2">
         {basico && (
-          <article className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-5 shadow-sm sm:p-6">
+          <article
+            className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-5 shadow-sm sm:p-6"
+            data-reveal
+          >
             <h3 className="font-display text-2xl font-extrabold text-ink">{basico.name}</h3>
             <p className="mt-1 text-sm text-muted-foreground">
               O essencial para ampliar seu repertório de atividades.
@@ -467,7 +479,11 @@ function Plans() {
           </article>
         )}
         {completo && (
-          <article className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-5 shadow-lg sm:p-6 md:-mt-3">
+          <article
+            className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-5 shadow-lg sm:p-6 md:-mt-3"
+            data-reveal
+            style={{ transitionDelay: "90ms" }}
+          >
             <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-ink">
               PACOTE MAIS COMPLETO
             </span>
@@ -543,7 +559,7 @@ function Bonuses() {
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.83_0.15_84/0.22),transparent)]"
       />
-      <div className="relative mx-auto w-full max-w-5xl">
+      <div className="relative mx-auto w-full max-w-5xl" data-reveal>
         <SectionTitle light compact>
           E NÃO PARA <span className="font-bold text-gold">POR AÍ</span>!
         </SectionTitle>
@@ -554,9 +570,11 @@ function Bonuses() {
         </p>
 
         <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3">
-          {offer.bonuses.map((b) => (
+          {offer.bonuses.map((b, i) => (
             <li
               key={b.title}
+              data-reveal
+              style={{ transitionDelay: `${i * 90}ms` }}
               className="flex flex-col items-center rounded-2xl border border-gold/25 bg-[#FAF5E9] p-3 text-center shadow-lg shadow-black/10 sm:p-4"
             >
               <div className="w-full overflow-hidden rounded-xl md:aspect-square">
@@ -630,7 +648,10 @@ function Guarantee() {
   if (!g) return null;
   return (
     <section className="bg-card px-5 py-10 sm:py-12">
-      <div className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center sm:flex-row sm:text-left">
+      <div
+        className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center sm:flex-row sm:text-left"
+        data-reveal
+      >
         <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full border-4 border-gold bg-forest text-gold">
           <div className="text-center leading-none">
             <ShieldCheck className="mx-auto h-6 w-6" />
@@ -670,7 +691,7 @@ function Faq() {
 function FinalCta() {
   return (
     <section className="bg-forest px-5 py-16 text-center text-forest-foreground">
-      <div className="mx-auto max-w-xl">
+      <div className="mx-auto max-w-xl" data-reveal>
         <Target className="mx-auto mb-3 h-8 w-8 text-gold" />
         <h2 className="text-[1.65rem] font-extrabold leading-[1.1] sm:text-4xl">
           Tenha Mais Dinâmicas à Sua Disposição Para as{" "}

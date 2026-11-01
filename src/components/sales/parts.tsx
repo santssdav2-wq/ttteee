@@ -15,7 +15,9 @@ export function Section({
 }) {
   return (
     <section id={id} className={`px-5 ${spacing} ${className}`}>
-      <div className="mx-auto w-full max-w-5xl">{children}</div>
+      <div className="mx-auto w-full max-w-5xl" data-reveal>
+        {children}
+      </div>
     </section>
   );
 }
