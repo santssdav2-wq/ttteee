@@ -91,7 +91,7 @@ function Hero() {
   // O vídeo NÃO pausa ao rolar a página: quem começa a assistir continua
   // ouvindo enquanto navega pelo conteúdo.
   return (
-    <section className="relative bg-background px-5 pb-14 pt-8 sm:pt-14">
+    <section className="relative bg-background px-5 pb-8 pt-8 sm:pb-10 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
         <h1 className="isolate font-display font-extrabold leading-[1.02] tracking-tight text-ink">
           <span className="block text-[1.55rem] sm:text-[2.6rem]">
@@ -201,7 +201,7 @@ const receiveItems = [
 
 function Receive() {
   return (
-    <Section className="bg-card">
+    <Section className="bg-card" spacing="pb-8 pt-8 sm:pb-10 sm:pt-10">
       <SectionTitle eyebrow="O material">
         O Que Você <span className="text-green-600 font-bold">Vai Receber</span>?
       </SectionTitle>
@@ -221,7 +221,7 @@ function Receive() {
           </li>
         ))}
       </ul>
-      <div className="mt-10 border-t pt-10 sm:mt-12 sm:pt-12">
+      <div className="mt-6 border-t pt-6 sm:mt-8 sm:pt-8">
         <Demo />
       </div>
     </Section>
@@ -273,7 +273,7 @@ const audience = [
 
 function Audience() {
   return (
-    <Section className="bg-card">
+    <Section className="bg-card" spacing="pb-8 pt-8 sm:pb-10 sm:pt-10">
       <SectionTitle eyebrow="Para quem é?">
         Feito Para <span className="text-green-600 font-bold">Quem Ensina Capoeira</span>
       </SectionTitle>
@@ -554,7 +554,7 @@ function Bonuses() {
   if (!offer.bonuses.length) return null;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-5 py-9 text-forest-foreground sm:py-11">
+    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-5 pb-9 pt-8 text-forest-foreground sm:pb-11 sm:pt-10">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.83_0.15_84/0.22),transparent)]"

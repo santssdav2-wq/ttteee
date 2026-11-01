@@ -4,14 +4,17 @@ import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 export function Section({
   id,
   className = "",
+  spacing = "py-14 sm:py-20",
   children,
 }: {
   id?: string;
   className?: string;
+  /** Substitui o padding vertical padrão quando a seção precisa de respiro menor. */
+  spacing?: string;
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={`px-5 py-14 sm:py-20 ${className}`}>
+    <section id={id} className={`px-5 ${spacing} ${className}`}>
       <div className="mx-auto w-full max-w-5xl">{children}</div>
     </section>
   );
