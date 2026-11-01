@@ -55,6 +55,9 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    // A capa do vídeo é o maior elemento da primeira dobra (LCP no mobile).
+    // Antecipar o download evita que o navegador só a busque ao montar o <video>.
+    links: [{ rel: "preload", as: "image", href: "/vsl-poster.webp", fetchPriority: "high" }],
   }),
   component: Index,
 });
@@ -103,7 +106,7 @@ function Hero() {
           <video
             ref={videoRef}
             src="/vsl.mp4"
-            poster="/vsl-poster.jpg"
+            poster="/vsl-poster.webp"
             autoPlay
             muted
             playsInline
@@ -235,6 +238,7 @@ function Demo() {
                 src={imgs[i].src}
                 alt={imgs[i].alt}
                 loading="lazy"
+                decoding="async"
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -496,6 +500,7 @@ function Plans() {
                 src="/mockup-completo.webp"
                 alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
                 loading="lazy"
+                decoding="async"
                 className="h-48 w-48 object-contain drop-shadow-sm sm:h-44 sm:w-44"
               />
             </div>
@@ -583,6 +588,7 @@ function Bonuses() {
                     src={b.image}
                     alt={b.title}
                     loading="lazy"
+                    decoding="async"
                     className="h-auto w-full object-contain mix-blend-multiply md:h-full"
                   />
                 ) : (
@@ -634,6 +640,7 @@ function Testimonials() {
               src={img.src}
               alt={img.alt}
               loading="lazy"
+              decoding="async"
               className="h-full w-full object-contain"
             />
           </div>
