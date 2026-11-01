@@ -171,6 +171,22 @@ function Hero() {
               🔊 TOQUE PARA ASSISTIR COM SOM
             </button>
           )}
+          {/* Balão de pausa: some sozinho quando o vídeo volta a tocar. */}
+          {started && !playing && (
+            <button
+              type="button"
+              tabIndex={-1}
+              aria-hidden="true"
+              className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-max max-w-[calc(100%-1rem)] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-0.5 rounded-xl bg-gold px-4 py-2 text-forest shadow-xl sm:px-3 sm:py-2"
+            >
+              <span className="text-xs font-extrabold leading-none sm:text-[0.72rem]">
+                ⏸ PAUSADO
+              </span>
+              <span className="text-[9px] font-bold uppercase leading-none tracking-wide text-forest/75 sm:text-[0.6rem]">
+                Toque para continuar
+              </span>
+            </button>
+          )}
         </div>
         <p className="font-hero mt-4 max-w-xl text-balance text-[15px] font-normal leading-relaxed text-muted-foreground sm:text-base">
           Mais de 300 atividades com objetivos, materiais necessários e passo a passo, organizadas
