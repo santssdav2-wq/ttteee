@@ -47,9 +47,15 @@ export function SectionTitle({
 }
 
 /** CTA geral: rola até a seção de planos. */
-export function CtaButton({ children }: { children: ReactNode }) {
+export function CtaButton({
+  children,
+  className = "",
+}: {
+  children: ReactNode;
+  className?: string;
+}) {
   return (
-    <a href={`#${PLANS_ANCHOR}`} className="btn-cta mx-auto max-w-md">
+    <a href={`#${PLANS_ANCHOR}`} className={`btn-cta mx-auto max-w-md ${className}`}>
       {children}
     </a>
   );

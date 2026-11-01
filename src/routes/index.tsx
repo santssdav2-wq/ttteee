@@ -93,25 +93,9 @@ function Hero() {
   return (
     <section className="relative bg-background px-5 pb-8 pt-8 sm:pb-10 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <h1 className="isolate font-display font-extrabold leading-[1.02] tracking-tight text-ink">
-          <span className="block text-[1.55rem] sm:text-[2.6rem]">
-            <span className="text-[2.6rem] text-cta sm:text-[4.2rem]">+300</span> Dinâmicas
-            Interativas de
-          </span>
-          <span className="relative mx-auto mt-1 block w-fit text-[3.1rem] text-green-600 sm:text-[5.2rem]">
-            Capoeira
-            <span
-              aria-hidden
-              className="absolute -bottom-0.5 left-1 right-1 h-2.5 -z-0 rounded-sm bg-gold/70 sm:h-4"
-              style={{ zIndex: -1 }}
-            />
-          </span>
-          <span className="mt-2 block text-[1.45rem] sm:text-[2.4rem]">
-            Prontas para{" "}
-            <span className="mt-1 inline-block whitespace-nowrap rounded bg-forest px-2 pb-0.5 text-gold">
-              Aplicar nas Aulas!
-            </span>
-          </span>
+        <h1 className="font-hero mx-auto max-w-3xl text-balance text-[1.55rem] font-bold leading-[1.28] tracking-[-0.01em] text-ink sm:text-[2.3rem] sm:leading-[1.2]">
+          +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
+          nas aulas de <span className="text-green-600">capoeira</span>
         </h1>
         <div className="relative mx-auto mt-6 w-[65%] max-w-2xl overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:w-full">
           <video
@@ -162,12 +146,12 @@ function Hero() {
             </>
           )}
         </div>
-        <p className="mt-4 max-w-md text-[15px] leading-relaxed text-muted-foreground sm:text-base">
-          Tenha mais opções de dinâmicas e atividades para variar suas aulas de capoeira e facilitar
-          a preparação das suas próximas propostas.
+        <p className="font-hero mt-4 max-w-xl text-balance text-[15px] font-normal leading-relaxed text-muted-foreground sm:text-base">
+          Mais de 300 atividades com objetivos, materiais necessários e passo a passo, organizadas
+          para você ter sempre uma nova ideia pronta para a próxima aula.
         </p>
         <div className="mt-2 w-full">
-          <CtaButton>QUERO MINHAS DINÂMICAS AGORA</CtaButton>
+          <CtaButton className="font-hero">QUERO AS +300 DINÂMICAS AGORA</CtaButton>
         </div>
       </div>
     </section>
