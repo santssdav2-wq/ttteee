@@ -93,7 +93,7 @@ function Hero() {
   return (
     <section className="relative bg-background px-5 pb-8 pt-8 sm:pb-10 sm:pt-14">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <h1 className="font-hero mx-auto max-w-3xl text-balance text-[1.55rem] font-bold leading-[1.28] tracking-[-0.01em] text-ink sm:text-[2.3rem] sm:leading-[1.2]">
+        <h1 className="font-headline mx-auto max-w-3xl text-balance text-[1.5rem] font-extrabold leading-[1.26] tracking-[-0.01em] text-ink sm:text-[2.05rem] sm:leading-[1.2]">
           +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
           nas aulas de <span className="text-green-600">capoeira</span>
         </h1>

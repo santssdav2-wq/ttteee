@@ -9,6 +9,8 @@
   --font-sans: "Figtree", system-ui, sans-serif;
   /** Primeira dobra: uma única família (Inter) na headline, subheadline e CTA. */
   --font-hero: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /** Headline da primeira dobra: Poppins ExtraBold. */
+  --font-headline: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
