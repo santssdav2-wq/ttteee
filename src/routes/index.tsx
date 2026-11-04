@@ -125,14 +125,14 @@ function Hero() {
   };
 
   return (
-    <section className="relative bg-background px-4 pb-6 pt-4 sm:pb-8 sm:pt-6">
+    <section className="relative bg-background px-4 pb-6 pt-6 sm:pb-8 sm:pt-8">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
         <p className="eyebrow">Material para quem ensina capoeira</p>
-        <h1 className="font-headline mx-auto mt-3 max-w-3xl text-balance text-[1.35rem] font-extrabold leading-[1.2] tracking-[-0.01em] text-ink sm:mt-3.5 sm:text-[2rem]">
+        <h1 className="font-headline mx-auto mt-4 max-w-3xl text-balance text-[1.35rem] font-extrabold leading-[1.2] tracking-[-0.01em] text-ink sm:mt-4.5 sm:text-[2rem]">
           +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
           nas aulas de <span className="text-green-600">CAPOEIRA</span>
         </h1>
-        <div className="relative mx-auto mt-3.5 aspect-[9/16] w-[calc(clamp(340px,45vh,400px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-5 sm:w-[calc(clamp(330px,52vh,470px)*9/16)] sm:rounded-2xl">
+        <div className="relative mx-auto mt-4.5 aspect-[9/16] w-[calc(clamp(340px,45vh,400px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-6 sm:w-[calc(clamp(330px,52vh,470px)*9/16)] sm:rounded-2xl">
           <video
             ref={videoRef}
             src="/vsl.mp4"
