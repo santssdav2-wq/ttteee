@@ -4,7 +4,7 @@ import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 export function Section({
   id,
   className = "",
-  spacing = "py-14 sm:py-20",
+  spacing = "py-9 sm:py-12",
   children,
 }: {
   id?: string;
@@ -14,7 +14,7 @@ export function Section({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className={`px-5 ${spacing} ${className}`}>
+    <section id={id} className={`px-4 ${spacing} ${className}`}>
       <div className="mx-auto w-full max-w-5xl" data-reveal>
         {children}
       </div>
@@ -35,15 +35,15 @@ export function SectionTitle({
 }) {
   return (
     <div
-      className={`flex flex-col items-center text-center ${compact ? "mb-3 sm:mb-4" : "mb-8 sm:mb-12"}`}
+      className={`flex flex-col items-center text-center ${compact ? "mb-3 sm:mb-4" : "mb-5 sm:mb-7"}`}
     >
-      {eyebrow && <span className="eyebrow mb-2">{eyebrow}</span>}
+      {eyebrow && <span className="eyebrow mb-1.5">{eyebrow}</span>}
       <h2
-        className={`max-w-xl text-[1.65rem] font-extrabold leading-[1.1] tracking-tight sm:text-4xl ${light ? "text-forest-foreground" : "text-ink"}`}
+        className={`max-w-xl text-[1.4rem] font-extrabold leading-[1.15] tracking-tight sm:text-[2rem] ${light ? "text-forest-foreground" : "text-ink"}`}
       >
         {children}
       </h2>
-      <div className={`berimbau-line ${compact ? "mt-2.5" : "mt-4"}`} />
+      <div className={`berimbau-line ${compact ? "mt-2.5" : "mt-3"}`} />
     </div>
   );
 }

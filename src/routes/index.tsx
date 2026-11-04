@@ -83,8 +83,8 @@ function Index() {
 
 function TopBar() {
   return (
-    <div className="bg-forest px-4 py-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] sm:text-[11px] text-gold">
-      Material digital para quem ensina capoeira
+    <div className="bg-forest px-4 py-1.5 text-center text-[10px] font-bold uppercase tracking-[0.14em] text-gold sm:text-[11px]">
+      Material digital | Acesso imediato
     </div>
   );
 }
@@ -125,13 +125,14 @@ function Hero() {
   };
 
   return (
-    <section className="relative bg-background px-5 pb-8 pt-8 sm:pb-10 sm:pt-14">
+    <section className="relative bg-background px-4 pb-6 pt-3 sm:pb-8 sm:pt-6">
       <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <h1 className="font-headline mx-auto max-w-3xl text-balance text-[1.5rem] font-extrabold leading-[1.26] tracking-[-0.01em] text-ink sm:text-[2.05rem] sm:leading-[1.2]">
+        <p className="eyebrow">Material para quem ensina capoeira</p>
+        <h1 className="font-headline mx-auto mt-1.5 max-w-3xl text-balance text-[1.35rem] font-extrabold leading-[1.2] tracking-[-0.01em] text-ink sm:mt-2 sm:text-[2rem]">
           +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
           nas aulas de <span className="text-green-600">CAPOEIRA</span>
         </h1>
-        <div className="relative mx-auto mt-6 w-[65%] max-w-2xl overflow-hidden rounded-2xl shadow-2xl sm:mt-8 sm:h-[clamp(200px,calc(100vh-401px),560px)] sm:w-auto sm:max-w-none sm:aspect-[9/16]">
+        <div className="relative mx-auto mt-3 aspect-[9/16] w-[calc(clamp(270px,38vh,320px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-4 sm:w-[calc(clamp(320px,50vh,460px)*9/16)] sm:rounded-2xl">
           <video
             ref={videoRef}
             src="/vsl.mp4"
@@ -142,7 +143,7 @@ function Hero() {
             preload="metadata"
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
-            className="aspect-[9/16] h-auto w-full"
+            className="h-full w-full object-cover"
           />
           {/* Camada invisível cobrindo toda a moldura: é o único controle do
               vídeo. 1º toque inicia do começo com som; depois alterna pausa e
@@ -152,7 +153,7 @@ function Hero() {
             tabIndex={0}
             aria-label={
               !started
-                ? "Toque para assistir com som"
+                ? "Toque para assistir com áudio"
                 : playing
                   ? "Pausar vídeo"
                   : "Continuar vídeo de onde parou"
@@ -166,9 +167,9 @@ function Hero() {
               type="button"
               tabIndex={-1}
               aria-hidden="true"
-              className="pulse-cta pointer-events-none absolute left-1/2 top-1/2 z-20 w-max -translate-x-1/2 -translate-y-1/2 rounded-xl bg-gold px-4 py-2 text-xs text-balance font-extrabold text-forest shadow-xl transition-all hover:opacity-90 sm:max-w-[calc(100%-0.75rem)] sm:px-3 sm:py-2 sm:text-[0.72rem]"
+              className="pulse-cta pointer-events-none absolute inset-x-2 top-1/2 z-20 mx-auto w-fit max-w-full -translate-y-1/2 rounded-xl bg-gold px-2.5 py-1.5 text-center text-[11px] font-extrabold leading-tight text-balance text-forest shadow-xl transition-all hover:opacity-90 sm:text-xs"
             >
-              🔊 TOQUE PARA ASSISTIR COM SOM
+              🔊 TOQUE PARA ASSISTIR COM ÁUDIO
             </button>
           )}
           {/* Balão de pausa: some sozinho quando o vídeo volta a tocar. */}
@@ -177,22 +178,20 @@ function Hero() {
               type="button"
               tabIndex={-1}
               aria-hidden="true"
-              className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex w-max max-w-[calc(100%-1rem)] -translate-x-1/2 -translate-y-1/2 flex-col items-center gap-0.5 rounded-xl bg-gold px-4 py-2 text-forest shadow-xl sm:px-3 sm:py-2"
+              className="pointer-events-none absolute inset-x-2 top-1/2 z-20 mx-auto flex w-fit max-w-full -translate-y-1/2 flex-col items-center gap-0.5 rounded-xl bg-gold px-2.5 py-1.5 text-forest shadow-xl sm:px-3 sm:py-2"
             >
-              <span className="text-xs font-extrabold leading-none sm:text-[0.72rem]">
-                ⏸ PAUSADO
-              </span>
-              <span className="text-[9px] font-bold uppercase leading-none tracking-wide text-forest/75 sm:text-[0.6rem]">
+              <span className="text-[11px] font-extrabold leading-none sm:text-xs">⏸ PAUSADO</span>
+              <span className="text-[9px] font-bold uppercase leading-none tracking-wide text-forest/75">
                 Toque para continuar
               </span>
             </button>
           )}
         </div>
-        <p className="font-hero mt-4 max-w-xl text-balance text-[15px] font-normal leading-relaxed text-muted-foreground sm:text-base">
+        <p className="font-hero mt-3 max-w-[27rem] text-balance text-[14px] leading-[1.5] text-muted-foreground sm:mt-4 sm:text-[15px]">
           Mais de 300 atividades com objetivos, materiais necessários e passo a passo, organizadas
           para você ter sempre uma nova ideia pronta para a próxima aula.
         </p>
-        <div className="mt-2 w-full">
+        <div className="mt-3 w-full sm:mt-4">
           <CtaButton className="font-hero">QUERO AS +300 DINÂMICAS AGORA</CtaButton>
         </div>
       </div>
@@ -227,29 +226,33 @@ const receiveItems = [
 
 function Receive() {
   return (
-    <Section className="bg-card" spacing="pb-8 pt-8 sm:pb-10 sm:pt-10">
+    <Section className="bg-card" spacing="pb-7 pt-7 sm:pb-9 sm:pt-9">
       <SectionTitle eyebrow="O material">
         O Que Você <span className="text-green-600 font-bold">Vai Receber</span>?
       </SectionTitle>
-      <ul className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:gap-4">
+      <ul className="mx-auto grid max-w-3xl grid-cols-2 gap-2.5 sm:gap-3">
         {receiveItems.map(({ icon: Icon, title, text }, i) => (
           <li
             key={title}
             data-reveal
             style={{ transitionDelay: `${i * 60}ms` }}
-            className="flex items-start gap-3 rounded-lg border bg-background p-3 sm:gap-4 sm:p-5"
+            className="flex items-start gap-2.5 rounded-lg border bg-background p-2.5 sm:gap-3 sm:p-3.5"
           >
-            <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-forest text-gold sm:h-11 sm:w-11">
-              <Icon className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-forest text-gold sm:h-10 sm:w-10">
+              <Icon className="h-4 w-4" />
             </span>
             <div className="min-w-0">
-              <h3 className="font-display text-base font-bold text-ink sm:text-lg">{title}</h3>
-              <p className="text-xs text-muted-foreground sm:text-[15px]">{text}</p>
+              <h3 className="font-display text-[13.5px] font-bold leading-tight text-ink sm:text-base">
+                {title}
+              </h3>
+              <p className="mt-0.5 text-[11.5px] leading-snug text-muted-foreground sm:text-sm">
+                {text}
+              </p>
             </div>
           </li>
         ))}
       </ul>
-      <div className="mt-6 border-t pt-6 sm:mt-8 sm:pt-8" data-reveal>
+      <div className="mt-5 border-t pt-5 sm:mt-6 sm:pt-6" data-reveal>
         <Demo />
       </div>
     </Section>
@@ -268,7 +271,7 @@ function Demo() {
         {Array.from({ length: count }).map((_, i) => (
           <div
             key={i}
-            className="aspect-[3/4] w-[76vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[400px]"
+            className="aspect-[3/4] w-[66vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[340px]"
           >
             {imgs[i] ? (
               <img
@@ -302,7 +305,7 @@ const audience = [
 
 function Audience() {
   return (
-    <Section className="bg-card" spacing="pb-8 pt-8 sm:pb-10 sm:pt-10">
+    <Section className="bg-card" spacing="pb-7 pt-7 sm:pb-9 sm:pt-9">
       <SectionTitle eyebrow="Para quem é?">
         Feito Para <span className="text-green-600 font-bold">Quem Ensina Capoeira</span>
       </SectionTitle>
@@ -312,10 +315,10 @@ function Audience() {
             key={t}
             data-reveal
             style={{ transitionDelay: `${i * 70}ms` }}
-            className="flex items-center gap-4 py-4"
+            className="flex items-center gap-3 py-2.5"
           >
-            <Icon className="h-6 w-6 shrink-0 text-cta" />
-            <span className="text-[16px] font-semibold text-ink">{t}</span>
+            <Icon className="h-5 w-5 shrink-0 text-cta" />
+            <span className="text-[14.5px] font-semibold leading-snug text-ink">{t}</span>
           </li>
         ))}
       </ul>
@@ -335,11 +338,11 @@ function CountdownTimer() {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return (
-    <div className="mx-auto mb-6 flex max-w-md items-center justify-center gap-3 rounded-xl border border-cta/30 bg-card px-4 py-3 shadow-sm sm:mb-8">
-      <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
+    <div className="mx-auto mb-4 flex max-w-md items-center justify-center gap-2.5 rounded-xl border border-cta/30 bg-card px-3.5 py-2 shadow-sm sm:mb-5">
+      <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
         Oferta expira em
       </span>
-      <span className="font-mono text-2xl font-extrabold tabular-nums text-cta">
+      <span className="font-mono text-xl font-extrabold tabular-nums text-cta">
         {String(m).padStart(2, "0")}:{String(s).padStart(2, "0")}
       </span>
     </div>
@@ -482,22 +485,26 @@ function Plans() {
       <SectionTitle eyebrow="Escolha seu plano">
         Escolha o melhor <span className="text-green-600 font-bold">pacote</span> para suas aulas
       </SectionTitle>
-      <p className="mx-auto -mt-6 mb-10 max-w-2xl text-center text-[15px] leading-relaxed text-muted-foreground sm:-mt-10 sm:mb-12">
+      <p className="mx-auto -mt-2 mb-6 max-w-2xl text-center text-[14px] leading-relaxed text-muted-foreground sm:-mt-3 sm:mb-7 sm:text-[15px]">
         Comece com as dinâmicas de capoeira ou leve também os materiais extras para organizar e
         acompanhar suas aulas.
       </p>
-      <div className="mx-auto grid max-w-4xl items-stretch gap-6 md:grid-cols-2">
+      {/* `data-reveal` fica no agrupamento, não em cada card: assim os dois planos
+          aparecem juntos, no mesmo instante, sem efeito escalonado. */}
+      <div
+        className="mx-auto grid max-w-4xl items-stretch gap-4 sm:gap-5 md:grid-cols-2"
+        data-reveal
+      >
         {basico && (
-          <article
-            className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-5 shadow-sm sm:p-6"
-            data-reveal
-          >
-            <h3 className="font-display text-2xl font-extrabold text-ink">{basico.name}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
+          <article className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-4 shadow-sm sm:p-5">
+            <h3 className="font-display text-xl font-extrabold text-ink sm:text-2xl">
+              {basico.name}
+            </h3>
+            <p className="mt-1 text-[13px] text-muted-foreground sm:text-sm">
               O essencial para ampliar seu repertório de atividades.
             </p>
-            <div className="mt-4">
-              <p className="font-display text-4xl font-extrabold text-ink">
+            <div className="mt-3">
+              <p className="font-display text-3xl font-extrabold text-ink sm:text-4xl">
                 {basico.price ?? (
                   <span className="text-xl text-muted-foreground">Preço a definir</span>
                 )}
@@ -506,13 +513,13 @@ function Plans() {
                 <p className="text-xs text-muted-foreground">{basico.priceNote}</p>
               )}
             </div>
-            <ul className="my-5 flex-1 space-y-2">
+            <ul className="my-4 flex-1 space-y-1.5">
               {basico.items.map((it) => (
                 <li
                   key={it.label}
                   className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[15px]"
                 >
-                  <Check className="mt-0.5 h-5 w-5 shrink-0 text-cta" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-cta sm:h-5 sm:w-5" />
                   <span>{it.label}</span>
                 </li>
               ))}
@@ -521,55 +528,56 @@ function Plans() {
           </article>
         )}
         {completo && (
-          <article
-            className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-5 shadow-lg sm:p-6 md:-mt-3"
-            data-reveal
-            style={{ transitionDelay: "90ms" }}
-          >
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider text-ink">
-              PACOTE MAIS COMPLETO
+          <article className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-4 shadow-lg sm:p-5 md:-mt-3">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-3.5 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-ink">
+              PACOTE MAIS VANTAJOSO
             </span>
-            <h3 className="font-display text-2xl font-extrabold text-ink">{completo.name}</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
+            <h3 className="font-display text-xl font-extrabold text-ink sm:text-2xl">
+              {completo.name}
+            </h3>
+            <p className="mt-1 text-[13px] text-muted-foreground sm:text-sm">
               Mais recursos para planejar suas aulas e acompanhar seus alunos.
             </p>
-            <div className="mt-4 flex justify-center">
+            <div className="mt-3 flex justify-center">
               <img
                 src="/mockup-completo.webp"
                 alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
                 loading="lazy"
                 decoding="async"
-                className="h-48 w-48 object-contain drop-shadow-sm sm:h-44 sm:w-44"
+                className="h-32 w-32 object-contain drop-shadow-sm sm:h-36 sm:w-36"
               />
             </div>
-            <ul className="my-5 flex-1 space-y-2">
+            <ul className="my-4 flex-1 space-y-1.5">
               {completo.items.map((it) => (
                 <li
                   key={it.label}
                   className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[15px]"
                 >
                   {it.gift ? (
-                    <Gift className="mt-0.5 h-5 w-5 shrink-0 text-[#c8951a]" aria-hidden="true" />
+                    <Gift
+                      className="mt-0.5 h-4 w-4 shrink-0 text-[#c8951a] sm:h-5 sm:w-5"
+                      aria-hidden="true"
+                    />
                   ) : (
-                    <Check className="mt-0.5 h-5 w-5 shrink-0 text-green-600" />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600 sm:h-5 sm:w-5" />
                   )}
                   <span className={it.gift ? "font-semibold" : undefined}>{it.label}</span>
                 </li>
               ))}
             </ul>
-            <div className="mb-5 rounded-xl border border-gold/70 bg-gradient-to-b from-gold/20 to-gold/5 px-4 py-4 text-center">
+            <div className="mb-4 rounded-xl border border-gold/70 bg-gradient-to-b from-gold/20 to-gold/5 px-3 py-3 text-center">
               {completo.anchorPrice && (
-                <p className="text-[13px] font-semibold text-ink/70">
+                <p className="text-[12px] font-semibold text-ink/70">
                   {completo.anchorLabel}{" "}
-                  <span className="text-[15px] font-extrabold text-ink/60 line-through decoration-2">
+                  <span className="text-[14px] font-extrabold text-ink/60 line-through decoration-2">
                     {completo.anchorPrice}
                   </span>
                 </p>
               )}
-              <p className="mt-1 text-[11px] font-extrabold uppercase tracking-wider text-green-700">
+              <p className="mt-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-green-700">
                 Hoje o pacote completo sai por
               </p>
-              <p className="font-display text-5xl font-extrabold leading-none text-primary sm:text-6xl">
+              <p className="font-display text-4xl font-extrabold leading-none text-primary sm:text-5xl">
                 {completo.price ?? (
                   <span className="text-xl text-muted-foreground">Preço a definir</span>
                 )}
@@ -597,7 +605,7 @@ function Bonuses() {
   if (!offer.bonuses.length) return null;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-5 pb-9 pt-8 text-forest-foreground sm:pb-11 sm:pt-10">
+    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-4 pb-7 pt-6 text-forest-foreground sm:pb-9 sm:pt-8">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.83_0.15_84/0.22),transparent)]"
@@ -606,21 +614,21 @@ function Bonuses() {
         <SectionTitle light compact>
           E NÃO PARA <span className="font-bold text-gold">POR AÍ</span>!
         </SectionTitle>
-        <p className="mx-auto mb-5 max-w-xl text-center text-sm leading-relaxed text-forest-muted sm:mb-6">
+        <p className="mx-auto mb-4 max-w-xl text-center text-[13px] leading-relaxed text-forest-muted sm:mb-5 sm:text-sm">
           Materiais extras{" "}
           <span className="font-semibold text-gold">inclusos no Material Completo</span> para
           reconhecer, acompanhar e planejar suas aulas.
         </p>
 
-        <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-4 sm:gap-5 md:grid-cols-3">
+        <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3">
           {offer.bonuses.map((b, i) => (
             <li
               key={b.title}
               data-reveal
               style={{ transitionDelay: `${i * 90}ms` }}
-              className="flex flex-col items-center rounded-2xl border border-gold/25 bg-[#FAF5E9] p-3 text-center shadow-lg shadow-black/10 sm:p-4"
+              className="flex flex-col items-center rounded-xl border border-gold/25 bg-[#FAF5E9] px-3 pb-2.5 pt-2 text-center shadow-lg shadow-black/10 sm:px-3.5 sm:pb-3 sm:pt-2.5"
             >
-              <div className="w-full overflow-hidden rounded-xl md:aspect-square">
+              <div className="w-full overflow-hidden rounded-lg md:aspect-square">
                 {b.image ? (
                   <img
                     src={b.image}
@@ -635,19 +643,9 @@ function Bonuses() {
                   </div>
                 )}
               </div>
-              <h3 className="mt-2 font-display text-base font-bold leading-snug text-ink sm:text-lg md:flex md:min-h-14 md:items-center md:justify-center">
+              <h3 className="mt-1.5 font-display text-[14px] font-bold leading-snug text-ink sm:text-base md:flex md:min-h-10 md:items-center md:justify-center">
                 {b.title}
               </h3>
-              {b.referencePrice && (
-                <p className="mt-0.5 text-sm font-semibold text-ink/55 line-through">
-                  {b.referencePrice}
-                </p>
-              )}
-              {b.includedAtNoExtraCost && (
-                <span className="mt-2 inline-flex w-full items-center justify-center rounded-lg bg-cta px-4 py-2 text-sm font-extrabold uppercase tracking-wide text-cta-foreground shadow-md">
-                  HOJE GRÁTIS
-                </span>
-              )}
             </li>
           ))}
         </ul>
@@ -665,14 +663,14 @@ function Testimonials() {
       <SectionTitle eyebrow="Depoimentos">
         O Que Estão <span className="text-green-600 font-bold">Dizendo</span> Sobre as Dinâmicas
       </SectionTitle>
-      <p className="mx-auto -mt-3 mb-8 max-w-xl text-center text-[15px] leading-relaxed text-muted-foreground sm:-mt-6">
+      <p className="mx-auto -mt-2 mb-5 max-w-xl text-center text-[14px] leading-relaxed text-muted-foreground sm:-mt-4 sm:text-[15px]">
         Prints reais de quem já está usando as dinâmicas nas aulas de capoeira.
       </p>
       <Carousel count={count} label="Depoimentos sobre as dinâmicas" speed={0.5}>
         {imgs.map((img, i) => (
           <div
             key={i}
-            className="aspect-[9/20] w-[64vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[280px]"
+            className="aspect-[9/20] w-[58vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[250px]"
           >
             <img
               src={img.src}
@@ -692,21 +690,23 @@ function Guarantee() {
   const g = offer.guarantee;
   if (!g) return null;
   return (
-    <section className="bg-card px-5 py-10 sm:py-12">
+    <section className="bg-card px-4 py-8 sm:py-10">
       <div
-        className="mx-auto flex max-w-xl flex-col items-center gap-4 text-center sm:flex-row sm:text-left"
+        className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center sm:flex-row sm:gap-4 sm:text-left"
         data-reveal
       >
-        <div className="grid h-24 w-24 shrink-0 place-items-center rounded-full border-4 border-gold bg-forest text-gold">
+        <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border-4 border-gold bg-forest text-gold">
           <div className="text-center leading-none">
-            <ShieldCheck className="mx-auto h-6 w-6" />
-            <span className="font-display text-2xl font-extrabold">{g.days}</span>
+            <ShieldCheck className="mx-auto h-5 w-5" />
+            <span className="font-display text-xl font-extrabold">{g.days}</span>
             <span className="block text-[10px] font-bold">DIAS</span>
           </div>
         </div>
         <div>
-          <h2 className="text-2xl font-extrabold text-ink">VOCÊ TEM {g.days} DIAS DE GARANTIA</h2>
-          <p className="mt-1 text-[15px] text-muted-foreground">{g.text}</p>
+          <h2 className="text-[1.15rem] font-extrabold leading-tight text-ink sm:text-xl">
+            VOCÊ TEM {g.days} DIAS DE GARANTIA
+          </h2>
+          <p className="mt-1 text-[14px] leading-snug text-muted-foreground">{g.text}</p>
         </div>
       </div>
     </section>
@@ -722,10 +722,12 @@ function Faq() {
       <Accordion type="single" collapsible className="mx-auto max-w-2xl">
         {offer.faq.map((f, i) => (
           <AccordionItem key={i} value={`f${i}`}>
-            <AccordionTrigger className="py-4 text-left text-[15px] font-bold text-ink">
+            <AccordionTrigger className="py-3.5 text-left text-[14.5px] font-bold leading-snug text-ink">
               {f.q}
             </AccordionTrigger>
-            <AccordionContent className="text-[15px] text-muted-foreground">{f.a}</AccordionContent>
+            <AccordionContent className="text-[14px] leading-relaxed text-muted-foreground">
+              {f.a}
+            </AccordionContent>
           </AccordionItem>
         ))}
       </Accordion>
@@ -735,21 +737,21 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section className="bg-forest px-5 py-16 text-center text-forest-foreground">
+    <section className="bg-forest px-4 py-10 text-center text-forest-foreground sm:py-14">
       <div className="mx-auto max-w-xl" data-reveal>
-        <Target className="mx-auto mb-3 h-8 w-8 text-gold" />
-        <h2 className="text-[1.65rem] font-extrabold leading-[1.1] sm:text-4xl">
+        <Target className="mx-auto mb-2 h-7 w-7 text-gold" />
+        <h2 className="text-[1.35rem] font-extrabold leading-[1.15] sm:text-3xl">
           Tenha Mais Dinâmicas à Sua Disposição Para as{" "}
           <span className="text-gold">Próximas Aulas</span>
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-[15px] text-forest-muted">
+        <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-forest-muted">
           Conheça o material e descubra como ele pode ajudar a organizar suas propostas de capoeira.
         </p>
-        <div className="mt-7">
+        <div className="mt-5">
           <CtaButton>QUERO ACESSAR O MATERIAL</CtaButton>
         </div>
         {offer.purchaseInfo.length > 0 && (
-          <p className="mt-4 text-xs text-forest-muted">{offer.purchaseInfo.join(" · ")}</p>
+          <p className="mt-3 text-xs text-forest-muted">{offer.purchaseInfo.join(" · ")}</p>
         )}
       </div>
     </section>
@@ -758,7 +760,7 @@ function FinalCta() {
 
 function Footer() {
   return (
-    <footer className="bg-ink px-5 py-8 text-center text-xs text-forest-muted">
+    <footer className="bg-ink px-4 py-6 text-center text-xs text-forest-muted">
       <p className="font-display text-sm font-bold text-gold">{offer.brand}</p>
       <p className="mt-1">
         © {new Date().getFullYear()} {offer.brand}. Todos os direitos reservados.
