@@ -141,19 +141,19 @@ export const offer = {
 
   /** Popup exibido ao clicar no Material Básico: oferece a versão completa com os bônus. */
   upgrade: {
-    title: "Espere! Temos uma opção melhor para você 👀",
-    subtitle: "Leve a versão completa do União Capoeirista com todos os bônus incluídos.",
-    badge: "VERSÃO COMPLETA + BÔNUS",
+    badge: "Última chance",
+    title: "Desconto liberado para você",
+    subtitle: "Se sair agora, esta condição não volta.",
     price: "R$ 17,90",
-    priceNote: "Apenas R$ 7,90 a mais que o básico",
+    priceNote: "Só R$ 7,90 a mais que o básico",
     items: [
       "+300 dinâmicas interativas de capoeira",
       "Certificado de participação",
       "Ficha de planejamento de aula",
       "Ficha de acompanhamento dos alunos",
     ],
-    ctaLabel: "QUERO A VERSÃO COMPLETA",
-    dismissLabel: "Não, vou continuar com o material básico",
+    ctaLabel: "SIM, QUERO O COMPLETO",
+    dismissLabel: "Continuar com o básico",
     checkoutUrl: "https://pay.cakto.com.br/dc5aynu",
   } satisfies UpgradeOffer,
 
