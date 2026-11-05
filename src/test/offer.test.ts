@@ -46,7 +46,7 @@ describe("preserved offer and approved additions", () => {
 
   it("offers the R$ 17,90 upgrade with its own checkout", () => {
     expect(offer.upgrade.price).toBe("R$ 17,90");
-    expect(offer.upgrade.priceNote).toBe("Só R$ 7,90 a mais que o básico");
+    expect(offer.upgrade.priceNote).toBe("Só R$ 7,90 a mais");
     expect(offer.upgrade.items).toHaveLength(4);
     expect(offer.upgrade.checkoutUrl).toBe("https://pay.cakto.com.br/dc5aynu");
   });

@@ -143,9 +143,9 @@ export const offer = {
   upgrade: {
     badge: "Última chance",
     title: "Desconto liberado para você",
-    subtitle: "Se sair agora, esta condição não volta.",
+    subtitle: "Se sair agora, não volta.",
     price: "R$ 17,90",
-    priceNote: "Só R$ 7,90 a mais que o básico",
+    priceNote: "Só R$ 7,90 a mais",
     items: [
       "+300 dinâmicas interativas de capoeira",
       "Certificado de participação",
