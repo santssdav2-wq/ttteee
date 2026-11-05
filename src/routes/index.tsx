@@ -390,45 +390,44 @@ function UpgradeDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="upgrade-title"
-        className="relative max-h-[88vh] w-full max-w-[19rem] overflow-y-auto rounded-2xl bg-white px-3.5 pb-3 pt-6 text-center shadow-2xl motion-safe:animate-[dialog-pop_200ms_ease-out] sm:max-w-[21rem] sm:px-4"
+        className="relative max-h-[85vh] w-full max-w-[17rem] overflow-y-auto rounded-2xl bg-white px-3 pb-2.5 pt-5 text-center shadow-2xl motion-safe:animate-[dialog-pop_200ms_ease-out] sm:max-w-[19rem] sm:px-3.5"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Fechar"
-          className="absolute right-2 top-2 rounded-full p-1 text-ink/40 transition hover:bg-muted hover:text-ink"
+          className="absolute right-1.5 top-1.5 rounded-full p-1 text-ink/40 transition hover:bg-muted hover:text-ink"
         >
-          <X className="h-3.5 w-3.5" aria-hidden="true" />
+          <X className="h-3 w-3" aria-hidden="true" />
         </button>
 
-        <span className="inline-flex items-center gap-1 rounded-full bg-gold px-2 py-0.5 text-[9px] font-extrabold uppercase leading-none tracking-[0.12em] text-ink">
-          <Gift className="h-2.5 w-2.5" aria-hidden="true" />
+        <span className="inline-flex items-center rounded-full bg-gold px-1.5 py-0.5 text-[8.5px] font-extrabold uppercase leading-none tracking-[0.12em] text-ink">
           {upgrade.badge}
         </span>
 
         <h2
           id="upgrade-title"
-          className="mt-1.5 font-display text-[17px] font-extrabold leading-[1.1] text-ink sm:text-lg"
+          className="mt-1 font-display text-[15px] font-extrabold leading-[1.1] text-ink sm:text-base"
         >
           {upgrade.title}
         </h2>
-        <p className="mx-auto mt-0.5 max-w-[16rem] text-[11.5px] font-semibold leading-snug text-ink/65">
+        <p className="mx-auto mt-0.5 max-w-[14rem] text-[10.5px] font-semibold leading-snug text-ink/65">
           {upgrade.subtitle}
         </p>
 
-        <div className="mt-2 flex items-center justify-center gap-2 rounded-lg border border-gold/40 bg-[#FAF5E9] px-2.5 py-1.5">
-          <span className="font-display text-[28px] font-extrabold leading-none text-ink">
+        <div className="mt-1.5 flex items-center justify-center gap-1.5 rounded-lg border border-gold/40 bg-[#FAF5E9] px-2 py-1">
+          <span className="font-display text-[24px] font-extrabold leading-none text-ink">
             {upgrade.price}
           </span>
-          <span className="max-w-[6rem] border-l border-gold/40 pl-2 text-left text-[10px] font-bold leading-[1.2] text-green-700">
+          <span className="max-w-[5.5rem] border-l border-gold/40 pl-1.5 text-left text-[9.5px] font-bold leading-[1.2] text-green-700">
             {upgrade.priceNote}
           </span>
         </div>
 
-        <ul className="mx-auto mt-2 space-y-0.5 text-left">
+        <ul className="mx-auto mt-1.5 space-y-0.5 text-left">
           {upgrade.items.map((item) => (
-            <li key={item} className="flex items-start gap-1 text-[11.5px] leading-snug text-ink">
-              <Check className="mt-[2px] h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
+            <li key={item} className="flex items-start gap-1 text-[10.5px] leading-snug text-ink">
+              <Check className="mt-[2px] h-2.5 w-2.5 shrink-0 text-cta" aria-hidden="true" />
               <span>{item}</span>
             </li>
           ))}
@@ -438,7 +437,7 @@ function UpgradeDialog({
           <a
             ref={primaryRef}
             href={upgrade.checkoutUrl}
-            className="btn-cta btn-cta-gold-pulse mt-2.5"
+            className="btn-cta btn-cta-gold-pulse mt-2"
             rel="noopener"
             suppressHydrationWarning
           >
@@ -447,7 +446,7 @@ function UpgradeDialog({
         ) : (
           <span
             aria-disabled="true"
-            className="btn-cta mt-2.5 opacity-60"
+            className="btn-cta mt-2 opacity-60"
             title="Link de checkout pendente de configuração"
           >
             {upgrade.ctaLabel} · LINK PENDENTE
@@ -457,7 +456,7 @@ function UpgradeDialog({
         {basicCheckoutUrl ? (
           <a
             href={basicCheckoutUrl}
-            className="mt-0.5 inline-block px-2 py-1 text-[11.5px] font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
+            className="mt-0.5 inline-block px-2 py-0.5 text-[10.5px] font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
           >
             {upgrade.dismissLabel}
           </a>
@@ -465,7 +464,7 @@ function UpgradeDialog({
           <button
             type="button"
             onClick={onClose}
-            className="mt-0.5 inline-block px-2 py-1 text-[11.5px] font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
+            className="mt-0.5 inline-block px-2 py-0.5 text-[10.5px] font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
           >
             {upgrade.dismissLabel}
           </button>
