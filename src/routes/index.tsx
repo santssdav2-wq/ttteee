@@ -91,8 +91,24 @@ function TopBar() {
 
 function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const userStartedRef = useRef(false);
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(true);
+
+  // O vídeo tem 12,7 MB. Baixá-lo junto com a página satura a conexão móvel e
+  // atrasa o primeiro paint, então a prévia silenciosa começa pouco depois da
+  // hidratação (que roda após o conteúdo já estar visível). O primeiro toque
+  // continua reiniciando o vídeo do começo com áudio.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const timer = window.setTimeout(() => {
+      if (userStartedRef.current || !video.paused) return;
+      video.muted = true;
+      void video.play().catch(() => {});
+    }, 900);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   // O vídeo NÃO pausa ao rolar a página: quem começa a assistir continua
   // ouvindo enquanto navega pelo conteúdo.
@@ -105,6 +121,7 @@ function Hero() {
     const video = videoRef.current;
     if (!video) return;
     if (!started) {
+      userStartedRef.current = true;
       video.muted = false;
       video.currentTime = 0;
       void video.play();
@@ -137,10 +154,9 @@ function Hero() {
             ref={videoRef}
             src="/vsl.mp4"
             poster="/vsl-poster.webp"
-            autoPlay
             muted
             playsInline
-            preload="metadata"
+            preload="none"
             onPlay={() => setPlaying(true)}
             onPause={() => setPlaying(false)}
             className="h-full w-full object-cover"
@@ -279,6 +295,7 @@ function Demo() {
                 alt={imgs[i].alt}
                 loading="lazy"
                 decoding="async"
+                fetchPriority="low"
                 className="h-full w-full object-cover"
               />
             ) : (
@@ -550,6 +567,7 @@ function Plans() {
                 alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
                 loading="lazy"
                 decoding="async"
+                fetchPriority="low"
                 className="h-32 w-32 object-contain drop-shadow-sm sm:h-36 sm:w-36"
               />
             </div>
@@ -641,6 +659,7 @@ function Bonuses() {
                     alt={b.title}
                     loading="lazy"
                     decoding="async"
+                    fetchPriority="low"
                     className="h-auto w-full object-contain mix-blend-multiply md:h-full"
                   />
                 ) : (
@@ -683,6 +702,7 @@ function Testimonials() {
               alt={img.alt}
               loading="lazy"
               decoding="async"
+              fetchPriority="low"
               className="h-full w-full object-contain"
             />
           </div>

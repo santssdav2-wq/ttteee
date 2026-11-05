@@ -11,5 +11,8 @@ export default defineConfig({
     // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
     // nitro/vite builds from this
     server: { entry: "server" },
+    // A página de vendas é 100% estática: gerar o HTML no build evita o cold
+    // start da função SSR e entrega o documento direto da CDN.
+    pages: [{ path: "/", prerender: { enabled: true } }],
   },
 });
