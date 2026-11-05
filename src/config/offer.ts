@@ -37,6 +37,8 @@ export type UpgradeOffer = {
   badge: string;
   /** Ex.: "R$ 17,90" */
   price: string;
+  /** Preço de referência riscado (ex.: "R$ 27,90"). null = não exibir. */
+  anchorPrice?: string | null;
   priceNote: string;
   items: string[];
   ctaLabel: string;
@@ -145,6 +147,7 @@ export const offer = {
     title: "Desconto liberado para você",
     subtitle: "Se sair agora, não volta.",
     price: "R$ 17,90",
+    anchorPrice: "R$ 27,90",
     priceNote: "Só R$ 7,90 a mais",
     items: [
       "+300 dinâmicas interativas de capoeira",

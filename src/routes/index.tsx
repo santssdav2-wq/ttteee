@@ -416,9 +416,16 @@ function UpgradeDialog({
         </p>
 
         <div className="mt-1.5 flex items-center justify-center gap-1.5 rounded-lg border border-gold/40 bg-[#FAF5E9] px-2 py-1">
-          <span className="font-display text-[24px] font-extrabold leading-none text-ink">
-            {upgrade.price}
-          </span>
+          <div className="flex flex-col items-center leading-none">
+            {upgrade.anchorPrice ? (
+              <span className="text-[9px] font-bold text-ink/45 line-through">
+                {upgrade.anchorPrice}
+              </span>
+            ) : null}
+            <span className="font-display text-[24px] font-extrabold leading-none text-ink">
+              {upgrade.price}
+            </span>
+          </div>
           <span className="max-w-[5.5rem] border-l border-gold/40 pl-1.5 text-left text-[9.5px] font-bold leading-[1.2] text-green-700">
             {upgrade.priceNote}
           </span>
