@@ -153,7 +153,7 @@ function Hero() {
           <span className="block text-[clamp(2.75rem,6.2vw,4rem)] font-black leading-[0.95] tracking-[-0.02em] text-forest">
             +300
           </span>
-          <span className="mt-1 block text-[clamp(1.3rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em]">
+          <span className="mt-1 block text-[clamp(1.3rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em] text-forest">
             Dinâmicas Interativas
           </span>
           <span className="mt-1 block text-[clamp(1.15rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
@@ -638,20 +638,6 @@ function Plans() {
             <SecurityNote />
           </article>
         )}
-      </div>
-      {/* Arte oficial de entrega pelo WhatsApp (arquivo fornecido pelo cliente).
-          Fica abaixo dos dois planos, inteira e centralizada, sem recorte. */}
-      <div className="mx-auto mt-6 flex w-full max-w-4xl justify-center">
-        <img
-          src="/whatsapp-planos.png"
-          alt="Entrega do material pelo WhatsApp"
-          loading="lazy"
-          decoding="async"
-          className="h-auto w-full max-w-[520px] object-contain"
-          onError={(event) => {
-            event.currentTarget.style.display = "none";
-          }}
-        />
       </div>
       {/* <UpgradeDialog
         open={upgradeOpen}
