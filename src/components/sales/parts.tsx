@@ -64,7 +64,7 @@ export function CtaButton({
 }
 
 /** Botão de checkout do plano. Desativado enquanto o link estiver pendente.
- *  `muted`: variante apagada (cinza), usada no plano de entrada.
+ *  `muted`: variante secundária (contorno verde), usada no plano de entrada.
  *  `onSelect`: intercepta o clique (ex.: abrir popup) antes de navegar. */
 export function CheckoutButton({
   plan,
@@ -75,7 +75,7 @@ export function CheckoutButton({
   muted?: boolean;
   onSelect?: () => void;
 }) {
-  const className = muted ? "btn-cta-muted" : "btn-cta";
+  const className = muted ? "btn-cta-outline" : "btn-cta";
   if (!plan.checkoutUrl) {
     return (
       <span

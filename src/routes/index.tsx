@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 import {
-  BookOpen,
   ClipboardList,
   Target,
   Smartphone,
@@ -15,7 +14,6 @@ import {
   ShieldCheck,
   Gift,
   Award,
-  Printer,
   X,
 } from "lucide-react";
 import { offer } from "@/config/offer";
@@ -68,11 +66,11 @@ function Index() {
       <ScrollReveal />
       <TopBar />
       <Hero />
-      <Receive />
-      <Audience />
+      <Demo />
+      <Reasons />
+      <Testimonials />
       <Bonuses />
       <Plans />
-      <Testimonials />
       <Guarantee />
       <Faq />
       <FinalCta />
@@ -142,14 +140,28 @@ function Hero() {
   };
 
   return (
-    <section className="relative bg-background px-4 pb-6 pt-6 sm:pb-8 sm:pt-8">
-      <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-        <p className="eyebrow">Material para quem ensina capoeira</p>
-        <h1 className="font-headline mx-auto mt-4 max-w-3xl text-balance text-[1.35rem] font-extrabold leading-[1.2] tracking-[-0.01em] text-ink sm:mt-4.5 sm:text-[2rem]">
-          +300 dinâmicas prontas para <span className="text-green-600">facilitar sua rotina</span>{" "}
-          nas aulas de <span className="text-green-600">CAPOEIRA</span>
+    <section className="relative overflow-hidden bg-background px-4 pb-7 pt-5 sm:pb-9 sm:pt-7">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 bg-[radial-gradient(ellipse_at_top,oklch(0.64_0.18_148/0.11),transparent_65%)]"
+      />
+      <div className="relative mx-auto flex max-w-2xl flex-col items-center text-center">
+        {/* Hierarquia fixa: o +300 ocupa sempre a primeira linha, sozinho, em
+            qualquer largura de tela. As linhas seguintes usam blocos separados
+            para que o número nunca seja puxado para o meio da frase. */}
+        <h1 className="font-headline text-ink">
+          <span className="block text-[clamp(4.5rem,19vw,8.25rem)] font-black leading-[0.82] tracking-[-0.035em] text-forest">
+            +300
+          </span>
+          <span className="mt-2 block text-[clamp(1rem,5vw,2.05rem)] font-extrabold leading-[1.16] tracking-[-0.015em]">
+            dinâmicas prontas para <span className="text-green-600">facilitar</span>
+          </span>
+          <span className="block text-[clamp(1rem,5vw,2.05rem)] font-extrabold leading-[1.16] tracking-[-0.015em]">
+            <span className="text-green-600">sua rotina</span> nas aulas de{" "}
+            <span className="text-green-600">CAPOEIRA</span>
+          </span>
         </h1>
-        <div className="relative mx-auto mt-4.5 aspect-[9/16] w-[calc(clamp(340px,45vh,400px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-6 sm:w-[calc(clamp(330px,52vh,470px)*9/16)] sm:rounded-2xl">
+        <div className="relative mx-auto mt-4 aspect-[9/16] w-[calc(clamp(300px,40vh,350px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-5 sm:w-[calc(clamp(320px,44vh,400px)*9/16)] sm:rounded-2xl">
           <video
             ref={videoRef}
             src="/vsl.mp4"
@@ -203,11 +215,11 @@ function Hero() {
             </button>
           )}
         </div>
-        <p className="font-hero mt-3.5 max-w-[27rem] text-balance text-[14px] leading-[1.5] text-muted-foreground sm:mt-5 sm:text-[15px]">
+        <p className="font-hero mt-3 max-w-[26rem] text-balance text-[14px] leading-[1.5] text-muted-foreground sm:mt-4 sm:text-[15px]">
           Mais de 300 atividades com objetivos, materiais necessários e passo a passo, organizadas
           para você ter sempre uma nova ideia pronta para a próxima aula.
         </p>
-        <div className="mt-4 w-full sm:mt-5">
+        <div className="mt-4 w-full max-w-md">
           <CtaButton className="font-hero">QUERO AS +300 DINÂMICAS AGORA</CtaButton>
         </div>
       </div>
@@ -215,101 +227,51 @@ function Hero() {
   );
 }
 
-const receiveItems = [
-  {
-    icon: Layers,
-    title: "+300 dinâmicas",
-    text: "Dinâmicas interativas de capoeira em um só material.",
-  },
-  {
-    icon: Gift,
-    title: "Bônus exclusivos",
-    text: "Materiais extras para complementar suas dinâmicas e enriquecer suas aulas.",
-  },
-  {
-    icon: BookOpen,
-    title: "Organizadas",
-    text: "Atividades organizadas para facilitar a consulta.",
-  },
-  { icon: ClipboardList, title: "Como aplicar", text: "Orientações de aplicação das propostas." },
-  { icon: Smartphone, title: "Acesso digital", text: "Consulte no celular, tablet ou computador." },
-  {
-    icon: Printer,
-    title: "Pronto para Imprimir",
-    text: "Aplique nas aulas sem depender de tecnologia.",
-  },
-];
-
-function Receive() {
-  return (
-    <Section className="bg-card" spacing="pb-7 pt-7 sm:pb-9 sm:pt-9">
-      <SectionTitle eyebrow="O material">
-        O Que Você <span className="text-green-600 font-bold">Vai Receber</span>?
-      </SectionTitle>
-      <ul className="mx-auto grid max-w-3xl grid-cols-2 gap-2.5 sm:gap-3">
-        {receiveItems.map(({ icon: Icon, title, text }, i) => (
-          <li
-            key={title}
-            data-reveal
-            style={{ transitionDelay: `${i * 60}ms` }}
-            className="flex items-start gap-2.5 rounded-lg border bg-background p-2.5 sm:gap-3 sm:p-3.5"
-          >
-            <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-forest text-gold sm:h-10 sm:w-10">
-              <Icon className="h-4 w-4" />
-            </span>
-            <div className="min-w-0">
-              <h3 className="font-display text-[13.5px] font-bold leading-tight text-ink sm:text-base">
-                {title}
-              </h3>
-              <p className="mt-0.5 text-[11.5px] leading-snug text-muted-foreground sm:text-sm">
-                {text}
-              </p>
-            </div>
-          </li>
-        ))}
-      </ul>
-      <div className="mt-5 border-t pt-5 sm:mt-6 sm:pt-6" data-reveal>
-        <Demo />
-      </div>
-    </Section>
-  );
-}
-
 function Demo() {
   const imgs = offer.previewImages;
-  const count = imgs.length || 5;
-  return (
-    <div>
-      <SectionTitle eyebrow="Por dentro">
-        Conheça Algumas das <span className="text-green-600 font-bold">Dinâmicas</span>
-      </SectionTitle>
-      <Carousel count={count} label="Prévias do material">
-        {Array.from({ length: count }).map((_, i) => (
-          <div
-            key={i}
-            className="aspect-[3/4] w-[66vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[340px]"
-          >
-            {imgs[i] ? (
-              <img
-                src={imgs[i].src}
-                alt={imgs[i].alt}
-                loading="lazy"
-                decoding="async"
-                fetchPriority="low"
-                className="h-full w-full object-cover"
-              />
-            ) : (
-              <MaterialPage n={i + 1} />
-            )}
-          </div>
-        ))}
-      </Carousel>
-      {!imgs.length && (
-        <p className="mt-4 text-center text-xs text-muted-foreground">
-          Prévias ilustrativas da estrutura das páginas.
-        </p>
+  const pages: ({ src: string; alt: string } | null)[] = imgs.length
+    ? imgs
+    : Array.from({ length: 5 }, () => null);
+
+  const card = (img: (typeof pages)[number], i: number, extra: string) => (
+    <div
+      key={i}
+      className={`${extra} aspect-[2/3] overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm`}
+    >
+      {img ? (
+        <img
+          src={img.src}
+          alt={img.alt}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          className="h-full w-full object-cover"
+        />
+      ) : (
+        <MaterialPage n={i + 1} />
       )}
     </div>
+  );
+
+  return (
+    <section className="bg-background px-4 py-8 sm:py-10">
+      <div className="mx-auto w-full max-w-4xl" data-reveal>
+        <SectionTitle eyebrow="Veja por dentro">
+          Conheça Algumas das <span className="text-green-600 font-bold">Dinâmicas</span>
+        </SectionTitle>
+        {/* Celular: tira com encaixe; computador: grade de três colunas.
+            Um único conjunto de imagens evita baixar a mesma prévia duas vezes. */}
+        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0">
+          {pages.map((img, i) =>
+            card(
+              img,
+              i,
+              "w-[70vw] max-w-[280px] shrink-0 snap-center sm:w-full sm:max-w-none",
+            ),
+          )}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -320,26 +282,68 @@ const audience = [
   { icon: Baby, t: "Instrutores que trabalham com turmas infantis" },
 ];
 
-function Audience() {
+const reasons = [
+  {
+    icon: Layers,
+    title: "Mais de 300 dinâmicas",
+    text: "Diversas atividades prontas para ampliar as possibilidades das suas aulas de capoeira.",
+  },
+  {
+    icon: ClipboardList,
+    title: "Tudo organizado",
+    text: "Dinâmicas organizadas para facilitar a consulta e encontrar atividades com mais praticidade.",
+  },
+  {
+    icon: Target,
+    title: "Fácil aplicação",
+    text: "Orientações para ajudar na compreensão e aplicação das propostas durante as aulas.",
+  },
+  {
+    icon: Smartphone,
+    title: "Acesso digital",
+    text: "Consulte o material digitalmente e tenha a possibilidade de imprimir as atividades.",
+  },
+];
+
+function Reasons() {
   return (
-    <Section className="bg-card" spacing="pb-7 pt-7 sm:pb-9 sm:pt-9">
-      <SectionTitle eyebrow="Para quem é?">
-        Feito Para <span className="text-green-600 font-bold">Quem Ensina Capoeira</span>
-      </SectionTitle>
-      <ul className="mx-auto max-w-2xl divide-y">
-        {audience.map(({ icon: Icon, t }, i) => (
-          <li
-            key={t}
-            data-reveal
-            style={{ transitionDelay: `${i * 70}ms` }}
-            className="flex items-center gap-3 py-2.5"
-          >
-            <Icon className="h-5 w-5 shrink-0 text-cta" />
-            <span className="text-[14.5px] font-semibold leading-snug text-ink">{t}</span>
-          </li>
-        ))}
-      </ul>
-    </Section>
+    <section className="bg-muted px-4 py-9 sm:py-11">
+      <div className="mx-auto w-full max-w-5xl">
+        <SectionTitle eyebrow="Diferenciais">
+          Por Que Escolher as <span className="text-green-600 font-bold">Dinâmicas</span> de
+          Capoeira?
+        </SectionTitle>
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {reasons.map(({ icon: Icon, title, text }, i) => (
+            <li
+              key={title}
+              data-reveal
+              style={{ transitionDelay: `${i * 60}ms` }}
+              className="rounded-2xl border border-border/60 bg-card p-4 shadow-sm"
+            >
+              <span className="grid h-9 w-9 place-items-center rounded-xl bg-forest/5 text-cta ring-1 ring-cta/15">
+                <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+              </span>
+              <h3 className="mt-2.5 font-display text-[15px] font-extrabold leading-snug text-ink">
+                {title}
+              </h3>
+              <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">{text}</p>
+            </li>
+          ))}
+        </ul>
+        <div
+          className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] font-semibold text-muted-foreground"
+          data-reveal
+        >
+          {audience.map(({ icon: Icon, t }) => (
+            <span key={t} className="flex items-center gap-1.5">
+              <Icon className="h-3.5 w-3.5 shrink-0 text-cta" aria-hidden="true" />
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -499,6 +503,37 @@ function UpgradeDialog({
   );
 }
 
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+    </svg>
+  );
+}
+
+function WhatsAppNote() {
+  return (
+    <p className="mt-2.5 flex items-center justify-center gap-1.5 text-[11.5px] font-semibold leading-tight text-green-700">
+      <span className="grid h-4 w-4 shrink-0 place-items-center rounded-full bg-[#25D366]">
+        <WhatsAppIcon className="h-2.5 w-2.5 text-white" />
+      </span>
+      Você receberá seu material pelo WhatsApp.
+    </p>
+  );
+}
+
+function SecurityNote() {
+  return (
+    <p className="mt-1 flex items-center justify-center gap-1.5 text-[10.5px] font-medium text-muted-foreground">
+      <ShieldCheck className="h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
+      Pagamento seguro
+      <span aria-hidden="true">·</span>
+      <Smartphone className="h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
+      Acesso digital
+    </p>
+  );
+}
+
 function Plans() {
   const [basico, completo] = offer.plans;
   // POPUP DE UPGRADE (R$ 17,90) DESATIVADO TEMPORARIAMENTE.
@@ -514,111 +549,103 @@ function Plans() {
       <SectionTitle eyebrow="Escolha seu plano">
         Escolha o melhor <span className="text-green-600 font-bold">pacote</span> para suas aulas
       </SectionTitle>
-      <p className="mx-auto -mt-2 mb-6 max-w-2xl text-center text-[14px] leading-relaxed text-muted-foreground sm:-mt-3 sm:mb-7 sm:text-[15px]">
-        Comece com as dinâmicas de capoeira ou leve também os materiais extras para organizar e
-        acompanhar suas aulas.
-      </p>
       {/* `data-reveal` fica no agrupamento, não em cada card: assim os dois planos
           aparecem juntos, no mesmo instante, sem efeito escalonado. */}
-      <div
-        className="mx-auto grid max-w-4xl items-stretch gap-4 sm:gap-5 md:grid-cols-2"
-        data-reveal
-      >
+      <div className="mx-auto grid max-w-4xl items-start gap-4 md:grid-cols-2" data-reveal>
         {basico && (
-          <article className="relative flex h-full flex-col rounded-xl border border-border/70 bg-card p-4 shadow-sm sm:p-5">
-            <h3 className="font-display text-xl font-extrabold text-ink sm:text-2xl">
+          <article className="relative flex flex-col rounded-2xl border border-border/70 bg-card p-4 shadow-sm sm:p-5">
+            <h3 className="font-display text-lg font-extrabold leading-tight text-ink sm:text-xl">
               {basico.name}
             </h3>
-            <p className="mt-1 text-[13px] text-muted-foreground sm:text-sm">
-              O essencial para ampliar seu repertório de atividades.
-            </p>
-            <div className="mt-3">
-              <p className="font-display text-3xl font-extrabold text-ink sm:text-4xl">
+            <div className="mt-2">
+              <p className="font-display text-3xl font-extrabold leading-none text-ink sm:text-4xl">
                 {basico.price ?? (
                   <span className="text-xl text-muted-foreground">Preço a definir</span>
                 )}
               </p>
               {basico.priceNote && (
-                <p className="text-xs text-muted-foreground">{basico.priceNote}</p>
+                <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {basico.priceNote}
+                </p>
               )}
             </div>
-            <ul className="my-4 flex-1 space-y-1.5">
+            <ul className="my-3.5 space-y-1.5">
               {basico.items.map((it) => (
                 <li
                   key={it.label}
-                  className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[15px]"
+                  className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[14.5px]"
                 >
-                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-cta sm:h-5 sm:w-5" />
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-cta" aria-hidden="true" />
                   <span>{it.label}</span>
                 </li>
               ))}
             </ul>
             <CheckoutButton plan={basico} muted />
+            <WhatsAppNote />
+            <SecurityNote />
           </article>
         )}
         {completo && (
-          <article className="relative flex h-full flex-col rounded-xl border-2 border-green-600 bg-card p-4 shadow-lg sm:p-5 md:-mt-3">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-gold px-3.5 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-ink">
-              PACOTE MAIS VANTAJOSO
+          <article className="relative flex flex-col rounded-2xl border-2 border-green-600 bg-card p-4 shadow-lg shadow-green-950/5 sm:p-5">
+            <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gold px-3.5 py-1 text-[10.5px] font-extrabold uppercase tracking-wider text-ink shadow-sm">
+              Pacote mais vantajoso
             </span>
-            <h3 className="font-display text-xl font-extrabold text-ink sm:text-2xl">
+            <h3 className="font-display text-lg font-extrabold leading-tight text-ink sm:text-xl">
               {completo.name}
             </h3>
-            <p className="mt-1 text-[13px] text-muted-foreground sm:text-sm">
-              Mais recursos para planejar suas aulas e acompanhar seus alunos.
-            </p>
-            <div className="mt-3 flex justify-center">
+            {/* Mockup acima do preço, centralizado: o produto aparece primeiro e
+                o valor fecha o bloco, como uma vitrine. */}
+            <div className="mt-3 flex flex-col items-center text-center">
               <img
                 src="/mockup-completo.webp"
                 alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
-                className="h-32 w-32 object-contain drop-shadow-sm sm:h-36 sm:w-36"
+                className="h-24 w-24 object-contain drop-shadow-sm sm:h-28 sm:w-28"
               />
+              <div className="mt-1.5">
+                {completo.anchorPrice && (
+                  <p className="text-[11px] font-semibold leading-tight text-muted-foreground">
+                    {completo.anchorLabel}{" "}
+                    <span className="font-extrabold text-ink/50 line-through decoration-2">
+                      {completo.anchorPrice}
+                    </span>
+                  </p>
+                )}
+                <p className="font-display text-3xl font-extrabold leading-none text-primary sm:text-4xl">
+                  {completo.price ?? (
+                    <span className="text-xl text-muted-foreground">Preço a definir</span>
+                  )}
+                </p>
+                {completo.priceNote && (
+                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                    {completo.priceNote}
+                  </p>
+                )}
+              </div>
             </div>
-            <ul className="my-4 flex-1 space-y-1.5">
+            <ul className="my-3.5 space-y-1.5">
               {completo.items.map((it) => (
                 <li
                   key={it.label}
-                  className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[15px]"
+                  className="flex items-start gap-2 text-[14px] leading-snug text-ink sm:text-[14.5px]"
                 >
                   {it.gift ? (
                     <Gift
-                      className="mt-0.5 h-4 w-4 shrink-0 text-[#c8951a] sm:h-5 sm:w-5"
+                      className="mt-0.5 h-4 w-4 shrink-0 text-[#c8951a]"
                       aria-hidden="true"
                     />
                   ) : (
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600 sm:h-5 sm:w-5" />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" aria-hidden="true" />
                   )}
                   <span className={it.gift ? "font-semibold" : undefined}>{it.label}</span>
                 </li>
               ))}
             </ul>
-            <div className="mb-4 rounded-xl border border-gold/70 bg-gradient-to-b from-gold/20 to-gold/5 px-3 py-3 text-center">
-              {completo.anchorPrice && (
-                <p className="text-[12px] font-semibold text-ink/70">
-                  {completo.anchorLabel}{" "}
-                  <span className="text-[14px] font-extrabold text-ink/60 line-through decoration-2">
-                    {completo.anchorPrice}
-                  </span>
-                </p>
-              )}
-              <p className="mt-0.5 text-[10.5px] font-extrabold uppercase tracking-wider text-green-700">
-                Hoje o pacote completo sai por
-              </p>
-              <p className="font-display text-4xl font-extrabold leading-none text-primary sm:text-5xl">
-                {completo.price ?? (
-                  <span className="text-xl text-muted-foreground">Preço a definir</span>
-                )}
-              </p>
-              {completo.priceNote && (
-                <p className="mt-1 text-xs font-semibold text-muted-foreground">
-                  {completo.priceNote}
-                </p>
-              )}
-            </div>
             <CheckoutButton plan={completo} />
+            <WhatsAppNote />
+            <SecurityNote />
           </article>
         )}
       </div>
@@ -635,30 +662,28 @@ function Bonuses() {
   if (!offer.bonuses.length) return null;
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-4 pb-7 pt-6 text-forest-foreground sm:pb-9 sm:pt-8">
+    <section className="relative overflow-hidden bg-gradient-to-b from-forest via-[oklch(0.3_0.08_158)] to-[oklch(0.42_0.12_152)] px-4 py-9 text-forest-foreground sm:py-11">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-1/2 h-52 w-[34rem] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,oklch(0.83_0.15_84/0.22),transparent)]"
       />
-      <div className="relative mx-auto w-full max-w-5xl" data-reveal>
-        <SectionTitle light compact>
-          E NÃO PARA <span className="font-bold text-gold">POR AÍ</span>!
-        </SectionTitle>
-        <p className="mx-auto mb-4 max-w-xl text-center text-[13px] leading-relaxed text-forest-muted sm:mb-5 sm:text-sm">
-          Materiais extras{" "}
-          <span className="font-semibold text-gold">inclusos no Material Completo</span> para
-          reconhecer, acompanhar e planejar suas aulas.
-        </p>
-
-        <ul className="mx-auto grid max-w-5xl grid-cols-1 gap-3 sm:gap-4 md:grid-cols-3">
+      <div className="relative mx-auto w-full max-w-4xl">
+        <div className="text-center" data-reveal>
+          <span className="eyebrow text-gold/90">Inclusos no Material Completo</span>
+          <h2 className="mt-1.5 font-display text-[1.5rem] font-extrabold leading-tight text-forest-foreground sm:text-[1.9rem]">
+            3 Bônus Exclusivos <span className="text-gold">Grátis</span>
+          </h2>
+          <div className="berimbau-line mx-auto mt-3" />
+        </div>
+        <ul className="mx-auto mt-6 grid max-w-sm gap-4 sm:max-w-none sm:grid-cols-3">
           {offer.bonuses.map((b, i) => (
             <li
               key={b.title}
               data-reveal
-              style={{ transitionDelay: `${i * 90}ms` }}
-              className="flex flex-col items-center rounded-xl border border-gold/25 bg-[#FAF5E9] px-3 pb-2.5 pt-2 text-center shadow-lg shadow-black/10 sm:px-3.5 sm:pb-3 sm:pt-2.5"
+              style={{ transitionDelay: `${i * 80}ms` }}
+              className="flex h-full flex-col rounded-2xl border border-white/50 bg-[#FBF7EC] p-2.5 shadow-xl shadow-black/20 ring-1 ring-black/5"
             >
-              <div className="w-full overflow-hidden rounded-lg md:aspect-square">
+              <div className="grid aspect-[4/3] w-full place-items-center overflow-hidden rounded-xl bg-white p-2">
                 {b.image ? (
                   <img
                     src={b.image}
@@ -666,15 +691,13 @@ function Bonuses() {
                     loading="lazy"
                     decoding="async"
                     fetchPriority="low"
-                    className="h-auto w-full object-contain mix-blend-multiply md:h-full"
+                    className="h-full w-full object-contain mix-blend-multiply"
                   />
                 ) : (
-                  <div className="grid aspect-square w-full place-items-center">
-                    <Award className="h-12 w-12 text-forest" aria-hidden="true" />
-                  </div>
+                  <Award className="h-10 w-10 text-forest" aria-hidden="true" />
                 )}
               </div>
-              <h3 className="mt-1.5 font-display text-[14px] font-bold leading-snug text-ink sm:text-base md:flex md:min-h-10 md:items-center md:justify-center">
+              <h3 className="mt-2.5 flex flex-1 items-center justify-center px-1 pb-1 text-center font-display text-[13.5px] font-extrabold leading-snug text-ink sm:text-sm">
                 {b.title}
               </h3>
             </li>
@@ -690,31 +713,30 @@ function Testimonials() {
   if (!imgs.length) return null;
   const count = imgs.length;
   return (
-    <Section className="bg-card">
-      <SectionTitle eyebrow="Depoimentos">
-        O Que Estão <span className="text-green-600 font-bold">Dizendo</span> Sobre as Dinâmicas
-      </SectionTitle>
-      <p className="mx-auto -mt-2 mb-5 max-w-xl text-center text-[14px] leading-relaxed text-muted-foreground sm:-mt-4 sm:text-[15px]">
-        Prints reais de quem já está usando as dinâmicas nas aulas de capoeira.
-      </p>
-      <Carousel count={count} label="Depoimentos sobre as dinâmicas" speed={0.5}>
-        {imgs.map((img, i) => (
-          <div
-            key={i}
-            className="aspect-[9/20] w-[58vw] shrink-0 snap-center overflow-hidden rounded-lg border bg-card shadow-sm sm:w-[250px]"
-          >
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-              className="h-full w-full object-contain"
-            />
-          </div>
-        ))}
-      </Carousel>
-    </Section>
+    <section className="bg-card px-4 py-7 sm:py-9">
+      <div className="mx-auto w-full max-w-3xl" data-reveal>
+        <SectionTitle eyebrow="Depoimentos" compact>
+          O Que Estão <span className="text-green-600 font-bold">Dizendo</span>
+        </SectionTitle>
+        <Carousel count={count} label="Depoimentos sobre as dinâmicas" speed={0.45}>
+          {imgs.map((img, i) => (
+            <div
+              key={i}
+              className="aspect-[9/20] w-[44vw] shrink-0 snap-center overflow-hidden rounded-xl border border-border/70 bg-background p-1 shadow-sm sm:w-[172px]"
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                loading="lazy"
+                decoding="async"
+                fetchPriority="low"
+                className="h-full w-full rounded-lg object-contain"
+              />
+            </div>
+          ))}
+        </Carousel>
+      </div>
+    </section>
   );
 }
 
@@ -722,23 +744,23 @@ function Guarantee() {
   const g = offer.guarantee;
   if (!g) return null;
   return (
-    <section className="bg-card px-4 py-8 sm:py-10">
+    <section className="bg-card px-4 py-7 sm:py-8">
       <div
-        className="mx-auto flex max-w-xl flex-col items-center gap-3 text-center sm:flex-row sm:gap-4 sm:text-left"
+        className="mx-auto flex max-w-2xl flex-col items-center gap-3 rounded-2xl border border-border/70 bg-background p-4 text-center shadow-sm sm:flex-row sm:gap-4 sm:p-5 sm:text-left"
         data-reveal
       >
-        <div className="grid h-20 w-20 shrink-0 place-items-center rounded-full border-4 border-gold bg-forest text-gold">
+        <div className="grid h-16 w-16 shrink-0 place-items-center rounded-full border-2 border-gold bg-forest text-gold">
           <div className="text-center leading-none">
-            <ShieldCheck className="mx-auto h-5 w-5" />
-            <span className="font-display text-xl font-extrabold">{g.days}</span>
-            <span className="block text-[10px] font-bold">DIAS</span>
+            <ShieldCheck className="mx-auto h-4 w-4" aria-hidden="true" />
+            <span className="font-display text-lg font-extrabold">{g.days}</span>
+            <span className="block text-[8.5px] font-bold tracking-wide">DIAS</span>
           </div>
         </div>
         <div>
-          <h2 className="text-[1.15rem] font-extrabold leading-tight text-ink sm:text-xl">
-            VOCÊ TEM {g.days} DIAS DE GARANTIA
+          <h2 className="text-[1.05rem] font-extrabold leading-tight text-ink sm:text-lg">
+            GARANTIA INCONDICIONAL DE {g.days} DIAS
           </h2>
-          <p className="mt-1 text-[14px] leading-snug text-muted-foreground">{g.text}</p>
+          <p className="mt-1 text-[13px] leading-snug text-muted-foreground">{g.text}</p>
         </div>
       </div>
     </section>
@@ -747,17 +769,17 @@ function Guarantee() {
 
 function Faq() {
   return (
-    <Section>
-      <SectionTitle eyebrow="Dúvidas">
+    <Section spacing="py-8 sm:py-10">
+      <SectionTitle eyebrow="Dúvidas" compact>
         Perguntas <span className="text-green-600 font-bold">Frequentes</span>
       </SectionTitle>
       <Accordion type="single" collapsible className="mx-auto max-w-2xl">
         {offer.faq.map((f, i) => (
           <AccordionItem key={i} value={`f${i}`}>
-            <AccordionTrigger className="py-3.5 text-left text-[14.5px] font-bold leading-snug text-ink">
+            <AccordionTrigger className="py-3 text-left text-[14px] font-bold leading-snug text-ink">
               {f.q}
             </AccordionTrigger>
-            <AccordionContent className="text-[14px] leading-relaxed text-muted-foreground">
+            <AccordionContent className="text-[13.5px] leading-relaxed text-muted-foreground">
               {f.a}
             </AccordionContent>
           </AccordionItem>
@@ -769,21 +791,21 @@ function Faq() {
 
 function FinalCta() {
   return (
-    <section className="bg-forest px-4 py-10 text-center text-forest-foreground sm:py-14">
+    <section className="bg-forest px-4 py-9 text-center text-forest-foreground sm:py-11">
       <div className="mx-auto max-w-xl" data-reveal>
-        <Target className="mx-auto mb-2 h-7 w-7 text-gold" />
-        <h2 className="text-[1.35rem] font-extrabold leading-[1.15] sm:text-3xl">
+        <Target className="mx-auto mb-1.5 h-6 w-6 text-gold" aria-hidden="true" />
+        <h2 className="text-[1.3rem] font-extrabold leading-[1.15] sm:text-[1.85rem]">
           Tenha Mais Dinâmicas à Sua Disposição Para as{" "}
           <span className="text-gold">Próximas Aulas</span>
         </h2>
-        <p className="mx-auto mt-3 max-w-md text-[14px] leading-relaxed text-forest-muted">
+        <p className="mx-auto mt-2 max-w-md text-[13.5px] leading-relaxed text-forest-muted">
           Conheça o material e descubra como ele pode ajudar a organizar suas propostas de capoeira.
         </p>
-        <div className="mt-5">
+        <div className="mx-auto mt-4 w-full max-w-sm">
           <CtaButton>QUERO ACESSAR O MATERIAL</CtaButton>
         </div>
         {offer.purchaseInfo.length > 0 && (
-          <p className="mt-3 text-xs text-forest-muted">{offer.purchaseInfo.join(" · ")}</p>
+          <p className="mt-2.5 text-[11px] text-forest-muted">{offer.purchaseInfo.join(" · ")}</p>
         )}
       </div>
     </section>

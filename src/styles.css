@@ -176,6 +176,42 @@
   }
 }
 
+/* Plano de entrada: botão secundário, mas claramente acionável (não cinza). */
+@utility btn-cta-outline {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 52px;
+  padding: 0 1.25rem;
+  border-radius: 0.5rem;
+  border: 2px solid var(--cta);
+  background: var(--card);
+  color: oklch(0.45 0.14 150);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  text-align: center;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+  &:hover {
+    background: oklch(0.96 0.03 145);
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(1px);
+  }
+  &[aria-disabled="true"] {
+    cursor: not-allowed;
+    border-color: var(--border);
+    background: var(--muted);
+    color: var(--muted-foreground);
+    transform: none;
+  }
+}
+
 @utility eyebrow {
   display: inline-block;
   font-size: 0.72rem;
