@@ -155,7 +155,7 @@ function Hero() {
           <span className="mt-1 block text-[clamp(1.25rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
             de CAPOEIRA Prontas para
           </span>
-          <span className="mt-0.5 block text-[clamp(1.25rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
+          <span className="mt-0.5 block text-[clamp(1.25rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em] text-gold">
             Aplicar para os Alunos
           </span>
         </h1>
@@ -234,7 +234,7 @@ function Demo() {
   const card = (src: string, i: number) => (
     <div
       key={i}
-      className="aspect-[2/3] w-[28vw] max-w-[130px] shrink-0 overflow-hidden rounded-lg bg-card shadow-sm sm:w-[160px] sm:max-w-[160px]"
+      className="aspect-[2/3] w-[32vw] max-w-[150px] shrink-0 overflow-hidden rounded-lg bg-card shadow-sm sm:w-[160px] sm:max-w-[160px]"
     >
       <img
         src={src}
