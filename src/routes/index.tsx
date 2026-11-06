@@ -6,10 +6,6 @@ import {
   Target,
   Smartphone,
   Layers,
-  Users,
-  GraduationCap,
-  Building2,
-  Baby,
   Check,
   ShieldCheck,
   Gift,
@@ -277,13 +273,6 @@ function Demo() {
   );
 }
 
-const audience = [
-  { icon: GraduationCap, t: "Professores e instrutores de capoeira" },
-  { icon: Users, t: "Mestres e contramestres que organizam aulas" },
-  { icon: Building2, t: "Profissionais de projetos e atividades de capoeira" },
-  { icon: Baby, t: "Instrutores que trabalham com turmas infantis" },
-];
-
 const reasons = [
   {
     icon: Layers,
@@ -333,17 +322,6 @@ function Reasons() {
             </li>
           ))}
         </ul>
-        <div
-          className="mt-5 flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-[12px] font-semibold text-muted-foreground"
-          data-reveal
-        >
-          {audience.map(({ icon: Icon, t }) => (
-            <span key={t} className="flex items-center gap-1.5">
-              <Icon className="h-3.5 w-3.5 shrink-0 text-cta" aria-hidden="true" />
-              {t}
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   );
