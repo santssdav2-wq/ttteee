@@ -150,15 +150,17 @@ function Hero() {
             qualquer largura de tela. As linhas seguintes usam blocos separados
             para que o número nunca seja puxado para o meio da frase. */}
         <h1 className="font-headline text-ink">
-          <span className="block text-[clamp(2.5rem,6.4vw,3.5rem)] font-black leading-[0.95] tracking-[-0.02em] text-forest">
+          <span className="block text-[clamp(2.75rem,6.2vw,4rem)] font-black leading-[0.95] tracking-[-0.02em] text-forest">
             +300
           </span>
-          <span className="mt-1.5 block text-[clamp(1.1rem,3.2vw,1.5rem)] font-extrabold leading-[1.18] tracking-[-0.01em] max-[350px]:text-[1rem]">
-            dinâmicas prontas para <span className="text-green-600">facilitar</span>
+          <span className="mt-1 block text-[clamp(1.3rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em]">
+            Dinâmicas Interativas
           </span>
-          <span className="block text-[clamp(1.1rem,3.2vw,1.5rem)] font-extrabold leading-[1.18] tracking-[-0.01em] max-[350px]:text-[1rem]">
-            <span className="text-green-600">sua rotina</span> nas aulas de{" "}
-            <span className="text-green-600">CAPOEIRA</span>
+          <span className="mt-1 block text-[clamp(1.15rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
+            de CAPOEIRA Prontas para
+          </span>
+          <span className="mt-0.5 block text-[clamp(1.15rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
+            Aplicar para os Alunos
           </span>
         </h1>
         <div className="relative mx-auto mt-4 aspect-[9/16] w-[calc(clamp(300px,40vh,350px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-5 sm:w-[calc(clamp(320px,44vh,400px)*9/16)] sm:rounded-2xl">
