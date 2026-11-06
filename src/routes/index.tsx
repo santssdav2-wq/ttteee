@@ -234,7 +234,7 @@ function Demo() {
   const card = (src: string, i: number) => (
     <div
       key={i}
-      className="aspect-[2/3] w-[24vw] max-w-[110px] shrink-0 overflow-hidden rounded-lg bg-card shadow-sm sm:w-[130px]"
+      className="aspect-[2/3] w-[28vw] max-w-[130px] shrink-0 overflow-hidden rounded-lg bg-card shadow-sm sm:w-[160px] sm:max-w-[160px]"
     >
       <img
         src={src}
