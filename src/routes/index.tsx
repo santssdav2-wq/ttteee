@@ -146,10 +146,10 @@ function Hero() {
             qualquer largura de tela. As linhas seguintes usam blocos separados
             para que o número nunca seja puxado para o meio da frase. */}
         <h1 className="font-headline text-ink">
-          <span className="block text-[clamp(3.25rem,6.2vw,4rem)] font-black leading-[0.95] tracking-[-0.02em] text-forest">
+          <span className="block text-[clamp(3.25rem,6.2vw,4rem)] font-black leading-[0.95] tracking-[-0.02em] text-green-600">
             +300
           </span>
-          <span className="mt-1 block text-[clamp(1.5rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em] text-forest">
+          <span className="mt-1 block text-[clamp(1.5rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em] text-green-600">
             Dinâmicas Interativas
           </span>
           <span className="mt-1 block text-[clamp(1.25rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
