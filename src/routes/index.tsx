@@ -146,10 +146,10 @@ function Hero() {
             qualquer largura de tela. As linhas seguintes usam blocos separados
             para que o número nunca seja puxado para o meio da frase. */}
         <h1 className="font-headline text-ink">
-          <span className="block text-[clamp(3rem,6.2vw,4rem)] font-black leading-[0.95] tracking-[-0.02em] text-forest">
+          <span className="block text-[clamp(3.25rem,6.2vw,4rem)] font-black leading-[0.95] tracking-[-0.02em] text-forest">
             +300
           </span>
-          <span className="mt-1 block text-[clamp(1.4rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em] text-forest">
+          <span className="mt-1 block text-[clamp(1.5rem,3.4vw,2.1rem)] font-extrabold leading-[1.1] tracking-[-0.01em] text-forest">
             Dinâmicas Interativas
           </span>
           <span className="mt-1 block text-[clamp(1.25rem,2.7vw,1.7rem)] font-bold leading-[1.15] tracking-[-0.005em]">
@@ -159,7 +159,7 @@ function Hero() {
             Aplicar para os Alunos
           </span>
         </h1>
-        <div className="relative mx-auto mt-4 aspect-[9/16] w-[calc(clamp(320px,42vh,370px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-5 sm:w-[calc(clamp(340px,46vh,420px)*9/16)] sm:rounded-2xl">
+        <div className="relative mx-auto mt-4 aspect-[9/16] w-[calc(clamp(340px,44vh,390px)*9/16)] max-w-full overflow-hidden rounded-xl bg-ink shadow-lg sm:mt-5 sm:w-[calc(clamp(340px,46vh,420px)*9/16)] sm:rounded-2xl">
           <video
             ref={videoRef}
             src="/vsl.mp4"
