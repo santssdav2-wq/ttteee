@@ -584,9 +584,8 @@ function Plans() {
             <h3 className="font-display text-lg font-extrabold leading-tight text-ink sm:text-xl">
               {completo.name}
             </h3>
-            {/* Mockup acima do preço, centralizado: o produto aparece primeiro e
-                o valor fecha o bloco, como uma vitrine. */}
-            <div className="mt-3 flex flex-col items-center text-center">
+            {/* Mockup sozinho em cima; o preço fica abaixo da lista. */}
+            <div className="mt-2 flex justify-center">
               <img
                 src="/mockup-completo.webp"
                 alt="Mockup do pacote completo: +300 dinâmicas e os três bônus"
@@ -595,26 +594,6 @@ function Plans() {
                 fetchPriority="low"
                 className="h-24 w-24 object-contain drop-shadow-sm sm:h-28 sm:w-28"
               />
-              <div className="mt-1.5">
-                {completo.anchorPrice && (
-                  <p className="text-[11px] font-semibold leading-tight text-muted-foreground">
-                    {completo.anchorLabel}{" "}
-                    <span className="font-extrabold text-ink/50 line-through decoration-2">
-                      {completo.anchorPrice}
-                    </span>
-                  </p>
-                )}
-                <p className="font-display text-3xl font-extrabold leading-none text-primary sm:text-4xl">
-                  {completo.price ?? (
-                    <span className="text-xl text-muted-foreground">Preço a definir</span>
-                  )}
-                </p>
-                {completo.priceNote && (
-                  <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                    {completo.priceNote}
-                  </p>
-                )}
-              </div>
             </div>
             <ul className="my-3.5 space-y-1.5">
               {completo.items.map((it) => (
@@ -634,6 +613,26 @@ function Plans() {
                 </li>
               ))}
             </ul>
+            <div className="mb-1 text-center">
+              {completo.anchorPrice && (
+                <p className="text-[11px] font-semibold leading-tight text-muted-foreground">
+                  {completo.anchorLabel}{" "}
+                  <span className="font-extrabold text-ink/50 line-through decoration-2">
+                    {completo.anchorPrice}
+                  </span>
+                </p>
+              )}
+              <p className="font-display text-3xl font-extrabold leading-none text-primary sm:text-4xl">
+                {completo.price ?? (
+                  <span className="text-xl text-muted-foreground">Preço a definir</span>
+                )}
+              </p>
+              {completo.priceNote && (
+                <p className="mt-1 text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                  {completo.priceNote}
+                </p>
+              )}
+            </div>
             <CheckoutButton plan={completo} />
             <WhatsAppNote />
             <SecurityNote />
