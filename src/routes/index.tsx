@@ -501,7 +501,13 @@ function UpgradeDialog({
 
 function Plans() {
   const [basico, completo] = offer.plans;
-  const [upgradeOpen, setUpgradeOpen] = useState(false);
+  // POPUP DE UPGRADE (R$ 17,90) DESATIVADO TEMPORARIAMENTE.
+  // O componente `UpgradeDialog` e `offer.upgrade` continuam intactos neste arquivo
+  // e em `src/config/offer.ts`. Para reativar, restaure:
+  //   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  //   <CheckoutButton plan={basico} muted onSelect={() => setUpgradeOpen(true)} />
+  //   <UpgradeDialog open={upgradeOpen} onClose={() => setUpgradeOpen(false)}
+  //     basicCheckoutUrl={basico?.checkoutUrl ?? null} />
   return (
     <Section id="planos" className="bg-muted">
       <CountdownTimer />
@@ -547,7 +553,7 @@ function Plans() {
                 </li>
               ))}
             </ul>
-            <CheckoutButton plan={basico} muted onSelect={() => setUpgradeOpen(true)} />
+            <CheckoutButton plan={basico} muted />
           </article>
         )}
         {completo && (
@@ -616,11 +622,11 @@ function Plans() {
           </article>
         )}
       </div>
-      <UpgradeDialog
+      {/* <UpgradeDialog
         open={upgradeOpen}
         onClose={() => setUpgradeOpen(false)}
         basicCheckoutUrl={basico?.checkoutUrl ?? null}
-      />
+      /> */}
     </Section>
   );
 }
