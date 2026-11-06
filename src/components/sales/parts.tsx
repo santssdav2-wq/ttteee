@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback, useEffect, type ReactNode } from "react";
+﻿import { useRef, useState, useCallback, useEffect, type ReactNode } from "react";
 import { PLANS_ANCHOR, type Plan } from "@/config/offer";
 
 export function Section({
@@ -125,12 +125,15 @@ export function Carousel({
   children,
   label,
   speed = 1.2,
+  reverse = false,
 }: {
   count: number;
   children: ReactNode;
   label: string;
   /** Velocidade do auto-scroll em px por 1/60s. */
   speed?: number;
+  /** Rola na direção oposta (direita). */
+  reverse?: boolean;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
@@ -175,12 +178,14 @@ export function Carousel({
       if (pausedRef.current) {
         carry = 0;
       } else {
-        carry += (speed * elapsed) / (1000 / 60);
+        carry += (reverse ? -speed : speed) * (elapsed / (1000 / 60));
         const whole = Math.trunc(carry);
-        if (whole > 0) {
+        if (whole != 0) {
           carry -= whole;
-          el.scrollLeft += whole;
-          if (cycle > 0 && el.scrollLeft >= cycle) el.scrollLeft -= cycle;
+          if (reverse && el.scrollLeft === 0 && cycle > 0) el.scrollLeft = cycle - 1;
+          let target = el.scrollLeft + whole;
+          if (cycle > 0) target = ((target % cycle) + cycle) % cycle;
+          el.scrollLeft = target;
         }
       }
       raf = requestAnimationFrame(tick);

@@ -225,48 +225,44 @@ function Hero() {
   );
 }
 
-function Demo() {
-  const imgs = offer.previewImages;
-  const pages: ({ src: string; alt: string } | null)[] = imgs.length
-    ? imgs
-    : Array.from({ length: 5 }, () => null);
+const demoImages = Array.from({ length: 13 }, (_, i) => `/dinamica-${String(i + 1).padStart(2, "0")}.webp`);
 
-  const card = (img: (typeof pages)[number], i: number, extra: string) => (
+function Demo() {
+  const half = Math.ceil(demoImages.length / 2);
+  const top = demoImages.slice(0, half);
+  const bottom = demoImages.slice(half);
+  const card = (src: string, i: number) => (
     <div
       key={i}
-      className={`${extra} aspect-[2/3] overflow-hidden rounded-xl border border-border/60 bg-card shadow-sm`}
+      className="aspect-[2/3] w-[24vw] max-w-[110px] shrink-0 overflow-hidden rounded-lg bg-card shadow-sm sm:w-[130px]"
     >
-      {img ? (
-        <img
-          src={img.src}
-          alt={img.alt}
-          loading="lazy"
-          decoding="async"
-          fetchPriority="low"
-          className="h-full w-full object-cover"
-        />
-      ) : (
-        <MaterialPage n={i + 1} />
-      )}
+      <img
+        src={src}
+        alt={`Dinâmica de capoeira ${i + 1}`}
+        loading="lazy"
+        decoding="async"
+        fetchPriority="low"
+        className="h-full w-full object-cover"
+      />
     </div>
   );
-
   return (
     <section className="bg-background px-4 py-8 sm:py-10">
       <div className="mx-auto w-full max-w-4xl" data-reveal>
         <SectionTitle eyebrow="Veja por dentro">
           Conheça Algumas das <span className="text-green-600 font-bold">Dinâmicas</span>
         </SectionTitle>
-        {/* Celular: tira com encaixe; computador: grade de três colunas.
-            Um único conjunto de imagens evita baixar a mesma prévia duas vezes. */}
-        <div className="-mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0">
-          {pages.map((img, i) =>
-            card(
-              img,
-              i,
-              "w-[70vw] max-w-[280px] shrink-0 snap-center sm:w-full sm:max-w-none",
-            ),
-          )}
+        <div className="space-y-2 overflow-hidden">
+          <div className="pointer-events-none">
+            <Carousel count={top.length} label="Dinâmicas de capoeira" speed={0.5}>
+              {top.map((src, i) => card(src, i))}
+            </Carousel>
+          </div>
+          <div className="pointer-events-none">
+            <Carousel count={bottom.length} label="Dinâmicas de capoeira" speed={0.5} reverse>
+              {bottom.map((src, i) => card(src, half + i))}
+            </Carousel>
+          </div>
         </div>
       </div>
     </section>
@@ -322,6 +318,9 @@ function Reasons() {
             </li>
           ))}
         </ul>
+        <div className="mt-6 flex justify-center">
+          <CtaButton className="font-hero">QUERO AS DINÂMICAS AGORA</CtaButton>
+        </div>
       </div>
     </section>
   );
