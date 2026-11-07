@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+﻿import { createFileRoute } from "@tanstack/react-router";
 import { useState, useRef, useEffect, type KeyboardEvent as ReactKeyboardEvent } from "react";
 import { createPortal } from "react-dom";
 import {
@@ -11,6 +11,8 @@ import {
   Gift,
   Award,
   X,
+  ShoppingCart,
+  Clock,
 } from "lucide-react";
 import { offer } from "@/config/offer";
 import {
@@ -350,14 +352,36 @@ function CountdownTimer() {
 }
 
 /** Popup de upgrade exibido ao escolher o Material Básico. */
+function WhatsAppNote() {
+  return (
+    <p className="mt-2.5 text-center text-[11.5px] font-semibold leading-tight text-green-700">
+      Você receberá seu material pelo WhatsApp.
+    </p>
+  );
+}
+
+function SecurityNote() {
+  return (
+    <p className="mt-1 flex items-center justify-center gap-1.5 text-[10.5px] font-medium text-muted-foreground">
+      <ShieldCheck className="h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
+      Pagamento seguro
+      <span aria-hidden="true">·</span>
+      <Smartphone className="h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
+      Acesso digital
+    </p>
+  );
+}
+
 function UpgradeDialog({
   open,
   onClose,
   basicCheckoutUrl,
+  upgradeCheckoutUrl,
 }: {
   open: boolean;
   onClose: () => void;
   basicCheckoutUrl: string | null;
+  upgradeCheckoutUrl: string | null;
 }) {
   const primaryRef = useRef<HTMLAnchorElement>(null);
   const upgrade = offer.upgrade;
@@ -380,9 +404,9 @@ function UpgradeDialog({
   if (!open || typeof document === "undefined") return null;
 
   return createPortal(
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
       <div
-        className="absolute inset-0 bg-ink/60 backdrop-blur-sm motion-safe:animate-[dialog-fade_180ms_ease-out]"
+        className="absolute inset-0 bg-ink/60 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -390,80 +414,99 @@ function UpgradeDialog({
         role="dialog"
         aria-modal="true"
         aria-labelledby="upgrade-title"
-        className="relative max-h-[85vh] w-full max-w-[16rem] overflow-y-auto rounded-2xl bg-white px-2.5 pb-2 pt-4 text-center shadow-2xl motion-safe:animate-[dialog-pop_200ms_ease-out] sm:max-w-[18rem] sm:px-3"
+        className="relative max-h-[92vh] w-[94%] max-w-[24rem] overflow-y-auto rounded-2xl bg-white px-5 pb-4 pt-6 text-center shadow-2xl sm:w-full sm:max-w-md sm:px-7 sm:pb-5 sm:pt-7"
       >
         <button
           type="button"
           onClick={onClose}
           aria-label="Fechar"
-          className="absolute right-1.5 top-1.5 rounded-full p-0.5 text-ink/40 transition hover:bg-muted hover:text-ink"
+          className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full text-ink/40 transition hover:bg-muted hover:text-ink"
         >
-          <X className="h-3 w-3" aria-hidden="true" />
+          <X className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <span className="inline-flex items-center rounded-full bg-gold px-1.5 py-0.5 text-[8px] font-extrabold uppercase leading-none tracking-[0.12em] text-ink">
-          {upgrade.badge}
-        </span>
-
-        <h2
-          id="upgrade-title"
-          className="mt-1 font-display text-[14px] font-extrabold leading-[1.1] text-ink sm:text-base"
-        >
-          {upgrade.title}
-        </h2>
-        <p className="mx-auto mt-0.5 max-w-[14rem] text-[10px] font-semibold leading-snug text-ink/65">
-          {upgrade.subtitle}
-        </p>
-
-        <div className="mt-1.5 flex items-center justify-center gap-1.5 rounded-lg border border-gold/40 bg-[#FAF5E9] px-2 py-1">
-          <div className="flex flex-col items-center leading-none">
-            {upgrade.anchorPrice ? (
-              <span className="text-[8.5px] font-bold text-ink/45 line-through">
-                {upgrade.anchorPrice}
-              </span>
-            ) : null}
-            <span className="font-display text-[22px] font-extrabold leading-none text-ink">
-              {upgrade.price}
-            </span>
-          </div>
-          <span className="max-w-[5.5rem] border-l border-gold/40 pl-1.5 text-left text-[9px] font-bold leading-[1.2] text-green-700">
-            {upgrade.priceNote}
+        {/* Cabeçalho */}
+        <div className="flex flex-col items-center">
+          <span className="grid h-16 w-16 place-items-center rounded-full bg-gradient-to-br from-gold to-[#f5c542] shadow-lg shadow-gold/30 ring-4 ring-gold/20 sm:h-20 sm:w-20">
+            <Gift className="h-8 w-8 text-forest sm:h-10 sm:w-10" aria-hidden="true" />
           </span>
+          <h2
+            id="upgrade-title"
+            className="mt-3 font-display text-xl font-extrabold leading-tight text-ink sm:text-2xl"
+          >
+            VOCÊ GANHOU UM PRESENTE!
+          </h2>
         </div>
 
-        <ul className="mx-auto mt-1.5 space-y-0.5 text-left">
-          {upgrade.items.map((item) => (
-            <li key={item} className="flex items-start gap-1 text-[10px] leading-snug text-ink">
-              <Check className="mt-[2px] h-2 w-2 shrink-0 text-cta" aria-hidden="true" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+        {/* Quadro de preço */}
+        <div className="mt-4 rounded-xl border-2 border-gold/60 bg-[#FBF5E6] px-4 py-3 sm:px-5 sm:py-4">
+          <p className="text-sm font-bold text-ink sm:text-base">Leve o Plano Completo + Bônus</p>
+          <p className="mt-1 text-sm font-semibold text-ink/45 line-through">
+            De {upgrade.anchorPrice}
+          </p>
+          <p className="mt-0.5 font-display text-4xl font-extrabold leading-none text-cta sm:text-5xl">
+            {upgrade.price}
+          </p>
+          <p className="mt-1.5 text-xs font-semibold text-cta sm:text-sm">
+            Economize R$ 124,00.
+          </p>
+        </div>
 
-        {upgrade.checkoutUrl ? (
+        {/* Lista */}
+        <div className="mt-4 text-left">
+          <p className="text-sm font-extrabold uppercase tracking-wide text-ink sm:text-base">
+            VOCÊ VAI RECEBER:
+          </p>
+          <ul className="mt-2 space-y-1.5">
+            {upgrade.items.map((item) => (
+              <li key={item} className="flex items-start gap-2 text-sm leading-snug text-ink sm:text-[15px]">
+                <Check className="mt-0.5 h-4 w-4 shrink-0 text-cta sm:h-5 sm:w-5" aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Botão principal */}
+        {upgradeCheckoutUrl ? (
           <a
             ref={primaryRef}
-            href={upgrade.checkoutUrl}
-            className="btn-cta btn-cta-gold-pulse mt-1.5 !min-h-[36px] !text-[0.75rem] !px-2"
+            href={upgradeCheckoutUrl ?? "#"}
+            className="btn-cta mt-5 !min-h-[52px] gap-2 text-base sm:!min-h-[56px] sm:text-lg"
             rel="noopener"
             suppressHydrationWarning
+            onClick={() => {
+              try {
+                window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
+              } catch {
+                /* ignore */
+              }
+            }}
           >
+            <ShoppingCart className="h-5 w-5" aria-hidden="true" />
             {upgrade.ctaLabel}
           </a>
         ) : (
           <span
             aria-disabled="true"
-            className="btn-cta mt-1.5 !min-h-[36px] !text-[0.75rem] opacity-60"
-            title="Link de checkout pendente de configuração"
+            className="btn-cta mt-5 !min-h-[52px] opacity-60"
           >
-            {upgrade.ctaLabel} · LINK PENDENTE
+            {upgrade.ctaLabel}
           </span>
         )}
 
+        {/* Opção secundária */}
         {basicCheckoutUrl ? (
           <a
             href={basicCheckoutUrl}
-            className="mt-0.5 inline-block px-2 py-0.5 text-[10px] font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
+            onClick={() => {
+              try {
+                window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
+              } catch {
+                /* ignore */
+              }
+            }}
+            className="mt-3 inline-block text-sm font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
           >
             {upgrade.dismissLabel}
           </a>
@@ -471,46 +514,60 @@ function UpgradeDialog({
           <button
             type="button"
             onClick={onClose}
-            className="mt-0.5 inline-block px-2 py-0.5 text-[10px] font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
+            className="mt-3 inline-block text-sm font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
           >
             {upgrade.dismissLabel}
           </button>
         )}
+
+        {/* Aviso */}
+        <div className="mt-4 flex items-center justify-center gap-1.5 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 sm:text-sm">
+          <Clock className="h-4 w-4 shrink-0" aria-hidden="true" />
+          Se você sair agora, essa oferta não aparecerá novamente.
+        </div>
       </div>
     </div>,
     document.body,
   );
 }
 
-function WhatsAppNote() {
-  return (
-    <p className="mt-2.5 text-center text-[11.5px] font-semibold leading-tight text-green-700">
-      Você receberá seu material pelo WhatsApp.
-    </p>
-  );
-}
-
-function SecurityNote() {
-  return (
-    <p className="mt-1 flex items-center justify-center gap-1.5 text-[10.5px] font-medium text-muted-foreground">
-      <ShieldCheck className="h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
-      Pagamento seguro
-      <span aria-hidden="true">·</span>
-      <Smartphone className="h-3 w-3 shrink-0 text-cta" aria-hidden="true" />
-      Acesso digital
-    </p>
-  );
-}
-
 function Plans() {
   const [basico, completo] = offer.plans;
-  // POPUP DE UPGRADE (R$ 17,90) DESATIVADO TEMPORARIAMENTE.
-  // O componente `UpgradeDialog` e `offer.upgrade` continuam intactos neste arquivo
-  // e em `src/config/offer.ts`. Para reativar, restaure:
-  //   const [upgradeOpen, setUpgradeOpen] = useState(false);
-  //   <CheckoutButton plan={basico} muted onSelect={() => setUpgradeOpen(true)} />
-  //   <UpgradeDialog open={upgradeOpen} onClose={() => setUpgradeOpen(false)}
-  //     basicCheckoutUrl={basico?.checkoutUrl ?? null} />
+  const [upgradeOpen, setUpgradeOpen] = useState(false);
+
+  const isDismissed = () => {
+    try {
+      return window.localStorage.getItem("capoeira_upgrade_dismissed") === "1";
+    } catch {
+      return false;
+    }
+  };
+
+  const dismissUpgrade = () => {
+    try {
+      window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
+    } catch {
+      /* ignore */
+    }
+    setUpgradeOpen(false);
+  };
+
+  const handleBasicClick = () => {
+    if (isDismissed()) {
+      if (basico?.checkoutUrl) window.location.href = basico.checkoutUrl;
+      return;
+    }
+    setUpgradeOpen(true);
+  };
+
+  const handleUpgradeAccept = () => {
+    try {
+      window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
+    } catch {
+      /* ignore */
+    }
+    setUpgradeOpen(false);
+  };
   return (
     <Section id="planos" className="bg-muted">
       <CountdownTimer />
@@ -548,7 +605,7 @@ function Plans() {
                 </li>
               ))}
             </ul>
-            <CheckoutButton plan={basico} muted />
+            <CheckoutButton plan={basico} muted onSelect={handleBasicClick} />
             <WhatsAppNote />
             <SecurityNote />
           </article>
@@ -616,11 +673,12 @@ function Plans() {
           </article>
         )}
       </div>
-      {/* <UpgradeDialog
+      <UpgradeDialog
         open={upgradeOpen}
-        onClose={() => setUpgradeOpen(false)}
+        onClose={dismissUpgrade}
         basicCheckoutUrl={basico?.checkoutUrl ?? null}
-      /> */}
+        upgradeCheckoutUrl={offer.upgrade.checkoutUrl}
+      />
     </Section>
   );
 }
@@ -642,7 +700,15 @@ function Bonuses() {
           </h2>
           <div className="berimbau-line mx-auto mt-3" />
         </div>
-        <ul className="mx-auto mt-6 grid max-w-sm gap-4 sm:max-w-none sm:grid-cols-3">
+        <div className="mt-4 text-center" data-reveal>
+          <p className="font-display text-sm font-extrabold uppercase tracking-wide text-gold sm:text-base">
+            Mais de R$ 79 em b?nus extras!
+          </p>
+          <p className="mt-0.5 text-xs font-semibold text-forest-foreground/80 sm:text-sm">
+            E voc? recebe todos gratuitamente no Plano Completo!
+          </p>
+        </div>
+        <ul className="mx-auto mt-4 grid max-w-sm gap-4 sm:max-w-none sm:grid-cols-3">
           {offer.bonuses.map((b, i) => (
             <li
               key={b.title}
@@ -664,9 +730,17 @@ function Bonuses() {
                   <Award className="h-10 w-10 text-forest" aria-hidden="true" />
                 )}
               </div>
-              <h3 className="mt-2.5 flex flex-1 items-center justify-center px-1 pb-1 text-center font-display text-[13.5px] font-extrabold leading-snug text-ink sm:text-sm">
+              <h3 className="mt-2.5 flex flex-1 items-center justify-center px-1 text-center font-display text-[13.5px] font-extrabold leading-snug text-ink sm:text-sm">
                 {b.title}
               </h3>
+              <div className="mt-1 flex items-center justify-center gap-1.5">
+                <span className="text-[10.5px] font-semibold text-ink/45 line-through">
+                  De {b.referencePrice}
+                </span>
+                <span className="text-[10.5px] font-extrabold text-cta">
+                  HOJE GR?TIS
+                </span>
+              </div>
             </li>
           ))}
         </ul>

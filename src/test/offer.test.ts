@@ -10,13 +10,13 @@ describe("preserved offer and approved additions", () => {
     expect(offer.bonuses).toHaveLength(3);
     expect(offer.bonuses[0]?.title).toBe("Certificado de Capoeira Infantil");
     expect(offer.bonuses[0]?.includedAtNoExtraCost).toBe(true);
-    expect(offer.bonuses[0]?.referencePrice).toBe("R$ 37,00");
+    expect(offer.bonuses[0]?.referencePrice).toBe("R$ 19,90");
     expect(offer.bonuses[1]?.title).toBe("Ficha de Acompanhamento dos Alunos");
     expect(offer.bonuses[1]?.includedAtNoExtraCost).toBe(true);
-    expect(offer.bonuses[1]?.referencePrice).toBe("R$ 27,90");
+    expect(offer.bonuses[1]?.referencePrice).toBe("R$ 29,90");
     expect(offer.bonuses[2]?.title).toBe("Ficha de Planejamento de Aula");
     expect(offer.bonuses[2]?.includedAtNoExtraCost).toBe(true);
-    expect(offer.bonuses[2]?.referencePrice).toBe("R$ 49,90");
+    expect(offer.bonuses[2]?.referencePrice).toBe("R$ 29,90");
   });
 
   it("preserves both plans and their pending commercial settings", () => {
@@ -46,15 +46,15 @@ describe("preserved offer and approved additions", () => {
 
   it("offers the R$ 17,90 upgrade with its own checkout", () => {
     expect(offer.upgrade.price).toBe("R$ 17,90");
-    expect(offer.upgrade.anchorPrice).toBe("R$ 27,90");
+    expect(offer.upgrade.anchorPrice).toBe("R$ 141,90");
     expect(offer.upgrade.priceNote).toBe("Só R$ 7,90 a mais");
-    expect(offer.upgrade.items).toHaveLength(4);
+    expect(offer.upgrade.items).toHaveLength(7);
     expect(offer.upgrade.checkoutUrl).toBe("https://pay.cakto.com.br/dc5aynu");
   });
 
   it("anchors the complete plan on the sum of the bonus reference prices", () => {
     const completo = offer.plans.find((plan) => plan.id === "completo");
-    expect(completo?.anchorPrice).toBe("R$ 114,80");
+    expect(completo?.anchorPrice).toBe("R$ 79,70");
     expect(completo?.anchorLabel).toBe("Os bônus valem");
   });
 
