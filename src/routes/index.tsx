@@ -436,7 +436,7 @@ function UpgradeDialog({
             id="upgrade-title"
             className="mt-3 font-display text-xl font-extrabold leading-tight text-ink sm:text-2xl"
           >
-            VOCÊ GANHOU UM PRESENTE!
+            PARABÉNS, VOCÊ GANHOU UM PRESENTE!
           </h2>
         </div>
 
@@ -648,7 +648,7 @@ function Bonuses() {
       />
       <div className="relative mx-auto w-full max-w-4xl">
         <div className="text-center" data-reveal>
-          <span className="eyebrow text-gold/90">Inclusos no Material Completo</span>
+          <span className="eyebrow text-gold/90">BÔNUS EXCLUSIVOS</span>
           <h2 className="mt-1.5 font-display text-[1.5rem] font-extrabold leading-tight text-forest-foreground sm:text-[1.9rem]">
             3 Bônus Exclusivos <span className="text-gold">Grátis</span>
           </h2>
@@ -656,10 +656,10 @@ function Bonuses() {
         </div>
         <div className="mt-4 text-center" data-reveal>
           <p className="font-display text-sm font-extrabold uppercase tracking-wide text-gold sm:text-base">
-            Mais de R$ 79 em bônus extras!
+            Valor total dos bônus: <span className="line-through">R$79,00</span>
           </p>
           <p className="mt-0.5 text-xs font-semibold text-forest-foreground/80 sm:text-sm">
-            E você recebe todos gratuitamente no Plano Completo!
+            (Hoje todos de graça)
           </p>
         </div>
         <ul className="mx-auto mt-4 grid max-w-sm gap-4 sm:max-w-none sm:grid-cols-3">
@@ -711,8 +711,11 @@ function Testimonials() {
     <section className="bg-card px-4 py-7 sm:py-9">
       <div className="mx-auto w-full max-w-3xl" data-reveal>
         <SectionTitle eyebrow="Depoimentos" compact>
-          O Que Estão <span className="text-green-600 font-bold">Dizendo</span>
+          VEJA O QUE ALGUNS <span className="text-green-600 font-bold">MESTRES ESTÃO FALANDO</span>
         </SectionTitle>
+        <p className="mx-auto -mt-2 mb-3 max-w-xl text-center text-[13px] leading-relaxed text-muted-foreground sm:text-sm">
+          Veja prints reais de mestres que já utilizam nossas dinâmicas e transformaram suas aulas.
+        </p>
         <Carousel count={count} label="Depoimentos sobre as dinâmicas" speed={0.45}>
           {imgs.map((img, i) => (
             <div
