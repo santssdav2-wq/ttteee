@@ -580,7 +580,7 @@ function Plans() {
                 loading="lazy"
                 decoding="async"
                 fetchPriority="low"
-                className="h-24 w-24 object-contain drop-shadow-sm sm:h-28 sm:w-28"
+                className="h-32 w-32 object-contain drop-shadow-sm sm:h-40 sm:w-40"
               />
             </div>
             <ul className="my-3.5 space-y-1.5">
