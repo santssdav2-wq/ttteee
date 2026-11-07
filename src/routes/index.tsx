@@ -12,7 +12,6 @@ import {
   Award,
   X,
   ShoppingCart,
-  Clock,
 } from "lucide-react";
 import { offer } from "@/config/offer";
 import {
@@ -475,13 +474,7 @@ function UpgradeDialog({
             className="btn-cta mt-5 !min-h-[52px] gap-2 text-base sm:!min-h-[56px] sm:text-lg"
             rel="noopener"
             suppressHydrationWarning
-            onClick={() => {
-              try {
-                window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
-              } catch {
-                /* ignore */
-              }
-            }}
+
           >
             <ShoppingCart className="h-5 w-5" aria-hidden="true" />
             {upgrade.ctaLabel}
@@ -499,13 +492,7 @@ function UpgradeDialog({
         {basicCheckoutUrl ? (
           <a
             href={basicCheckoutUrl}
-            onClick={() => {
-              try {
-                window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
-              } catch {
-                /* ignore */
-              }
-            }}
+
             className="mt-3 inline-block text-sm font-semibold text-muted-foreground underline underline-offset-4 transition hover:text-ink"
           >
             {upgrade.dismissLabel}
@@ -520,12 +507,7 @@ function UpgradeDialog({
           </button>
         )}
 
-        {/* Aviso */}
-        <div className="mt-4 flex items-center justify-center gap-1.5 rounded-lg bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 sm:text-sm">
-          <Clock className="h-4 w-4 shrink-0" aria-hidden="true" />
-          Se você sair agora, essa oferta não aparecerá novamente.
-        </div>
-      </div>
+              </div>
     </div>,
     document.body,
   );
@@ -535,39 +517,8 @@ function Plans() {
   const [basico, completo] = offer.plans;
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
-  const isDismissed = () => {
-    try {
-      return window.localStorage.getItem("capoeira_upgrade_dismissed") === "1";
-    } catch {
-      return false;
-    }
-  };
+  const handleBasicClick = () => setUpgradeOpen(true);
 
-  const dismissUpgrade = () => {
-    try {
-      window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
-    } catch {
-      /* ignore */
-    }
-    setUpgradeOpen(false);
-  };
-
-  const handleBasicClick = () => {
-    if (isDismissed()) {
-      if (basico?.checkoutUrl) window.location.href = basico.checkoutUrl;
-      return;
-    }
-    setUpgradeOpen(true);
-  };
-
-  const handleUpgradeAccept = () => {
-    try {
-      window.localStorage.setItem("capoeira_upgrade_dismissed", "1");
-    } catch {
-      /* ignore */
-    }
-    setUpgradeOpen(false);
-  };
   return (
     <Section id="planos" className="bg-muted">
       <CountdownTimer />
@@ -675,7 +626,7 @@ function Plans() {
       </div>
       <UpgradeDialog
         open={upgradeOpen}
-        onClose={dismissUpgrade}
+        onClose={() => setUpgradeOpen(false)}
         basicCheckoutUrl={basico?.checkoutUrl ?? null}
         upgradeCheckoutUrl={offer.upgrade.checkoutUrl}
       />
@@ -702,10 +653,10 @@ function Bonuses() {
         </div>
         <div className="mt-4 text-center" data-reveal>
           <p className="font-display text-sm font-extrabold uppercase tracking-wide text-gold sm:text-base">
-            Mais de R$ 79 em b?nus extras!
+            Mais de R$ 79 em bônus extras!
           </p>
           <p className="mt-0.5 text-xs font-semibold text-forest-foreground/80 sm:text-sm">
-            E voc? recebe todos gratuitamente no Plano Completo!
+            E você recebe todos gratuitamente no Plano Completo!
           </p>
         </div>
         <ul className="mx-auto mt-4 grid max-w-sm gap-4 sm:max-w-none sm:grid-cols-3">
@@ -738,7 +689,7 @@ function Bonuses() {
                   De {b.referencePrice}
                 </span>
                 <span className="text-[10.5px] font-extrabold text-cta">
-                  HOJE GR?TIS
+                  HOJE GRÁTIS
                 </span>
               </div>
             </li>
